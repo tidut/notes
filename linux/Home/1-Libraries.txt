@@ -1,0 +1,104 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-28T15:46:51+05:30
+
+ Created Tuesday 28 March 2017
+
+====== Libraries : ======
+
+#. Are designed to package similar functionality in a single unit
+#. Then this unit can be shared with our developers
+#. This kind of programing called Modular programing
+
+Linux supports two types of libraries :-
+
+1. Static
+2. Shared
+	a. Dynamic Loading 
+	b. Dynamic Linking
+
+====== 1. Static Library: ======
+
+#	These libaries can't be shared. Bounded to program only. Used at compile time
+# 	Ends withg suffix -a.
+#	Only libararies are shared with developer no source code is shared.
+#	Runs faster than shared libraries.
+#	Prevents user to link to program without having recompile the code.
+
+Creating the Shared Library :-
+
+{{./screenshot_2017-03-28-173310.png}}
+
+
+Advantages:-
+#	Useful in small programs where minimum functionality needed.
+#	No of programs need the library then no of times need to be added.
+
+Disadvantage:-
+# 	Where more no of programs need to use the library then no of times the space will be required.
+#	Need more memory.
+
+At same shared Libraray one one copy is required.
+
+2. ====== Shared ======
+
+
+1. Both are similar due to the fact that both of them defer loading the library until the program is running.
+2. Linked at runtime to an y program.
+3. Can be loaded any where in memory
+4. Provides modularity to development environment as the library code can be changed modfied & recompiled without recompiling the application.
+
+Mainly three places where libraries are kept:
+[[/lib]]			:-	loaded at startup & loading in root file system 
+[[/usr/lib]]		:-	used internally or used by user or shell
+[[/usr/local/lib]]	:-	donloaded new libraries contains all lib. 
+
+
+====== Dynamic loading ======
+	1. Ability to load a program from external source
+	2. Call dlopen or Load library function that function allow you to map the dynamic library into process space
+	3. Loading the subroutines of a program as and when required during run-time, instead of loading all the subroutines at once 	before the program execution starts. 
+	4. This is useful in efficient memory usage since many subroutines may not be called at all.
+	5. Dynamic loading is the process by which a library is loaded into the memory at run-time. So when you use a dlopen call in your program, the dynamic loader shall load the library into the memory at run time, if that library is not already loaded.
+
+
+{{./screenshot_2017-03-28-180301.png}}
+{{./screenshot_2017-03-28-180332.png}}
+{{./screenshot_2017-03-28-180417.png}}
+
+http://linuxkernel51.blogspot.in/2012/11/dynamic-loading-and-un-loading-of.html
+
+
+====== Dynamic linking ======
+	1. Environment automates the run time linking of external shared objects.
+	2. Loads elf file & looks for required symbols & maps the correct.
+	3. A shared library (on Linux) or a dynamic link library (dll on Windows) is a collection of object files. In dynamic linking, object files are not combined with programs at compile time, also, they are not copied permanently into the final executable file;
+	4. Concerned with linking library routines at run-time instead of combining them with the executable program code before the program execution starts i.e. static linking. 
+	5. To achieve this, a small code call 'stub' is inserted in the program code wherever library routine is required. The stub contains information about where to find the routine if it is not already in the main memory, and how to load it into the main memory. If the library routine is already present in the main memory then the  the stub replaces itself with the address of the routine and executes it. So, like dynamic loading, dynamic linking also helps in efficient memory usage.
+	6. Its implicitly handled by the OS. It binds all the external references of a program to a library before executing that program.
+
+
+[root@host ~]# gcc -Wall -fPIC -c add.c
+[root@host ~]# gcc -Wall -fPIC -c sub.c
+The -fPIC or -fpic option enable "position independent code" generation, a requirement for shared libraries. 
+
+Above commands will produce two fresh object files in current directory add.o, and sub.o. The warning option -Wall enables warnings for many common errors, and should always be used. It combines a large number of other, more specific, warning options which can also be selected individually. For details you can see man page for warnings specified.
+
+//Now build the library libheymath.so using the following command.//
+//[root@host ~]# gcc -shared -o libheymath.so add.o sub.o //
+
+//[root@host ~]# gcc -o addDemo addDemo.o libheymath.so//
+//or//
+//[root@host ~]# gcc -o addDemo addDemo.o -lheymath//
+//You can list the shared library dependencies which your executable is dependent upon. The ldd <name-of-executable> command does that for you.//
+//[root@host ~]# ldd addition//
+//libheymath.so => /usr/lib/libheymath.so (0x00002b19378fa000)//
+//libc.so.6 => /lib64/libc.so.6 (0x00002b1937afb000)//
+///lib64/ld-linux-x86-64.so.2 (0x00002b19376dd000)//
+
+http://cs-fundamentals.com/c-programming/static-and-dynamic-linking-in-c.php
+
+
+
+
+

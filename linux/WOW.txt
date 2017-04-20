@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-04-17T22:04:41+05:30
+
+====== WOW ======
+Created Monday 17 April 2017
+
+https://automotivetechis.wordpress.com/automotive-interview-questions/
+http://beningo.com/understanding-the-microcontroller-boot-process/
+
+https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwjd3LKSh6zTAhXMPo8KHXLrCxUQFgguMAI&url=http%3A%2F%2Fwww.ieee802.org%2F1%2Ffiles%2Fpublic%2Fdocs2013%2Fnew-tsn-diarra-osi-layers-in-automotive-networks-0313-v01.pdf&usg=AFQjCNE-YEyoaT9LN30ISHdPII0HyxR83Q&sig2=RglybroD2xV3tQkcVddynQ

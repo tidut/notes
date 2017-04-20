@@ -1,0 +1,39 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-28T10:33:05+05:30
+
+
+
+Linux Operating system
+
+1. Linux Directory Structure
+2. Bash scripting
+3. Make files
+4. Libraries
+5. inux file structure
+6. System Calls
+7. Process
+8. Threads
+9. Process Management
+10. Pipes
+11. Fifos
+12. Message queues
+13. Shared memeory
+14. socket programing
+15. semaphores
+16. mutex
+17. spin locks
+18. Kernel intro
+19. Kernnel modules
+20. IOCTL
+21. File operations
+22. Kernel synchronization
+23. Blocking IO's
+24. Interupt & Int handlers
+25. Memeory management
+26. Kernel basics
+27. Linux file structure concept
+28. Linux build system
+29. Kernel Initialization
+30. Linux kernel devleopment
+
