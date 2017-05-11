@@ -1,0 +1,199 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-04-04T21:31:20+05:30
+
+====== 9-Kernel Synchronization ======
+Created Tuesday 04 April 2017
+
+https://www.cse.iitb.ac.in/~cs347/notes/04-process-sync.pdf
+
+Atomic Operations :-  Operations that execute atomically without any interruption. 
+
+* It uses the special data type atomic_t.
+* Accepts only atomic_t type ensure.
+* Support 32 bit operations
+
+Basically on memory the atomic operation will be done it will be locked once operatation done then it will be unlock.
+
+== Spin Locks : - ==
+
+[ ] To protect the shared resource from being modified by 2 or more processes.
+[ ] The first process that will check if lock is not acquired it will first acquire the lock & cntinue it operation. At the same time if another thread also want to acquire the lock then it will be keep on spining. Once the lock is free then only another thread will get the lock.
+[ ] A Spin copuld be used in situation where locks are held for short period of times & threads don't want to incur the cost of rescheduling.
+
+
+== spin_lock() / spin_unlock() ==
+
+	1. must not lose CPU while holding a spin lock
+		other threads will wait for the lock for a long time
+
+	2. spin_lock() prevents kernel preemption by ++preempt_count
+		in uniprocessor, that’s all spin_lock() does
+
+	3. must NOT call any function that can potentially sleep
+		ex) kmalloc, copy_from_user
+
+	4. hardware interrupt is ok unless the interrupt handler may try to lock this spin lock
+		spin lock not recursive: same thread locking twice will deadlock
+
+
+== spin_lock_irqsave() / spin_unlock_irqrestore() ==
+
+* disable all interrupts on local CPU, lock, unlock, restore interrupts to how it was before
+* need to use this version if the lock is something that an interrupt handler may try to acquire 
+* no need to worry about interrupts on other CPUs – spin lock will work normally 
+* again, no need to spin in uniproc – just ++preempt_count & disable irq
+
+== spin_lock_irq() / spin_unlock_irq() ==
+
+* disable & enable irq assuming it was disabled to begin with
+* should not be used in most cases
+
+Code : 
+**Declaration:-** 		static spinlock_t my_lock;
+	
+**Initialization :-**	spin_lock_init(&my_lock);
+
+**Usage :-**			spin_lock(&my_lock);
+					while (i == 0);
+					spin_unlock(&my_lock);
+
+
+== The Spinlock Functions :- ==
+
+{{./screenshot_2017-04-06-214305.png}}
+
+{{./screenshot_2017-04-06-212601.png}}{{./screenshot_2017-04-06-212618.png}}
+{{./screenshot_2017-04-06-212648.png}}
+
+== Reader/Writer Spinlocks :- ==
+
+{{./screenshot_2017-04-06-214508.png}}
+
+{{./screenshot_2017-04-06-214535.png}}
+
+**DEFINE_RWLOCK(my_rwlock);**
+
+{{./screenshot_2017-04-06-212720.png}}
+
+{{./screenshot_2017-04-06-212733.png}}
+{{./screenshot_2017-04-06-212743.png}}
+
+== Read-Write SPINLOCK :- ==
+
+[ ] Locks are basically divided intyo R/W. Multiple process can acquire Read Spinlock but at that time write spinlock will not be acquired by any process.
+[ ] Like that if write spinlock is acquired by one process then any other process will not be able to get the write spinlock until process leaves spin lock. At same time even Read spin lock will not be acquired by any other process.
+[ ] But remeber if write spinlock is acquired by any process then it is required to be disable the interrupts.
+
+**Q:- If Process A is accquired the lock. If there are three or more process also spining for lock then how kernel handles those processes as well as who will get the spin lock ?.**
+A:- 
+
+**Q:- Why Process should not sleep after acquiring the spin lock ?.**
+A:- Actual use of spin lock where acquring time of lock is very less. If Process acquires the lock for long time then other process who will spin for lock actually wastes the CPU time. This is basic reason SPIN locks should not sleep in after acquring the lock.
+
+**Q:- What happens if Process sleeps after holding spin Lock ?.**
+A:- In Spinlocks user has to understand the conmcept of pre-emption & scheduling.
+Preemption is disabled after holding the SPINLOCK.
+But still scheduling is possible.
+Let us suppose one process has hold the spinlock & if that process further schdeles another process (or sleeps) after holding the lock. Means it is scheduling another process. If that process also wana acquire the spin lock then it will be keep on spining for lock. In this case this new process will be nerver released as well as first process will never start again & deadlock occurs here. Reason behind this is pre-emption is disabled here.
+
+**Q:- What is the advantage of spinlock?**
+**A:-	**
+* There is no context switching, when the lock is not available, the cpu keeps spinning for the status change of lock. 
+* No overhead of going back to the sleep mode, and waking up on an unlock event. 
+* In case the critical region is short, going back to sleep mode and waking up will create latency.
+* spinlock will give a good performance here. 
+* spinlock is useful where there is no sleep or blocking call required in the execution path. 
+
+**For example 1 :-**  the copy_to_user(), and copy_from_user() has the possibility of making the process sleep because of the page fault while copying the data. The kernel has to reload the page table using swap-in/swap-out. This will make the current process in the sleep mode until and unless the appropriate page table is available. 
+**For example 2 :- **kmalloc() can make the calling process in the sleep mode to make the required memory available. 
+
+Thus, we should never have a copy_to_user/copy_from_user(), kmalloc within a spinlock and spinunlock. 
+
+Any I/O operation, where the request is not immediate should be avoided within the spinlock and spinunlock. If this is not done, then there is a high possibility of deadlock/in-efficiency. Please remember, spinlock doesn’t support recursion. Thus, if the other process gets scheduled, then that process will keep spinning for the lock status. As a result, the first process will never get a chance to complete its execution. Spin locks disable pre-emption. If CPU A has the spinlock and sleeps/schedules and CPU B wants it, then CPU B has to wait for CPU A to finish it’s business.
+
+
+== Semaphores :- ==
+[ ] Are sleeping locks.
+[ ] Based on signaling not ownership
+[ ] if any thread want to acquire semaphore if it is not available then os will put this task on wait queue & will be sleeping further. Here Processor will ready to run other task.
+[ ] Once semaphore is available then os will wake that task & it will acquire the semaphore.
+[ ] Only can be used in process context not in interrupt context.
+
+Types :-
+**Binary Semaphore :-  **only single resource 
+**Counting Semaphore :-**  has multiple resource. Means No of resource can use No of Processes.
+
+**Declare :-**		static struct semaphore sem;
+**Initialize :-**		sema_init(&sem, 1);
+**Acquire :-**		down_interruptible(&sem);
+**Release :-**		up(&sem);
+
+
+{{./screenshot_2017-04-06-221057.png}}
+
+
+{{./screenshot_2017-04-06-221135.png}}
+	
+
+== Mutex :- ==
+
+	**DEFINE_MUTEX(my_mutex);**
+	**mutex_lock(&my_mutex);**
+	**;;;;;;;;;;;;;;;;;;;;;;;;;;;;	**
+	**;;;;;;;;;;;;;;;;;;;;;;;;;;;;**
+	**mutex_unlock(&my_mutex);**
+	
+1) A binary semaphore can be a Mutex but a Mutex can never be binary semaphore. This simply means that a binary semaphore can be used as Mutex, but a Mutex can never exhibit the functionality of binary semaphore.
+
+2) No one owns binary semaphores, whereas Mutex are owned and the owner is held responsible for them. This is an important distinction from a debugging perspective.
+
+3) In case the of Mutex, the thread that owns the Mutex is responsible for freeing it. However, in the case of binary semaphores, this condition is not required. Any other thread can signal to free the binary semaphore by using the sem_post()function.
+
+4) Another difference that would matter to developers is that binary semaphores are system-wide and remain in the form of files on the filesystem, unless otherwise cleaned up. Mutex are process-wide and get cleaned up automatically when a process exits.
+
+5) The nature of binary semaphores makes it possible to use them in synchronizing related and unrelated process, as well as between threads. Mutex can be used only in synchronizing between threads and at most between related processes (the pthread implementation of the latest kernel comes with a feature that allows Mutex to be used between related process).
+
+6) According to the kernel documentation, Mutex are lighter when compared to binary semaphores. What this means is that a program with binary semaphore usage has a higher memory footprint when compared to a program having Mutex.
+
+7) From a usage perspective, Mutex has simpler semantics when compared to binary semaphores.
+
+Mutex can not be used for unrelated process.
+
+Semaphore is signaling mechanism
+mutex is locking mechanism
+
+**Q:- How to select between Mutex & Semaphore ?.**
+A:-  As we know mutex is locking mechanism. Let us suppose I want to run two theads. One thread is creating the task & other thread is deleting the task. As we before creating we can't delete so first task needs to be created. 
+
+If I use the mutex here then we don't know who will run here. But we need mutex here.
+If I use use mutex but on top If I use semaphore then main thread will acquire the semaphore and other thread will be in wait state. So semaphore here can solve the problem.
+
+**Q:-  What is Priority Inversion ?.**
+**A:-** priority inversion is a problematic scenario in scheduling in which a high priority task is indirectly preempted by a lower priority task effectively "inverting" the relative priorities of the two tasks.
+
+This violates the priority model that high priority tasks can only be prevented from running by higher priority tasks and briefly by low priority tasks which will quickly complete their use of a resource shared by the high and low priority tasks.
+
+Example :- there are 3 tasks A,B,C Task A has highest priority then B & atlast C. 
+Currently Task C is runing holding the semaphore & task A is waiting for semaphore task A won't get run & when Task B is schduled then it will preempt the task C. So here when task B is runing & Task A is waiting. Task A will only run when semaphore will be released by Task C.
+
+**Issue:- D**
+
+
+**Q:-  What is difference between Priority Inheritance and Priority celling ?.**
+**A:-**  
+**Priority Inheritance :-**  	when L is in critical section, L inherits priority of H at the time when H starts pending for critical section. By doing so, M doesn’t interrupt L and H doesn’t wait for M to finish. Please note that inheriting of priority is done temporarily i.e. L goes back to its old priority when L comes out of critical section.
+
+//The most common approach is priority inheritance. Since the mutex knows its current owner, it is possible to promote the priority of the owner whenever a higher-priority task starts waiting on the mutex. The current owner temporarily assumes the priority of the highest priority task waiting on the mutex. This allows the owner to resume running if it was preempted by a mid-priority task, and to continue running should a mid-priority task become ready to run. When the owner releases the mutex, it drops back to its original priority.//
+
+
+**Priority ceiling :-** 	In real-time computing, the priority ceiling protocol is a synchronization protocol for shared resources to avoid unbounded priority inversion and mutual deadlock due to wrong nesting of critical sections. In this protocol each resource is assigned a priority ceiling, which is a priority equal to the highest priority of any task which may lock the resource. The protocol works by temporarily raising the priorities of tasks in certain situations, thus it requires a scheduler that supports dynamic priority scheduling.[1]
+
+//priority ceiling: gives each shared resource a predefined priority ceiling. When a task acquires a shared resource, the task is hoisted (has its priority temporarily raised) to the priority ceiling of that resource. It will not see whether the job has been blocked or not, simply it raises to the priority of the shared resource.// 
+
+//An alternative to priority inheritance is priority ceiling promotion. With it, a priority ceiling is specified for a mutex, when it is created. The ceiling is set equal to the priority of the highest-priority task that is expected to get the mutex. When a lower-priority task obtains the mutex, its priority is immediately boosted to the mutex's ceiling. Hence, a mid-priority task cannot preempt as long as the low-priority task owns the mutex, nor can any other task preempt that wants the mutex. Interestingly, priority ceiling is a simply an automatic method for forcing tasks to be of the same priority while using a resource — i.e. it enforces a good design practice.//
+
+**Q:- What is Deadlock ?..**
+**A:-** Suppose Task A is waiting for a resource held by Task B, while Task B is waiting for a resource held by Task C, which is waiting for a resource held by Task A. None of the three tasks is able to acquire the resource it needs to resume execution, so the application is deadlocked. 
+
+**Q:-** 

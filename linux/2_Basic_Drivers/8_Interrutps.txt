@@ -1,0 +1,66 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:08:12+05:30
+
+====== 8 Interrutps ======
+Created Wednesday 10 May 2017
+
+
+**Q:- How add interrupt on GPIO ?.**
+A:- 
+
+	#define BUTTON	72
+	
+	if ( (irq_line = **gpio_to_irq**(BUTTON)) < 0){
+		printk(KERN_ALERT "Gpio %d cannot be used as interrupt",BUTTON);
+		return -EINVAL;
+	}
+
+	if ( (irq_req_res = **request_irq**(irq_line, button_irq_handler, 
+		IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, "gpio_change_state", NULL)) < 0) {
+		printk(KERN_ERR "Keypad: registering irq failed\n");
+		return -EINVAL;
+	}
+
+	**static irqreturn_t button_irq_handler(int irq, void *data)**
+	{
+		if (gpio_get_value(BUTTON) == 1)
+		{
+			mod_timer(&debounce_timer[0], jiffies + debounce_jiffies);
+		}
+		else
+		{
+			del_timer(&debounce_timer[0]);
+		}
+		return IRQ_HANDLED;
+	}
+
+**Q:- How to test interrupt ?.**
+A:- 
+	{{./screenshot_2017-05-11-164620.png}}
+
+	
+	{{./screenshot_2017-05-11-164829.png}}
+
+	{{./screenshot_2017-05-11-164938.png}}
+
+	
+	{{./screenshot_2017-05-11-165033.png}}
+
+
+**Q:- How to  use timer interrupt ?.**
+A:- 
+	
+	{{./screenshot_2017-05-11-165849.png}}**t**
+
+ 
+
+
+
+
+
+
+
+
+
+

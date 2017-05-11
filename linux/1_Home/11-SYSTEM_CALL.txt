@@ -1,0 +1,179 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-04-11T16:24:35+05:30
+
+====== 11-SYSTEM CALL ======
+Created Tuesday 11 April 2017
+
+
+**Q;- How System Call is works in ARM/x86 and System Call Implementation in ARM/x86 ?.** 
+
+As we said, system calls are kernel functions. User space applications cannot access system calls directly. We need a way to switch to the kernel space and to execute the system call and get the return value of the system call. 
+
+**This is where software-generated interrupts are used.** 
+
+A vector in the interrupt descriptor table (IDT) is used to invoke the system call. Only one vector is allocated for the system calls. But, how are more than one system calls invoked with one vector?. There will be a generic function (you can say an ISR) which will multiplex the all other system calls. That means when an interrupt (software interrupt using INT instruction) is raised on this vector, the generic function will be called and a system call number is passed as an argument to this function.
+
+This generic function uses this system call number as an index into the sys_call_table array and gets the address (function pointer) of the system call and invokes that system call. Interrupt vector used for the system call is 0x80(128), interrupt descriptor table's 128thentry. 128th entry in the IDT table is filled( in the trap_init(), arch/x86/kernel/traps.c) with the address of system_call() function. system_call() is defined in arch/x86/kernel/entry_32.S.
+
+**How System Calls are Executed On ARM:**
+In case of x86, interrupt vector 0x80 is used to invoke system call. 
+An Exception is used to invoke system calls in case of ARM . The ARM architecture supports seven types of exceptions. When an exception occurs, execution is forced from a fixed memory address corresponding to the type of exception. These fixed addresses are called the exception vectors. These vectors are same as the vectors of x86 interrupt descriptor table.
+
+One of the seven exceptions is the software interrupt exception. Address of the function to be executed when this exception is raised is stored at the physical address 0x00000008. The Software Interrupt instruction (SWI) is used to generate the software interrupt exception. Linux uses this vector to invoke the system calls. When this exception is generated a function, vector_swi(), is called. vector_swi() is defined in <arch/arm/kernel/entry-common.S>. vector_swi() gets the system call number in the R7 general-purpose register and finds the system call address in the sys_call_table and invokes it. Registers R0-R6 are used to send arguments to the system calls.
+
+**Q:- What are the maximum  arguments can be passed in system call ?.**
+**A:-**  Only 6 arguments can be passed.
+
+**Q:- How to add own system call in linux source code ?.** 
+**A :-**
+
+=== System Call Implementation in ARM: ===
+Download linux kernel from www.kernel.org and extract it.
+Files that are to be modified to add system call on ARM are:
+**1. include/linux/syscalls.h**
+**2. arch/arm/include/asm/unistd.h**
+**3. arch/arm/kernel/calls.S**
+**4. arch/arm/kernel/entry_common.S**
+**5. arch/arm/kernel/sys_arm.c**
+
+Procedure for adding a system call in ARM:
+
+== Step 1: ==
+Define system call number for your system call in **<arch/arm/include/asm/unistd.h>.**
+
+//Add our define at the end.//
+
+== #define __NR_sendmmsg    (__NR_SYSCALL_BASE+376) ==
+
+== #define __NR_setns    (__NR_SYSCALL_BASE+377) ==
+
+== #define __NR_mynew_add (__NR_SYSCALL_BASE +378 ) ==
+
+== Step 2: ==
+Add prototype of the system call in the **<include/linux/syscalls.h>**
+
+//Add the following line://
+**asmlinkage long sys_mynew_add(int,int);**
+
+== Step 3: ==
+Add our system call entry in the sys_call_table. 
+**sys_call_table is defined as follows in <arch/arm/kernel/entry-common.S> file.**
+
+path: /arch/arm/kernel/calls.S
+
+CALL(sys_mynew_add); (the position has to be same as the system call number ie 378)
+This file will be automatically added to entry-common.S as the file entry-common.S include it as follows.
+**#include "calls.S"**
+
+(Alternatively)
+
+We can define a wrapper function in entry-common.S and then register this wrapper function in calls.S. In the entry-common.S then finally we can jump to our system call routine.
+**path: /arch/arm/kernel/entry-common.S**
+**PATH: vim arch/arm/kernel/calls.S**
+In calls.S at the end
+CALL(sys_mynew_add_wrapper); (the position has to be same as the system call number ie 378)
+
+In entry-common.S,
+Add the following code
+Path: arch/arm/kernel/entry_common.S
+
+sys_mynew_add_wrapper:
+	 b sys_mynew_add
+ENDPROC(sys_mynew_add_wrapper)
+
+That's it, our system call has been added successfully.
+
+== Step 4: ==
+Writing the routine/definition for system call. Again it can be done in two ways:
+i. Directly it can be included in the existing files (so that it doesn't require us to modify the Makefile)
+ii. Make a separate file and change the Make file to make sure it compiles.
+
+Example: 
+**Method 1:**
+**arch/arm/kernel/sys_arm.c**
+
+asmlinkage long sys_mynew_add(int a,int b)
+{
+ printk(KERN_ALERT "The addition is %d ",a+b);
+return a+b;
+}
+
+**Method 2:**
+If separate file (say mynew_add.c) is maintained we have to add the following line in the Makefile.
+e.g.:
+obj-y :=mynew_add.o
+ Note: Now compile the kernel port that kernel image on to target device and boot it;
+System call API:
+Invoking a system call requires to raise an interrupt using the INT instruction, and requires to write
+assembly code to send arguments to the system call. So when you write a system call you need to
+provide a function which invokes the system call. For example, if you take open system call, there
+is a open() function provided by the glibc and for read system call there is a read() function
+provided by the glibc.
+syscall() function For all standard system calls glibc provides API to invoke them. But, what if there is no API
+available for a system call?. You need to write the API for that. It will be good if there is a generic API which can be used to invoke any system call, right?. That is what syscall() API. This function takes a system call number and arguments to that system call and invokes the system call.
+The prototype of this function is:
+int syscall(int number, ...);
+First argument is the system call number and other are variable number of arguments and depends
+on the system call that you are invoking.
+The return value of the syscall() is defined by the system call being invoked. 
+In general, a 0 return value indicates success.  -1 return value indicates an error, and an error code is stored in errno.
+User Application: 
+Now that kernel is updated with a few new system calls, let's look at what's necessary to use them from a user-space application. There are two ways that you can use new kernel system calls. With the first method, you call your new functions as identified by their index through the syscall function. With the syscall function, you can call a system call by specifying its call index and a set of arguments. For example, the short application shown bellow calls your sys_my_add using its index. The syscall function is architecture specific but uses a mechanism to transfer control to the kernel. The argument is based on a mapping of __NR indexes to SYS_ symbols provided by /usr/include/bits/syscall.h (defined when the libc is built). Never reference this file directly; instead use /usr/include/sys/syscall.h.The kernel header file <linux/unistd.h> provides a set of _syscall[0-6] macros that automatically generate functions that do what is necessary to properly trigger the software interrupt. The digit at the end refers to the number of arguments taken by that particular syscall. For example, this program calls the kernel syscall mynew_add()systemcall directly:
+Assembly code to invoke system call sys_mynew_add will be as follows 
+Movl r7,#378
+mov  r0,#25
+mov r1,#35
+SWI 0
+mov r7,#1 
+SWI  0 
+Assembling: 
+arm-linux-as -o sysnewadd.o sysnewadd.S 
+arm-linux-ld -s -o syscall sysnewadd.o
+
+
+=== In C Application code is ===
+
+**vim sysnewadd.c**
+
+#include <stdio.h> 
+#include <linux/kernel.h> 
+#include <sys/syscall.h> 
+#include <unistd.h> 
+#define __NR_sys_add 378 
+
+int main(int argc, char *argv[]) 
+{ 
+	long int a = syscall(__NR_sys_add, 25, 35); //Invoking our own system call
+	printf(“System call invoked\n”);
+	printf("system call returned %ld\n",a);  
+	return 0;  
+} 
+
+Compile and Execute:
+*compile that code in host side
+$ arm-linux-gcc -static -o syscall sysnewadd.c  
+$ ./syscall
+System call invoked
+system call returned 60                    //addition of 25,35
+
+=== Q:- How system call works ?. ===
+**A:-** 
+1. To perform a system call put the system call number in r7 put the arguments in r0-r6 
+	(64bit arguments must be aligned to an even numbered register i.e. in r0+r1, r2+r3, or r4+r5)
+
+2. issue the Software interrut Call instruction with a zero operand — SWI #0 Register r7  is used to pass the system call number 
+
+3. It acts as an interface between the user and the system call system routine.
+
+4. When SWIs execute, the processor changes modes (from User  to Supervisor  mode on the ARM) and disables interrupts.
+
+For  example: open system call, library function will eventually syscall (378) or followed by macro expansion
+
+mov r7,378
+swi # 0
+
+__NR_open, that is, swi #0 invokes the software interrupt  378 this is taken from the r7 register  378 interrupt, the interrupt number 378 stored in the [ lr, # -4] address, the processor jumps to arch / arm / kernel / entry-common.S in vector_swi read [lr, # -4] address of the interrupt number and then check arch / arm / kernel / entry-common.S the sys_call_table system call table, the table content in arch / arm / kernel / calls.S defined, __NR_open in the table corresponds to the order number arch /arm/kernel/calls.S declared the system call function include/asm/unistd.h defines the system call No rules
+vi arch/arm/kernel/calls.S
+CALL(sys_mynew_add);
+will sys_call_table [378] in the pass on to the pc, the system enters sys_my_add function, handling real open action sys_mynew_add defined in arch /arm /kernel/entry-common.S.

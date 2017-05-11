@@ -1,0 +1,117 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-28T18:53:09+05:30
+
+====== Linux Virtual File Structure ======
+Created Tuesday 28 March 2017
+
+**Introduction:-** In linux everythng is file.
+
+**Directories:-**	Each file has some contents like name, file creation table, modification date ,file permission. These all 				properites are stored in file' node. A directory is a file that holds node number
+
+Holds below info:
+	1. Node number
+	2. Name of other files
+	3. Each diectory entry linked to file node number & name of other files. 
+	4. Once file is removed from directory then link is also removed.
+	5. No of links in directory will go down by 1.
+	6. If directory is empty then no of link to file reaches zero.
+ 
+
+**Node:-**	A special block of data in file system that hold below info
+	1. length of data in file 
+	2. where on disk it is stored.
+
+
+{{./screenshot_2017-03-28-191502.png}}
+
+
+The figure above shows the relationship between the Linux kernel's Virtual File System and it's real file systems.
+
+**Virtual File system :-** 	a complete file system rather than actual file system.
+	1. Supports application with system calls for file management.
+	2. Maintain internal structures & passes tasks to appropriate file system.
+
+Description:-	The above figure shows the relationship between VFS & real FS. 
+				VFS must manage all different FS that are mounted at given time.
+				VFS describes file system in terms of super blocks & nodes.
+				Supports applications with system calls for file management, maintain internal structure pass task to appropriate FS.
+				
+Question :-	How VFS is initialized ?..
+				As each FS is register itself with VFS.
+
+**Introduction :-** 	
+
+* VFS is the kernel software layer that handles all system calls to a standard Unix filesystem.
+* Main strength is providing common interface to several kinds of filesystems.
+* kernel that provides the filesystem interface to userspace programs. 
+* It also provides an abstraction within the kernel which allows different filesystem implementations to coexist.
+* VFS system calls open(2), stat(2), read(2), write(2), chmod(2) and so on are called from a process context. 
+
+VFS is abstraction layer between application program & filesystem implementation.
+
+
+{{./screenshot_2017-03-30-131259.png}}
+
+{{./screenshot_2017-03-30-131314.png}}
+
+{{./screenshot_2017-03-30-133028.png}}
+
+**Disk-based FS: -** usually stored in a hardware block devices such as hard-disk. floppy, cd rom. 
+
+**Common File Model : -	**VFS common file model capable of representing all supported fs.Each FS must translate its physical organization into 						VFS's common file model.
+
+CFD consist of following objects :-
+
+{{./screenshot_2017-03-30-133404.png}}{{./screenshot_2017-03-30-133512.png}}{{./screenshot_2017-03-30-133532.png}}
+
+{{./screenshot_2017-03-30-133558.png}}{{./screenshot_2017-03-30-133612.png}}
+
+=== INode :- always unique to file as well as remains same as long as file exists. ===
+
+{{./screenshot_2017-03-30-133927.png}}{{./screenshot_2017-03-30-134028.png}}
+
+=== A inode represents a each file on FS ===
+
+{{./screenshot_2017-03-30-134124.png}}{{./screenshot_2017-03-30-134141.png}}
+
+
+{{./screenshot_2017-03-30-134358.png}}{{./screenshot_2017-03-30-134415.png}}
+
+Dentry state : - Three states used unused and negative.
+
+**used :- valid node + also used by one or more users of object or by VFS. points to vali data.**
+
+unused :-  a valid node but not used by any object
+
+negative :- not valid node
+
+Dentry Cache : - After VFS klayer goes through trouble of resolving the each element in path name into denry object and arriving at the end of path. It would be wastefull to through away al that work. 
+
+Instead of doing this dcahe is used.
+
+consist of three parts :- 
+1. list of used dentris
+2. list of used and unused in double link list
+3. Hash table & hashing tables to quickly resolve a given path into associated dentry object.
+
+
+{{./screenshot_2017-03-30-135104.png}}
+
+
+{{./screenshot_2017-03-30-135126.png?type=None}}
+{{./screenshot_2017-03-30-135306.png}}
+
+File Objects : describes how a process interacts with file it has opened.=
+
+{{./screenshot_2017-03-30-135347.png}}
+{{./screenshot_2017-03-30-135402.png}}
+
+
+
+=== File System Handling :- ===
+In linux make us eof system Rootfs is automatically mounted during boot up. Every FS has its own root diectory. The directory on which FS is mounted called mount point. A mounted FS is a child of mounted FS to which mount point direcory belongs.
+
+=== Namespaces :- ===
+Every process might have its own tree of mounted FS called NS.
+A process gets its new namespace if it is created by clone system call

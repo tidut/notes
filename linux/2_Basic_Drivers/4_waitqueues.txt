@@ -1,0 +1,161 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:07:15+05:30
+
+====== 4 waitqueues ======
+Created Wednesday 10 May 2017
+
+**Q:- How to create proc entry ?.**
+**A:-**
+
+{{./screenshot_2017-05-11-002021.png}}
+
+**Q:- What is schedule() function system call ?.**
+**A:-**
+It is system call tells CPU to run the next task in run queue & put the current task into wait queue or sleep
+
+**Q:- What are the different wait system calls are present in linux ?.**
+**A:-**
+
+**Example 1: Put the current task to sleep & wake up from other process**
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/1$**
+
+Fn1:-	static struct task_struct *sleeping_task;
+		**sleeping_task = current;**
+		printk("Scheduling Out\n");
+		**schedule();**
+		printk(KERN_INFO "Woken Up\n");
+
+Fn2:		**wake_up_process(sleeping_task);**
+
+== There is problem in this example becuase we did not made our sleeping task to interruptable. ==
+
+== include/asm-genric/current.h		>	#define current get_current() ==
+
+== include/asm-genric/current.h		>	#define get_current() (current_thread_info()->task) ==
+
+{{./screenshot_2017-05-11-012214.png}}
+
+
+== ################################################################## ==
+== Example 2: Put the current task to sleep & wake up from other process ==
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/2$**
+
+Fn1:-     	static struct task_struct *sleeping_task;
+		sleeping_task = current;
+		printk("Scheduling Out\n");
+		set_current_state(TASK_INTERRUPTIBLE);
+		**schedule();**
+		printk(KERN_INFO "Woken Up\n");
+
+Fn2:**		wake_up_process(sleeping_task);**
+
+== ################################################################## ==
+== Example 3: Put the current task to wait & wake up from other process ==
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/4$**
+
+Fn1:-	char flag = 0;
+		static DECLARE_WAIT_QUEUE_HEAD(wq);
+		sleeping_task = current;
+		**wait_event_interruptible(wq, flag != 0);  // it will be waiting for flag value should get change** 
+
+Fn2:		**//wake_up_process(sleeping_task);**
+		   flag = 1;
+		   **wake_up_interruptible(&wq);**
+
+
+	**/****
+	** * wait_event_interruptible - sleep until a condition gets true**
+	** * @wq: the waitqueue to wait on**
+	** * @condition: a C expression for the event to wait for**
+	****/**
+
+
+== include/linux/wait.h	>	#define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL) ==
+
+== kernel/sched/wait.c ==
+
+{{./screenshot_2017-05-11-013121.png}}
+
+
+
+== ################################################################## ==
+== Example 4: Put the current task by using  prepare_to_wait & wake up from other process ==
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/7$**
+
+Fn1:-	DECLARE_WAIT_QUEUE_HEAD(wq_head);
+		DEFINE_WAIT(wait);
+		**prepare_to_wait**(&wq_head, &wait, TASK_INTERRUPTIBLE);
+		schedule();
+		finish_wait(&wq_head, &wait);
+
+Fn2:		wake_up(&wq_head);
+
+If we **prepare_to_wait is indirectly putting task into interruptible. No need to put task in interruptible**
+
+
+== ################################################################## ==
+== Example 5: Put the 10 threds into wait & wake up from other process ==
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/9$**
+
+Fn1:- creates 10 threads one by one kthread_run function
+
+	if (down_interruptible(&sem))
+		return -ERESTARTSYS;
+
+	while (flag != 'y')
+	{
+		up(&sem);
+		printk("Thread %d going to Sleep\n", *(int *)data);
+		**if (wait_event_interruptible(wq, flag == 'y'))**
+			return -ERESTARTSYS;
+
+Fn2:	driver write function will written by app		
+	if (copy_from_user(&flag, buff, 1)) 
+	{
+		printk("copy_from_user failed\n");
+		return -EFAULT;
+	}
+	**wake_up_interruptible(&wq);**
+
+This example says that when all threds will b sleeping then once Y is written from write function in 
+driver all the threds will wake up
+
+== ################################################################## ==
+== Example 6: Put the 10 threds into exclusive wait & wake up from other process ==
+
+**tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/d_WaitQueues/10$**
+
+Fn1:-	**init_wait(&wq_entry[(*(int *)data)]);**
+		if (down_interruptible(&sem))
+			return -ERESTARTSYS;
+	
+		while (flag != 'y') 
+		{
+			up(&sem);
+			printk("Thread %d going to Sleep\n", *(int *)data);
+			**prepare_to_wait_exclusive(&wq, &wq_entry[*(int *)data],TASK_INTERRUPTIBLE);** 
+			if (flag != 'y')
+				**schedule();**
+	**		finish_wait(&wq, &wq_entry[*(int *)data]);**
+
+Fn2:		driver write function will written by app		
+		if (copy_from_user(&flag, buff, 1)) 
+		{
+			printk("copy_from_user failed\n");
+			return -EFAULT;
+		}
+		**wake_up_interruptible(&wq);**
+	
+##################################################################
+##################################################################
+
+##################################################################
+##################################################################
+##################################################################
+##################################################################

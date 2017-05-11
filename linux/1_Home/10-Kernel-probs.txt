@@ -1,0 +1,44 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-04-11T15:13:46+05:30
+
+====== 10-Kernel-probs ======
+Created Tuesday 11 April 2017
+
+**Q:- When to use Kmalloc Vmalloc Malloc ?.**
+**A:-** 
+
+**Vmalloc :-**  function works in a similar fashion to kmalloc(), except it allocates memory that is only virtually contiguous and not necessarily physically contiguous. The vmalloc() function only ensures that the pages are contiguous within the virtual address space. 
+
+**Malloc :-**  The pages returned by malloc() are contiguous within the virtual address space of the processor, but there is no guarantee that they are actually contiguous in physical RAM. 
+
+**Kmalloc :-**  function guarantees that the pages are physically contiguous (and virtually contiguous).  It does this by allocating potentially noncontiguous chunks of physical memory and "fixing up" the page tables to map the memory into a contiguous chunk of the logical address space.
+
+
+**Q:- How to add new driver in linux source code ?.**
+**A:- **https://hardikpatelblogs.wordpress.com/2010/11/19/8/
+
+**Q:- How Kernel Modules can commnuicate to each other ?.**
+**A:- **By exporting there function in same driver then it can be used in others drivers.
+
+
+**Q:- What is Kconfig ?.**
+**A:-** **Introduction**
+
+{{./screenshot_2017-04-15-235019.png}}
+
+KConfig provides an advanced configuration system. It is made of two parts: KConfigCore and KConfigGui.
+
+KConfigCore provides access to the configuration files themselves. It features:
+
+	Code generation: describe your configuration in an XML file, and use `kconfig_compiler to generate classes that read and write configuration entries.
+	Cascading configuration files (global settings overridden by local settings).
+	Optional shell expansion support (see docs/options.md).
+	The ability to lock down configuration options (see docs/options.md).
+
+KConfigGui provides a way to hook widgets to the configuration so that they are automatically initialized from the configuration and automatically propagate their changes to their respective configuration files. 
+
+**Q:- What is kobject, kset, subsystem ?.**
+**A: -**  http://www.programering.com/a/MjN3ITNwATM.html
+
+

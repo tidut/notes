@@ -1,0 +1,88 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-31T00:35:53+05:30
+
+====== 6-IPC-Pipes&Fifos ======
+Created Friday 31 March 2017
+
+
+[ ] Pipes
+[ ] Fifos
+[ ] Message Queues
+[ ] Semaphores Spin locks Mutex
+[ ] Socket 
+[ ] Shared Memory
+
+== PIPE :- ==
+	* Connecting Data from one process to another. When pip attached bwteen two process then output of one process will be given to input of other process.
+	* A pipe is designated in commands by the vertical bar character, e.g. cmd1 | cmd2
+		{{./screenshot_2017-03-31-131046.png}}
+
+
+== PIPE Example :-  Just remember popen also calls pipe function ==
+
+		popen definition is defined here : -
+		http://www.retro11.de/ouxr/211bsd/usr/src/lib/libc/gen/popen.c.html
+
+{{./screenshot_2017-03-31-131639.png}}
+
+
+**pipe definition : -** http://lxr.free-electrons.com/source/fs/pipe.c
+
+{{./screenshot_2017-03-31-133008.png}}
+
+
+{{./screenshot_2017-03-31-131754.png}}{{./screenshot_2017-03-31-131824.png}}
+
+== Pipes :- ==
+created used & destroyed with in file as a set of process. Each end of pipe has its own file descriptorone end is for reading & other end for writing. when use has done pipe closed.
+	1. unidirectional
+	2. shell use pipe between two process.
+	3. two fd p[0],p[1]
+	4. created by shell
+	5. opened at time of creation.
+	6. Realted Process share same descriptor table
+
+Fifos : -  are knows as named pipes. exist as special file in FS. They exists untill they are removed with rm or unlink command. They can be used with unrelated process.
+	1. Bi-directional
+	2. Allow independent process to find pipe.
+	3. Only one fd
+	4. created by mkfifo
+	5. Not opened at time of creation.
+	6. Unrelated process share different  descriptor table
+
+Disadvantages  of pipes : - 
+	* Can't strore much data
+	* No message boundaries.
+	* Data treated as strength of buffer
+	* Data can't be broadcast to multiple receiver
+
+Disadvantages  of FIFO : - 
+	* Data can't be broad casted to many receivers
+	* can't used accross n/w
+	* less secure than pipe
+	* can't store data
+	* No message boundaries
+
+							{{./screenshot_2017-03-31-135243.png}}
+
+
+== Let us understand here Server is creating the fifo here client is just using the fifo ==
+
+							 {{./screenshot_2017-03-31-135321.png}}
+
+
+== Let us understand how mkfifo command works :- ==
+
+								   {{./screenshot_2017-03-31-135720.png}}
+
+									 {{./screenshot_2017-03-31-141256.png}}
+
+
+									  {{./screenshot_2017-03-31-140846.png}}
+										{{./screenshot_2017-03-31-141025.png}}
+											   {{./screenshot_2017-03-31-141045.png}}
+
+
+
+

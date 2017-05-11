@@ -1,0 +1,361 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-03-30T16:34:34+05:30
+
+====== 5-Process Threads ======
+Created Thursday 30 March 2017
+
+== Process:-  A program in the midst of execution. Just a execution program code. ==
+
+[*] Open files
+[*] Pending signals
+[*] Internal kernel data
+[*] Processor state
+[*] Memory address space with one or more memory mappings
+[*] Thread(s) of execution
+[*] Data section containing global variables
+
+* Process Includes  open files + pending signals + internal kernel data + 1 or more thread execution + data section containg global variables.
+* Process in effect are the living result of running program code.
+* Each process allocates a unique number called process identifier or PID. This is +ve 2 to 32768
+* No 1 process manages all process.
+* A Process has its own stack space used for local variables in function & for controlling function calls.
+* Also maitains the Program counter record where it has gotten to execute.
+* each process is represented by a task_struct data structure. The task vector is an array of pointers to every task_struct data structure in the system.
+* As processes are created, a new task_struct is allocated from system memory and added into the task vector. To make it easy to find, the current, running, process is pointed to by the current pointer.
+* As well as the normal type of process, Linux supports real time processes. 
+
+== Different States :- ==
+
+== 1. Running ==
+The process is either running (it is the current process in the system) or it is ready to run (it is waiting to be assigned to one of the system's CPUs).
+
+== Waiting ==
+
+The process is waiting for an event or for a resource. Linux differentiates between two types of waiting process; interruptible and uninterruptible. Interruptible waiting processes can be interrupted by signals whereas uninterruptible waiting processes are waiting directly on hardware conditions and cannot be interrupted under any circumstances. 
+
+== Stopped ==
+
+The process has been stopped, usually by receiving a signal. A process that is being debugged can be in a stopped state. 
+
+== 4. Zombie ==
+This is a halted process which, for some reason, still has a task_struct data structure in the task vector. It is what it sounds like, a dead process. 
+
+== Process Table:- ==
+* Just like a data structures describing all the other process that are currently loaded.
+* Os manages Process by using PID & they used as index on process table
+* Process & signas form a fundamental part of linux OS. They control almost all the activites performed by linux & all other unix like computer system.
+
+== Scheduling:- ==
+* All processes run partially in user mode and partially in system mode. 
+* User mode has far less privileges than system mode. 
+* Each time a process makes a system call it swaps from user mode to system mode and continues executing. 
+* At this point the kernel is executing on behalf of the process. 
+* In Linux, processes do not preempt the current, running process, they cannot stop it from running so that they can run. 
+* Each process decides to relinquish the CPU that it is running on when it has to wait for some system event.
+* For example, a process may have to wait for a character to be read from a file. This waiting happens within the system call, in system mode; the process used a library function to open and read the file and it, in turn made system calls to read bytes from the open file. 
+* In this case the waiting process will be suspended and another, more deserving process will be chosen to run.
+
+== time-slice:- ==
+Processes use a disproportionate amount of CPU time and so Linux uses pre-emptive scheduling. In this scheme, each process is allowed to run for a small amount of time, 200ms, and, when this time has expired another process is selected to run and the original process is made to wait for a little while until it can run again. This small amount of time is known as a time-slice.
+
+It is the scheduler that must select the most deserving process to run out of all of the runnable processes in the system.
+
+A runnable process is one which is waiting only for a CPU to run on. Linux uses a reasonably simple priority based scheduling algorithm to choose between the current processes in the system. When it has chosen a new process to run it saves the state of the current process, the processor specific registers and other context being saved in the processes task_struct data structure. It then restores the state of the new process (again this is processor specific) to run and gives control of the system to that process. For the scheduler to fairly allocate CPU time between the runnable processes in the system it keeps information in the task_struct for each process:
+
+
+== Q:- How process created in linux ?. ==
+
+The fork() system call creates new process by duplication the existing one. The process that calls fork() is parent process whereas new process is child process.
+
+== Task strtcuture:- ==
+Kernel stores the list of processes in a circular double linked list called task list. 
+Each element in the task list is aprocess descriptor of the type struct task_struct which is defined in <linux/sched.h>
+for 32 bit machine task_struct is 1.7 KB on 32 bit machine. contains all the info what Kernel has & need about a process.
+
+== Process Descriptor:- ==
+Contains the data that describes the executing program.
+
+{{./screenshot_2017-03-30-182107.png}}
+
+== Allocating the Process Descriptor:- ==
+The task_struct structure is allocated via slab allocator dynamically along with that thread_info structure info is created.
+Slab allocation is a memory management mechanism intended for the efficient memory allocation of kernel objects. It eliminates fragmentation caused by allocations and deallocations. The technique is used to retain allocated memory that contains a data object of a certain type for reuse upon subsequent allocations of objects of the same type. It is analogous to an object pool, but only applies to memory, not other resources.
+
+
+{{./screenshot_2017-03-30-182306.png}}
+
+== task_struct ==
+
+== Each task_struct data structure describes a process or task in the system. ==
+
+== struct task_struct ==
+
+== { ==
+/* these are hardcoded - don't touch */
+  volatile long        state;          /* -1 unrunnable, 0 runnable, >0 stopped */
+  long                 counter;
+  long                 priority;
+  unsigned             long signal;
+  unsigned             long blocked;   /* bitmap of masked signals */
+  unsigned             long flags;     /* per process flags, defined below */
+  int errno;
+  long                 debugreg[8];    /* Hardware debugging registers */
+  struct exec_domain   *exec_domain;
+/* various fields */
+  struct linux_binfmt  *binfmt;
+  struct task_struct   *next_task, *prev_task;
+  struct task_struct   *next_run,  *prev_run;
+  unsigned long        saved_kernel_stack;
+  unsigned long        kernel_stack_page;
+  int                  exit_code, exit_signal;
+  /* ??? */
+  unsigned long        personality;
+  int                  dumpable:1;
+  int                  did_exec:1;
+  int                  pid;
+  int                  pgrp;
+  int                  tty_old_pgrp;
+  int                  session;
+  /* boolean value for session group leader */
+  int                  leader;
+  int                  groups[NGROUPS];
+  /* 
+   * pointers to (original) parent process, youngest child, younger sibling,
+   * older sibling, respectively.  (p->father can be replaced with 
+   * p->p_pptr->pid)
+   */
+  struct task_struct   *p_opptr, *p_pptr, *p_cptr, *p_ysptr, *p_osptr;
+  struct wait_queue    *wait_chldexit;  
+  unsigned short       uid,euid,suid,fsuid;
+  unsigned short       gid,egid,sgid,fsgid;
+  unsigned long        timeout, policy, rt_priority;
+  unsigned long        it_real_value, it_prof_value, it_virt_value;
+  unsigned long        it_real_incr, it_prof_incr, it_virt_incr;
+  struct timer_list    real_timer;
+  long                 utime, stime, cutime, cstime, start_time;
+/* mm fault and swap info: this can arguably be seen as either
+   mm-specific or thread-specific */
+  unsigned long        min_flt, maj_flt, nswap, cmin_flt, cmaj_flt, cnswap;
+  int swappable:1;
+  unsigned long        swap_address;
+  unsigned long        old_maj_flt;    /* old value of maj_flt */
+  unsigned long        dec_flt;        /* page fault count of the last time */
+  unsigned long        swap_cnt;       /* number of pages to swap on next pass */
+/* limits */
+  struct rlimit        rlim[RLIM_NLIMITS];
+  unsigned short       used_math;
+  char                 comm[16];
+/* file system info */
+  int                  link_count;
+  struct tty_struct    *tty;           /* NULL if no tty */
+/* ipc stuff */
+  struct sem_undo      *semundo;
+  struct sem_queue     *semsleeping;
+/* ldt for this task - used by Wine.  If NULL, default_ldt is used */
+  struct desc_struct *ldt;
+/* tss for this task */
+  struct thread_struct tss;
+/* filesystem information */
+  struct fs_struct     *fs;
+/* open file information */
+  struct files_struct  *files;
+/* memory management info */
+  struct mm_struct     *mm;
+/* signal handlers */
+  struct signal_struct *sig;
+#ifdef __SMP__
+  int                  processor;
+  int                  last_processor;
+  int                  lock_depth;     /* Lock depth. 
+										  We can context switch in and out
+										  of holding a syscall kernel lock... */  
+#endif   
+
+== }; ==
+
+== struct thread_info ==
+
+== { ==
+		  unsigned long           flags;          /* low level flags */
+		  int                     preempt_count;  /* 0 => preemptable, <0 => bug */
+		  mm_segment_t            addr_limit;     /* address limit */
+		  struct task_struct      *task;          /* main task structure */
+		  __u32                   cpu;            /* cpu */
+		  __u32                   cpu_domain;     /* cpu domain */
+		  struct cpu_context_save cpu_context;    /* cpu context */
+		  __u32                   syscall;        /* syscall number */
+		  __u8                    used_cp[16];    /* thread used copro */
+		  unsigned long           tp_value[2];    /* TLS registers */
+  #ifdef CONFIG_CRUNCH
+		  struct crunch_state     crunchstate;
+  #endif
+		  union fp_state          fpstate __attribute__((aligned(8)));
+		  union vfp_state         vfpstate;
+  #ifdef CONFIG_ARM_THUMBEE
+		  unsigned long           thumbee_state;  /* ThumbEE Handler Base register */
+  #endif
+
+== }; ==
+
+== Relation between task_struct & thread_info ?. ==
+Threads in Linux are treated as processes that just happen to share some resources. 
+Each thread has its own thread_info (at the bottom of the stack like you said) and its own task_struct. 
+There are two reasons why they are maintained as separate structures.
+
+* thread_info is architecture dependent. task_struct is generic.
+* thread_info cuts into the size of the kernel stack for that process, so it should be kept small. thread_info is placed at the bottom of the stack as a micro-optimization that makes it possible to compute its address from the current stack pointer by rounding down by the stack size saving a CPU register.
+* The task_struct is a large data structure. Hence the task of storing large structure is very much difficult. So kernel introduced concept of thread_info , which is very much slimmer than task_struct and just points to task_struct structure.
+
+== task_struct --> thread_info --> struct cpu_context_save cpu_context ==
+
+{{./screenshot_2017-03-30-184552.png}}
+
+The current_thread_info() function
+
+On x86, current is calculated by masking out the 13 least-significant bits of the stack pointer to obtain the thread_info structure. This is done by the current_thread_info() function (arch/x86/include/asm/thread_info.h#L184). 
+
+The assembly is shown here:
+
+movl $-8192, %eax
+andl %esp, %eax
+
+This assumes that the stack size is 8KB. When 4KB stacks are enabled, 4096 is used in lieu of 8192. Current dereferences the task member of thread_info to return the task_struct:
+
+Each process on the system is in exactly one of five different states. This value is represented by one of five flags:
+
+== TASK_RUNNING: ==
+The process is runnable; it is either currently running or on a runqueue waiting to run. This is the only possible state for a process executing in user-space; it can also apply to a process in kernel-space that is actively running.
+
+== TASK_INTERRUPTIBLE: ==
+The process is sleeping (blocked), waiting for some condition to exist. The process also awakes prematurely and becomes runnable if it receives a signal.
+
+== TASK_UNINTERRUPTIBLE: ==
+ This state is identical to TASK_INTERRUPTIBLE except that it does not wake up and become runnable if it receives a signal. This is used in situations where the process must wait without interruption or when the event is expected to occur quite quickly. Because the task does not respond to signals in this state, TASK_UNINTERRUPTIBLE is less often used than TASK_INTERRUPTIBLE.
+
+== TASK_TRACED: ==
+The process is being traced by another process, such as a debugger, via ptrace.
+
+== TASK_STOPPED: ==
+ Process execution has stopped; the task is not running nor is it eligible to run. This occurs if the task receives the SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU signal or if it receives any signal while it is being debugged.
+
+== Manipulating the Current Process State :- ==
+Kernel code often needs to change a process's state. 
+The preferred mechanism is using: **set_task_state(task, state);** /* set task ‘task’ to state ‘state’ */
+
+== Process Context :- ==
+The program code is read in from an executable file and executed within the program's address space.
+
+	**User-space:** Normal program execution occurs in user-space.
+	**Kernel-space:** When a program executes a system call or triggers an exception, it enters kernel-space.
+
+
+== The Process Family Tree ==
+
+All processes are descendants of the **init process (PID 1).** The kernel starts init in the last step of the boot process. The init process reads the system initscripts and executes more programs, eventually completing the boot process.
+
+* Every process on the system has exactly one parent.
+* Every process has zero or more children.
+* Processes that are all direct children of the same parent are called siblings.
+
+{{./screenshot_2017-03-30-212733.png}}
+
+{{./screenshot_2017-03-30-213024.png}}
+{{./screenshot_2017-03-30-214542.png}}
+{{./screenshot_2017-03-30-214611.png}}
+
+== Process Creation :-  fork()  & exec() ==
+
+fork() :- creates child process that is copy of current task. Only differs from parent by PID. Done by COW scheme.
+exec() :- Loads a new executable in to address space & begins executing.
+
+== Copy-on-Write (COW):- ==
+Basically it duplicates the parents's page tables & creation of unique process descriptor for the child. but exec() can do lot of optimization as well as increase thew speed of task.
+
+== Forking :- ==
+* Linux implements the fork() via clone() system call take series of flags that which resources parent and child should share.
+* clone() calls further do_fork() defined in kernel/fork.c
+* do_fork() calls copy+process() & then starts the process running
+
+== work is done by copy_process(): ==
+1. It calls dup_task_struct() that creates following for the new process with identical values to those of the current task:
+		[ ] Kernel stack
+		[ ] thread_info structure
+		[ ] task_struct
+		(At this point, the child and parent process descriptors are identical)
+2. It then checks that the new child will not exceed the resource limits on the number of processes for the current user.
+3. Various members of the process descriptor are cleared or set to initial values, to differentiate the child from its parent.
+		[ ] Members of the process descriptor not inherited are primarily statistically information.
+		[ ] The bulk of the values in task_struct remain unchanged.
+ 
+4. The child's state is set to TASK_UNINTERRUPTIBLE to ensure that it does not yet run.
+5. It calls copy_flags() to update the flags member of the task_struct
+6. It calls alloc_pid() to assign an available PID to the new task.
+7. Depending on the flags passed to clone(), copy_process() either duplicates or shares:
+	[ ] Open files
+	[ ] Filesystem information
+	[ ] Signal handlers
+	[ ] Process address space
+	[ ] Namespace
+	(These resources are typically shared between threads in a given process; otherwise they are unique and thus copied here)
+Finally, copy_process() cleans up and returns to the caller a pointer to the new child.
+
+== vfork() :- ==
+The vfork() system call has the same effect as fork(), except that the page table entries of the parent process are not copied. The child executes as the sole thread in the parent's address space, and the parent is blocked until the child either calls exec() or exits.
+
+The vfork() system call is implemented via a special flag to the clone() system call:
+	[ ] In copy_process(), the task_struct member vfork_done is set to NULL.
+	[ ] In do_fork(), if the special flag was given, vfork_done is pointed at a specific address.
+	[ ] After the child is first run, the parent (instead of returning) waits for the child to signal it through the vfork_done pointer.
+	[ ] In the mm_release() function, which is used when a task exits a memory address space, vfork_done is checked to see whether it is NULL. If it is not, the parent is signaled.
+	[ ] Back in do_fork(), the parent wakes up and returns.
+
+
+
+
+**Threads :- are the objects of activity with in the process. Each thread include unique program counter  + process stack + set of processor registers.**
+
+Each thread includes:
+	[ ] Program counter
+	[ ] Process stack
+	[ ] Set of processor registers
+
+The Linux Implementation of Threads :-
+	[ ] Threads are a programming abstraction that provide multiple threads of execution within the same program in a shared memory address space.
+	[ ] Threads can also share open files and other resources.
+	[ ] Threads enable concurrent programming and, on multiple processor systems, true parallelism.
+{{./screenshot_2017-03-30-223639.png}}
+
+Kernel schdules individual threads not process. Each process consist of one thread
+
+== Kernel Threads :- ==
+are standard process that only run in kernel space. Helps kernel to run some operations in the background.
+
+Different from Normal threads :-
+	[ ] Kernel threads do not have an address space. Their mm pointer, which points at their address space, is NULL.
+	[ ] Kernel threads operate only in kernel-space and do not context switch into user-space.
+
+Similarity with normal threads:
+	[ ] Kernel threads are schedulable and preemptable.
+
+== kthread_create(): Create Kernel thread ==
+{{./screenshot_2017-03-30-224140.png}}
+
+The new task is created via the clone() system call by the kthread kernel process:
+	[ ] The new process will run the threadfn function, which is passed the data argument.
+	[ ] The process will be named namefmt, which takes printf-style formatting arguments in the variable argument list.
+	[ ] The process is created in an unrunnable state; it will not start running until explicitly woken up via wake_up_process().
+
+A process can be created and made runnable with a single function, kthread_run():
+{{./screenshot_2017-03-30-230759.png}}
+{{./screenshot_2017-03-30-230834.png}}
+
+
+== Process Termination :- ==
+
+ when the process calls the exit() system call. Regardless of how a process terminates, the bulk of the work is handled by do_exit(), defined in 
+
+{{./screenshot_2017-03-30-232335.png}}
+
+
+

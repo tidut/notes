@@ -1,0 +1,58 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:02:48+05:30
+
+====== 1-Basic ======
+Created Wednesday 10 May 2017
+
+==== Character Drivers :- ====
+
+**Q:- What is device node in drivers ?.**
+1. Device node number on the special file connects it to a specific device driver in the Unix kernel. 
+2. A device node is created with the command mknod. 
+3. The device nodes are stored in or have links to the /dev directory. 
+4. When the ls -l command is used to list these files, their major and minor numbers are displayed.
+5. Device nodes (often referred to simply as "devices" in casual conversation) are the files that the kernel, applications, 
+	and even command-line tools use when they need to access the hardware. 
+
+**Q:- What is dynamic & static driver allocation ?.**
+
+	Static Allocation of node : -		sudo mknod /dev/chardrv_dynamic c 249 0
+	Dynamic Allocation of node :-	By c driver only
+	
+	== 	if (IS_ERR(cl = class_create(THIS_MODULE, "char"))) ==
+	
+	**	{**
+	**		cdev_del(&c_dev);**
+	**		unregister_chrdev_region(mydev, MINOR_CNT);**
+	**		return PTR_ERR(cl);**
+	**	}**
+	
+	== 	if (IS_ERR(dev_ret = device_create(cl, NULL, mydev, NULL, "mychar%d", FIRST_MINOR))) ==
+	
+	**	{**
+	**		class_destroy(cl);**
+	**		cdev_del(&c_dev);**
+	**		unregister_chrdev_region(mydev, MINOR_CNT);**
+	**		return PTR_ERR(dev_ret);**
+	**	}**
+	
+
+
+**Q:- What is flow to add the character driver ?.**
+
+	
+	{{./screenshot_2017-05-10-231449.png}}
+	
+	
+**Q: What is use __init keyword for driver init function ?.**
+**A:-**	
+This keyword helps kernel to allocate memory when driver is inserted in kernel. & when exit then that memory will de-allocated to that particular specific driver.
+
+
+
+
+
+
+
+

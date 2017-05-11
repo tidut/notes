@@ -1,0 +1,131 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:07:25+05:30
+
+====== 5 kernel synch ======
+Created Wednesday 10 May 2017
+
+**Q:- How can I use MUTEX in Kernel drivers ?. **
+**A:-** tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/e_kernel_synch/1/drv1$
+
+**DEFINE_MUTEX(mylock);**
+	
+	{{./screenshot_2017-05-11-104227.png}}
+
+
+== /** ==
+== * mutex_lock_interruptible - acquire the mutex, interruptible ==
+== * @lock: the mutex to be acquired ==
+== * ==
+== * Lock the mutex like mutex_lock(), and return 0 if the mutex has ==
+== * been acquired or sleep until the mutex becomes available. If a ==
+== * signal arrives while waiting for the lock then this function ==
+== * returns -EINTR. ==
+== * ==
+== * This function is similar to (but not equivalent to) down_interruptible(). ==
+== */ ==
+
+**mutex_lock_interruptible(&mylock)**
+**mutex_unlock(&mylock);**
+
+	{{./screenshot_2017-05-11-104339.png}}
+
+
+**Q:- How can I use Semaphore in Kernel drivers ?. **
+**A:-** tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/e_kernel_synch/2/drv1$
+
+**DEFINE_SEMAPHORE(mysem);**
+	{{./screenshot_2017-05-11-104749.png}}
+
+**down_interruptible(&mysem)**
+
+	{{./screenshot_2017-05-11-112824.png}}
+
+	{{./screenshot_2017-05-11-112907.png}}
+	
+	== #define	MAX_SCHEDULE_TIMEOUT	LONG_MAX ==
+	== #define LONG_MAX	((long)(~0UL>>1)) ==
+	
+
+	{{./screenshot_2017-05-11-112956.png}}
+
+**up(&mysem);**
+	{{./screenshot_2017-05-11-113252.png}}
+
+
+	{{./screenshot_2017-05-11-113351.png}}	
+
+
+
+**Q:- How can I use Spin-lock in Kernel drivers ?. **
+**A:-** tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/e_kernel_synch/3/drv1$
+
+
+**static spinlock_t myspin;**
+
+
+	{{./screenshot_2017-05-11-113916.png}}
+
+	{{./screenshot_2017-05-11-115051.png}}
+	
+	{{./screenshot_2017-05-11-115115.png}}
+
+**spin_lock(&myspin);**
+	
+	{{./screenshot_2017-05-11-113951.png}}
+	
+	__#define raw_spin_lock(lock)		_raw_spin_lock(lock)__
+	__#define _raw_spin_lock(lock)	__LOCK(lock)__
+	__#define __LOCK(lock)   			do { preempt_disable(); ___LOCK(lock); } while (0)__
+	__#define ___LOCK(lock)			do { __acquire(lock); (void)(lock); } while (0)__
+	
+	__# define __acquire(x) 			(void)0__
+	__#define preempt_disable()		barrier()__
+	__static inline void barrier(void)__
+	__{__
+	__	asm volatile("" : : : "memory");__
+	__}__
+	
+
+**spin_unlock(&myspin); // end of critical region**
+
+	{{./screenshot_2017-05-11-115413.png}}
+
+	__#define raw_spin_unlock(lock)		_raw_spin_unlock(lock)__
+	__#define _raw_spin_unlock(lock)		__UNLOCK(lock)__
+	__#define UNLOCK(lock) 				do { preempt_enable(); _UNLOCK(lock); } while (0)__
+	__#define _UNLOCK(lock) 			do { release(lock); (void)(lock); } while (0)__
+	__#define preempt_enable()			barrier()__
+	__# define __release(x) 				(void)0__
+	
+
+**root@tsp-Inspiron-5558:/home/tsp/tlinux/mylinux/Tools/6-Driver/e_kernel_synch/synchronization/app# echo "hello" > /proc/hold** 
+
+**Q:- How can I use R/W Semaphore in Kernel drivers ?. **
+**A:-** tsp@tsp-Inspiron-5558:~/tlinux/mylinux/Tools/6-Driver/e_kernel_synch/synchronization/4$ 
+
+	{{./screenshot_2017-05-11-124609.png}}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

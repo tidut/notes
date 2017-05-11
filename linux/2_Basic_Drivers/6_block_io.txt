@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:07:32+05:30
+
+====== 6 block io ======
+Created Wednesday 10 May 2017
+
+**Q:- How to block the current task & wait for completion ?.**
+**A:-** 
+
+**static DECLARE_COMPLETION (my_wait);**
+
+	{{./screenshot_2017-05-11-135215.png}}
+	
+	{{./screenshot_2017-05-11-135300.png}}
+	
+	{{./screenshot_2017-05-11-135329.png}}{{./screenshot_2017-05-11-135417.png}}
+	
+	
+**Fn1	:-	wait_for_completion (&my_wait);**
+	{{./screenshot_2017-05-11-135847.png}}
+	{{./screenshot_2017-05-11-135903.png}}
+	{{./screenshot_2017-05-11-135925.png}}
+	
+	{{./screenshot_2017-05-11-140000.png}}
+	
+**Fn2	:-	complete (&my_wait);**
+	
+	{{./screenshot_2017-05-11-140537.png}}
+	{{./screenshot_2017-05-11-140557.png}}
+	{{./screenshot_2017-05-11-140620.png}}
+	
+
+**Q:- How to block the current task & wait for completion ?.**
+**A:-** 
+
+	static DECLARE_WAIT_QUEUE_HEAD(mywq);
+	
+	**Fn1:- 	wait_event_interruptible (mywq, (atomic_read (&data_ready)));**
+	**Fn2:- 	wake_up_interruptible (&mywq);**
+	
+	{{./screenshot_2017-05-11-141150.png}}
+
+	{{./screenshot_2017-05-11-141221.png?type=None}}
+
+	{{./screenshot_2017-05-11-141241.png?type=None}}
+
+	{{./screenshot_2017-05-11-141348.png}}
+
+
+	{{./screenshot_2017-05-11-141359.png}}
+
+	{{./screenshot_2017-05-11-141409.png}}
+
+
+	{{./screenshot_2017-05-11-141421.png}}
+
+
+	{{./screenshot_2017-05-11-141433.png}}
+
+

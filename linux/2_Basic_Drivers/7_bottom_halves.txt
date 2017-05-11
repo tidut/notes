@@ -1,0 +1,93 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:07:43+05:30
+
+====== 7 bottom halves ======
+Created Wednesday 10 May 2017
+
+**Q:-	How to start & scheduled work queue ?.**
+**A:-**
+	{{./screenshot_2017-05-11-142554.png}}
+	
+	{{./screenshot_2017-05-11-142630.png}}
+
+	{{./screenshot_2017-05-11-142753.png}}
+
+	{{./screenshot_2017-05-11-142820.png}}
+	
+	{{./screenshot_2017-05-11-142844.png}}
+	
+	
+	{{./screenshot_2017-05-11-142932.png}}
+	
+	
+	{{./screenshot_2017-05-11-142947.png}}
+	
+	
+	{{./screenshot_2017-05-11-143034.png}}
+	
+	
+	
+**Q:-	How to use tasklet ?.**
+**A:-**
+	{{./screenshot_2017-05-11-150508.png}}
+
+	{{./screenshot_2017-05-11-150804.png}}
+	
+	{{./screenshot_2017-05-11-150831.png}}
+	
+	{{./screenshot_2017-05-11-150927.png}}
+	
+	
+**There is another way to declare tasklet :-**
+
+	__static struct tasklet_struct my_tasklet1;__
+	__tasklet_init(&my_tasklet1, tsklt_fn, 1);__
+	__tasklet_schedule(&my_tasklet1);__
+	
+	__void tsklt_fn(unsigned long data)__
+	__{__
+	__	printk("Tasklet %lu scheduled\n", data);__
+	__	return;__
+	__}__
+
+
+**Q:- How to use Timer ?.**
+**A:-**
+
+	__static struct timer_list my_timer;__
+	
+	__setup_timer(&my_timer, my_timer_callback, 0);__
+	
+	__ret = mod_timer(&my_timer, jiffies + msecs_to_jiffies(200));__
+	__if (ret)__ 
+		__printk("Error in mod_timer\n");__
+
+	__void my_timer_callback(unsigned long data)__
+	__{__
+	__	mod_timer(&my_timer, jiffies + msecs_to_jiffies(200));__
+	__}__
+
+
+**Q:- How to use Timer out wait ?.**
+
+	{{./screenshot_2017-05-11-155519.png}}** ?.**
+
+
+**Q:- How to use Scheduler Timer out wait ?.**
+**A:-** 
+
+	{{./screenshot_2017-05-11-161038.png}}
+	
+
+
+**Q:- Example of busy wait ?.**
+**A:-** 
+
+	{{./screenshot_2017-05-11-162428.png}}
+
+**Q:- Example of Sched wait ?.**
+**A:-** 
+
+	{{./screenshot_2017-05-11-162458.png}}
+

@@ -1,0 +1,45 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:06:52+05:30
+
+====== 2 ioctl ======
+Created Wednesday 10 May 2017
+
+**Q:- IOCTL ?.**
+**A:-**
+
+	{{./screenshot_2017-05-10-233650.png}}
+	
+	
+**Q:- How to use IOCTL ?.**
+**A:-**	
+
+	**On Application side** user has to send the ioctl command like this. Below example is for reading the size. 
+	Remeber IOCTL_MAGIC no isused here. That should match with driver and application.
+
+	{{./screenshot_2017-05-10-232431.png}}	
+
+	{{./screenshot_2017-05-10-232522.png}}
+
+	
+	**On driver side**:-	
+					check the MAGIC no matches or not
+					Check the MAX no of commands
+					Check Direction of command R/W then check the access for that memory R/W
+
+
+	{{./screenshot_2017-05-10-233932.png}}
+
+
+
+	{{./screenshot_2017-05-10-234107.png}}
+	{{./screenshot_2017-05-10-233828.png}}
+	
+	
+**Q:- What is use of IOCTL ?.**
+
+	long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+	  {{./screenshot_2017-04-30-162309.png}}
+
+**Q:- How many IOCTL commands can be set in one driver ?.**
+**A:- 32 only**

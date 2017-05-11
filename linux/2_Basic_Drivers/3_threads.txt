@@ -1,0 +1,77 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-10T23:07:02+05:30
+
+====== 3 threads ======
+Created Wednesday 10 May 2017
+
+**Q:- How to start kernel thread ?.**
+**A:-	**
+	
+	Only to create the thread but call back won't get execute . To execute this Thread user has to call **wake_up_process() call**	
+
+	{{./screenshot_2017-05-10-235638.png}}
+
+	 {{./screenshot_2017-04-30-164121.png}}
+
+
+=== kthread.c ===
+
+	{{./screenshot_2017-04-30-164254.png}}
+
+
+
+=== Q:- How to run and create kernel thread together  ?. ===
+**A:-	**
+
+	{{./screenshot_2017-04-30-163544.png}}
+
+	 {{./screenshot_2017-04-30-172726.png}}
+
+
+=== Q:- 	How to make thread killable ?. ===
+**A:-**	
+
+	 {{./screenshot_2017-04-30-173914.png}}
+
+
+=== Q:- 	How to make thread stopable thread  ?. ===
+**A:-**	
+
+	 {{./screenshot_2017-04-30-174227.png}}
+
+ 
+	{{./screenshot_2017-04-30-174727.png}}
+
+
+== Q:- Why threads better to use than process ?. ==
+**A:-** 
+Basically there r two types of threads 
+	1. Kernel threads
+	2. User threds
+	Kernel threds are light weight process only.
+	
+	Normally Threads are more often to be used than processes because in threads context switching is faster than process.
+	
+	== Why :- ==
+		Because each process having blow information
+		Parents ID
+		Own PID
+		Group ID
+		No of files opned
+		Registers and blah blah
+	
+	== But  ==
+		Threads shares its process space only. Mainly contain
+		Own stack
+		thread related data
+		Registers
+
+== so process needs more time to swap than threads. ==
+
+== Q:- Difference between  Kernel & user threads ?. ==
+**A:-** 
+	{{./screenshot_2017-05-11-001201.png}}
+	
+	
+
