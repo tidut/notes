@@ -9,3 +9,8 @@ https://automotivetechis.wordpress.com/automotive-interview-questions/
 http://beningo.com/understanding-the-microcontroller-boot-process/
 
 https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwjd3LKSh6zTAhXMPo8KHXLrCxUQFgguMAI&url=http%3A%2F%2Fwww.ieee802.org%2F1%2Ffiles%2Fpublic%2Fdocs2013%2Fnew-tsn-diarra-osi-layers-in-automotive-networks-0313-v01.pdf&usg=AFQjCNE-YEyoaT9LN30ISHdPII0HyxR83Q&sig2=RglybroD2xV3tQkcVddynQ
+
+
+http://www.thecrazyprogrammer.com/2017/03/operating-system-interview-questions-and-answers.html
+
+http://cinterviewquestionandanswer.blogspot.in/2014/06/processes-vs-threads.html
