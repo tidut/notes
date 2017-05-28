@@ -44,11 +44,9 @@ Define system call number for your system call in **<arch/arm/include/asm/unistd
 
 //Add our define at the end.//
 
-== #define __NR_sendmmsg    (__NR_SYSCALL_BASE+376) ==
-
-== #define __NR_setns    (__NR_SYSCALL_BASE+377) ==
-
-== #define __NR_mynew_add (__NR_SYSCALL_BASE +378 ) ==
+**#define __NR_sendmmsg    (__NR_SYSCALL_BASE+376)**
+**#define __NR_setns    (__NR_SYSCALL_BASE+377)**
+**#define __NR_mynew_add (__NR_SYSCALL_BASE +378 )**
 
 == Step 2: ==
 Add prototype of the system call in the **<include/linux/syscalls.h>**

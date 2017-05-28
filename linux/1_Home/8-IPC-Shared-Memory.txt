@@ -25,16 +25,16 @@ Shared-Memory :-
 	[ ] The identifier of the segment is called the shmid.
 
 Write on shared memory
-{{./screenshot_2017-03-31-152313.png}}
+	{{./screenshot_2017-03-31-152313.png}}
 
 Read from shared memeory : - 
 
-{{./screenshot_2017-03-31-152423.png}}
+	{{./screenshot_2017-03-31-152423.png}}
 
 Basically shared memory is an form of IPC.The shared region is created in /dev/shm which is created in memory only(RAM) and it requires no disk operations, hence it is a faster method of IPC.Although IPC can be done using disk file and then using mmap too, but it would be comparetively slow.
 
 
-{{./screenshot_2017-03-31-154743.png}}
+	{{./screenshot_2017-03-31-154743.png}}
 
 The mmap subroutine provides a unique object address for each process that maps to an object. The software accomplishes this by providing each process with a unique virtual address, known as an alias. The shmat subroutine allows processes to share the addresses of the mapped objects.
 

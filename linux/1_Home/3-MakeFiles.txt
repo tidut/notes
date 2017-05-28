@@ -5,4 +5,63 @@ Creation-Date: 2017-03-28T12:33:49+05:30
 ====== 3-MakeFiles ======
 Created Tuesday 28 March 2017
 
-bhjh
+1. Most of projects requires source code to be distributed among many files. 
+2. Modification of any file takes necessary time to compile.
+3. The make utility in linux OS automates such task generating object modules & executables.
+
+**Make →	It  compiles only those codes that are modified & links with other modules.**
+
+**Default :-** 
+		gcc text.c -o
+		geerates a.out file as a default output.
+		[[./a.out]]
+		
+**User based :-**
+		gcc text.c -o bin
+		it generates bin file as a output
+		[[./bin]]
+		
+		gcc text1.c -o text1.o
+		gcc text.2c -o text2.o
+		gcc text3.c -o text3.o
+		gcc -o binary text1.o text2.o text3.o
+		output = [[./binary]]
+		
+
+**Keywards:-**
+
+**CC			:-	used for inbuilt compilers**
+**TARGET		:-	used for select target name**
+**OFLAGS		:-	used for set -o flags**
+**CFLAGS		:-	used for -c flags**
+
+**$<			:-	Replaced by first prerequisite of the rule**
+**$^			:-	Replaced by all prerequisite of the rule**
+**$@			:-	Replaced by target**
+**$?			:-	List of pre-requisite that newer than target**
+
+**Shortcuts	:-	gcc -o binary $^ **__(Replace all c files in a current folder $^ )__
+
+**Best Example** 
+
+**Step 1: #################################**
+	OFLAGS=-o
+	CFLAGS=-c
+	CC=gcc
+	TARGET = entity
+	SRCS := $(shell find . -name '*.c')
+	OBJS= $(SRCS:.c=.o)
+
+**Step 2: #################################**
+	.PHONY: all objs
+	all: $(TARGET)
+	$(TARGET):$(OBJS)
+		$(CC) -o $(TARGET) $(OBJS) -lsqlite3
+	%.o: %.c 
+		$(CC) $(CFLAGS) $< -o $@
+		$(CC) -MM -MP $< >> $@ 
+
+**Step 3: #################################**
+	clean:
+		rm -rf $(OBJS)  $(TARGET)
+

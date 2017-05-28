@@ -2,6 +2,6 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2017-05-10T23:09:18+05:30
 
-====== 3 Interview ======
+====== Interview ======
 Created Wednesday 10 May 2017
 
