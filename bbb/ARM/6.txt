@@ -1,0 +1,90 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-17T12:02:49+05:30
+
+====== 6 ======
+Created Monday 17 July 2017
+
+====== Interrrupts ======
+
+{{./screenshot_2017-07-17-120336.png}}
+
+
+
+Let us understand the Interrupt mechanism in ARM :-
+
+== Interrupt Processing :- ==
+* INTC supports only level sensitive interrupts.
+* A perirpheral asserting interrupt hold untill it is disasserted by peripheral interrupt handler
+* A SW interrupt is generated when MPU_INTC.INTC_ISR_SETn bit is set n stands for MPU 0,1,2,3 for MPU sub system
+* A SW interrupt is cleared when MPU_INTC.INTC_ISR_CLEARn bit is set.
+
+== Masking :- ==
+
+	1. == Individual Masking :-  ==
+
+		Detection of interrupts on each incoming interrrupt line can be en or dis. Can be set to FIQ or IRQ.
+	2. 
+== Priority Masking :- ==
+
+		To enable faster processing of high priority interrupts, a programmable priority masking threshold is provided. this priority threshold allows preemption by higher priority interrupts. All the interrupts of lower or equal priority than the threshold are masked.Priority 0 can never be masked by threshold & 0x7f is lowest priority.
+	3. 
+== Priority Sorting :- ==
+
+		As we know Priority 0 is assigned to each interrupt line. Both priority level & interrupt request are configured. Same Priority level when got interrupted then highest number interrupt is service first.
+
+
+== Register Seclection :-  ==
+if MPU_INTC.INTC_PROTECTION[0] bit is set access to INTC register is restricted to supervisory mode.
+
+== Module Power Saving :-  ==
+	there are clocks domains :- 
+	* Interface Clock
+	* Functional Clock
+	* Synchronizer Clock
+
+== Error Handling :-  ==
+	* Priviledge violation
+	* Unsuported commands
+
+== Interrupt Handling Rewgisters :- ==
+
+{{./screenshot_2017-07-17-142709.png}}
+
+{{./screenshot_2017-07-17-142744.png}}
+
+
+{{./screenshot_2017-07-17-142808.png}}
+
+{{./screenshot_2017-07-17-142835.png}}
+
+
+
+{{./screenshot_2017-07-17-142901.png}}
+{{./screenshot_2017-07-17-142915.png}}
+{{./screenshot_2017-07-17-142928.png}}
+{{./screenshot_2017-07-17-142942.png}}
+{{./screenshot_2017-07-17-142953.png}}
+
+
+{{./screenshot_2017-07-17-143649.png}}
+
+{{./screenshot_2017-07-17-143711.png}}
+
+{{./screenshot_2017-07-17-143732.png}}
+
+{{./screenshot_2017-07-17-143752.png}}
+
+{{./screenshot_2017-07-17-143809.png}}
+
+{{./screenshot_2017-07-17-143826.png}}
+
+{{./screenshot_2017-07-17-143842.png}}
+
+{{./screenshot_2017-07-17-143855.png}}
+
+{{./screenshot_2017-07-17-143910.png}}
+
+
+
+

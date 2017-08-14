@@ -1,0 +1,183 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-19T12:02:03+05:30
+
+====== can module ======
+Created Friday 19 May 2017
+
+List of Drivers which user should know:
+
+
+**################################################################################################################**
+
+=== sudo modprobe can ===
+
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/drivers/net/can/c_can$ ls -la *.c
+-rw-rw-r-- 1 taa5kor taa5kor 33730 Jan 17 12:10 **c_can.c**
+-rw-rw-r-- 1 taa5kor taa5kor  7048 Jan 17 12:10 c_can_pci.c
+-rw-rw-r-- 1 taa5kor taa5kor 12789 Jan 17 12:10 **c_can_platform.c**
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/drivers/net/can/c_can$
+
+=== kernel4.4.41+/kernel/drivers/net/can/c_can/ 			→ → → 			c_can.ko ===
+
+=== kernel4.4.41+/kernel/drivers/net/can/c_can/ 			→ → → 			ca_can_platform.ko ===
+
+**Make file for above folder :-**
+{{./screenshot_2017-05-19-155415.png}}
+
+**################################################################################################################**
+
+=== sudo modprobe can-dev ===
+loads **dev.c driver only **
+
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/drivers/net/can$ ls -la *.c
+-rw-rw-r-- 1 taa5kor taa5kor 35519 Jan 17 12:10 at91_can.c
+-rw-rw-r-- 1 taa5kor taa5kor 19559 Jan 17 12:10 bfin_can.c
+**-rw-rw-r-- 1 taa5kor taa5kor 28540 Jan 17 12:10 dev.c**
+-rw-rw-r-- 1 taa5kor taa5kor 35913 Jan 17 12:10 flexcan.c
+-rw-rw-r-- 1 taa5kor taa5kor 50880 Jan 17 12:10 grcan.c
+-rw-rw-r-- 1 taa5kor taa5kor 48886 Jan 17 12:10 janz-ican3.c
+-rw-rw-r-- 1 taa5kor taa5kor  4163 Jan 17 12:10 led.c
+-rw-rw-r-- 1 taa5kor taa5kor 33169 Jan 17 12:10 pch_can.c
+-rw-rw-r-- 1 taa5kor taa5kor 27488 Jan 17 12:10 rcar_can.c
+-rw-rw-r-- 1 taa5kor taa5kor 20079 Jan 17 12:10 **slcan.c**
+-rw-rw-r-- 1 taa5kor taa5kor 24169 Jan 17 12:10 sun4i_can.c
+-rw-rw-r-- 1 taa5kor taa5kor 32737 Jan 17 12:10 ti_hecc.c
+-rw-rw-r-- 1 taa5kor taa5kor  5346 Jan 17 12:10 **vcan.c**
+-rw-rw-r-- 1 taa5kor taa5kor 34342 Jan 17 12:10 xilinx_can.c
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/drivers/net/can$ 
+
+=== kernel4.4.41+/kernel/drivers/net/can/ 			 	→ → → 			can-dev.ko ===
+
+=== kernel4.4.41+/kernel/drivers/net/can/ 			 	→ → → 			slcan.ko ===
+
+=== kernel4.4.41+/kernel/drivers/net/can/ 			 	→ → → 			vcan.ko ===
+
+{{./screenshot_2017-05-19-155457.png}}
+
+**################################################################################################################**
+
+=== sudo modprobe can-raw ===
+
+__kernel4.4.41+/kernel/net/can/ 			 		→ → → 			can-raw.ko__
+**calls af_can.c**
+__kernel4.4.41+/kernel/net/can/ 			 		→ → → 			af_can.ko__
+**calls proc.c**
+__kernel4.4.41+/kernel/net/can/ 			 		→ → → 			proc.ko__
+
+
+**this above driver loads the other driver also in same link af_can.c & proc.c**
+
+{{./screenshot_2017-05-19-154405.png?type=None}}
+
+
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/net/can$ ls -la *.c
+-rw-rw-r-- 1 taa5kor taa5kor 24578 Jan 17 12:11 **af_can.c**
+-rw-rw-r-- 1 taa5kor taa5kor 40460 Jan 17 12:11 **bcm.c**
+-rw-rw-r-- 1 taa5kor taa5kor 26314 Jan 17 12:11 **gw.c**
+-rw-rw-r-- 1 taa5kor taa5kor 16211 Jan 17 12:11 proc.c
+-rw-rw-r-- 1 taa5kor taa5kor 20168 Jan 17 12:11 **raw.c**
+taa5kor@KOR1066068VM:~/tlinux/0-gen/bbb/ker4.4/linux/net/can$ 
+
+=== kernel4.4.41+/kernel/net/can/ 			 		→ → → 			can.ko = proc.ko + af_can.ko ===
+
+=== kernel4.4.41+/kernel/net/can/ 			 		→ → → 			can-bcm.ko ===
+
+=== kernel4.4.41+/kernel/net/can/ 			 		→ → → 			can-gw.ko ===
+
+=== kernel4.4.41+/kernel/net/can/ 			 		→ → → 			can-raw.ko ===
+
+{{./screenshot_2017-05-19-155547.png}}
+
+Then you can load the kernel drivers for the CAN-Bus:
+ **sudo modprobe can**
+
+** sudo modprobe can-raw**
+
+To bring up the interface and configure the bus speed to 125kBit/sec enter the following lines:
+**sudo ip link set can0 up type can bitrate 125000**
+**sudo ifconfig can0 up**
+
+
+Let us understand from these modprobes which are the drivers will be loaded into Kernel :-
+
+
+**###################################################################################################**
+
+root@ubuntu-armhf:~# dmesg | grep can
+[   22.980058] can: can_dev_init DRIVERS/NET/CAN/DEV.C
+[   23.053784] can: register_c_can_dev DRIVER/NET/CAN/C_CAN/C_CAN.C 
+[   23.078643] c_can_platform 481d0000.can: c_can_platform device registered (regs=fa1d0000, irq=165)
+[   34.090358] c_can_platform 481d0000.can can0: setting BTR=1c02 BRPE=0000
+root@ubuntu-armhf:~# lsmod |grep can
+c_can_platform          7501  0 
+c_can                  12336  1 c_can_platform
+can_dev                14482  1 c_can
+root@ubuntu-armhf:~# 
+
+
+this above is by default when u will look into BBB
+
+Let us see how we can do manually:
+
+**#######################**
+root@ubuntu-armhf:~# rmmod c_can_platform  
+root@ubuntu-armhf:~# rmmod c_can 
+root@ubuntu-armhf:~# rmmod can_dev
+
+
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# 
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# insmod can-dev.ko 
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# 
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# 
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# dmesg
+[ 4619.516422] can: can_dev_init DRIVERS/NET/CAN/DEV.C
+[ 4619.516499] CAN device driver interface
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# lsmod |grep can
+can_dev                14482  0 
+root@ubuntu-armhf:/lib/modules/4.4.41+/kernel/drivers/net/can# 
+
+
+**#######################**
+root@ubuntu-armhf:~# modprobe c_can_platform
+root@ubuntu-armhf:~# lsmod |grep can
+c_can_platform          8341  0 
+c_can                  	12422  1 c_can_platform
+can_dev                	14482  1 c_can
+
+root@ubuntu-armhf:~# 
+[ 4735.123389] can: driver name 481d0000.can 
+[ 4735.123455] can: driver id -1 
+[ 4735.123484] can: driver id_auto 0 
+[ 4735.123511] can: driver num_resources 2 
+[ 4735.123538] can: driver driver_override (null) 
+[ 4735.123570] can: driver resource 1209860096 0x481D0000
+[ 4735.123597] can: driver resource 1209868287 0x481D1FFF
+[ 4735.123624] can: driver resource /ocp/can@481d0000 
+[ 4735.123664] can: match triggered 
+[ 4735.123756] can: CLK triggered 
+[ 4735.123929] can: alloc_c_can_dev 
+[ 4735.124042] can: BOSCH_D_CAN driver/net/can/c_can_platform.c 
+[ 4735.124105] can: register_c_can_dev 
+[ 4735.124133] can: register_c_can_dev DRIVER/NET/CAN/C_CAN/C_CAN.C 
+[ 4735.141530] c_can_platform 481d0000.can: c_can_platform device registered (regs=fa1d0000, irq=165)
+[ 4735.565341] c_can_platform 481d0000.can can0: setting BTR=1c02 BRPE=0000
+
+
+**#######################**
+root@ubuntu-armhf:~# modprobe can
+[ 4181.357637] can: can_init /NET/CAN/AF_CAN.C
+[ 4181.357709] can: controller area network core (rev 20120528 abi 9)
+[ 4181.357890] can: can_init_proc /NET/CAN/PROC.C
+[ 4181.358155] NET: Registered protocol family 29
+
+**#######################**
+root@ubuntu-armhf:~# modprobe can-raw
+[ 4277.421586] can: raw_module_init NET/CAN/RAW.C
+[ 4277.421656] can: raw protocol (rev 20120528)
+
+
+
+
+
+

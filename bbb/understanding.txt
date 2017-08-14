@@ -1,0 +1,810 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-09T16:44:28+05:30
+
+====== understanding ======
+Created Tuesday 09 May 2017
+
+**Q:**	**how driver is probed in linux ?...**
+
+{{./screenshot_2017-05-09-164554.png}}
+
+
+
+
+
+
+
+
+{{./screenshot_2017-05-09-164653.png}}
+
+
+####################################################################################
+
+Let us understand the driver code flow :- 
+
+=== code : - driver/base/platform.c ===
+
+{{./screenshot_2017-05-10-134912.png}}
+
+
+=== calls 	:-	ret = device_add(&pdev->dev); ===
+
+=== code 	:- 	driver/base/core.c ===
+
+=== calls 	:-	bus_probe_device(dev); ===
+
+=== code 	:- 	driver/base/core.c ===
+
+=== calls 	:-	device_initial_probe(dev); ===
+
+=== code 	:- 	driver/base/dd.c ===
+
+=== calls 	:-	__device_attach(dev, true); ===
+
+=== code 	:- 	driver/base/dd.c ===
+
+=== calls 	:-	bus_for_each_drv() ===
+
+=== code 	:- 	driver/base/bus.c ===
+
+=== calls 	:-	__device_attach_driver() ===
+
+=== code 	:- 	driver/base/dd.c ===
+
+=== calls 	:-	driver_probe_device() ===
+
+=== code 	:- 	driver/base/dd.c ===
+
+=== calls 	:-	really_probe ===
+
+=== code 	:- 	driver/base/dd.c ===
+
+
+
+** [    0.574810] Tarun: really_probe called reg-dummy **
+	drivers/regulator/dummy.c:		.name		= "reg-dummy",
+	drivers/regulator/dummy.c:	dummy_pdev = platform_device_alloc("reg-dummy", -1);
+
+
+//#define pure_initcall(fn)		__define_initcall(fn, 0)//
+
+//#define core_initcall(fn)		__define_initcall(fn, 1)//
+//#define core_initcall_sync(fn)		__define_initcall(fn, 1s)//
+//#define postcore_initcall(fn)		__define_initcall(fn, 2)//
+//#define postcore_initcall_sync(fn)	__define_initcall(fn, 2s)//
+//#define arch_initcall(fn)		__define_initcall(fn, 3)//
+//#define arch_initcall_sync(fn)		__define_initcall(fn, 3s)//
+//#define subsys_initcall(fn)		__define_initcall(fn, 4)//
+//#define subsys_initcall_sync(fn)	__define_initcall(fn, 4s)//
+//#define fs_initcall(fn)			__define_initcall(fn, 5)//
+//#define fs_initcall_sync(fn)		__define_initcall(fn, 5s)//
+//#define rootfs_initcall(fn)		__define_initcall(fn, rootfs)//
+//#define device_initcall(fn)		__define_initcall(fn, 6)//
+//#define device_initcall_sync(fn)	__define_initcall(fn, 6s)//
+//#define late_initcall(fn)		__define_initcall(fn, 7)//
+//#define late_initcall_sync(fn)		__define_initcall(fn, 7s)//
+
+//#define __initcall(fn) device_initcall(fn)//
+
+
+
+**[    0.621269] Tarun: really_probe called omap_gpio **
+**[    0.624187] Tarun: really_probe called omap_gpio **
+**[    0.626854] Tarun: really_probe called omap_gpio **
+**[    0.629320] Tarun: really_probe called omap_gpio **
+**[    0.635860] Tarun: really_probe called omap_hwspinlock **
+**[    0.644891] Tarun: really_probe called sram **
+**[    0.645550] Tarun: really_probe called sram **
+**[    0.656474] Tarun: really_probe called ti-dma-crossbar **
+**[    1.800853] Tarun: really_probe called edma3-tptc **
+**[    1.801098] Tarun: really_probe called edma3-tptc **
+**[    1.801231] Tarun: really_probe called edma3-tptc **
+**[    1.801651] Tarun: really_probe called edma **
+**[    1.821480] Tarun: really_probe called reg-fixed-voltage **
+**[    1.836567] Tarun: really_probe called omap_i2c **
+**[    1.836709] Tarun: really_probe called omap_i2c **
+**[    1.838516] Tarun: really_probe called omap-mailbox **
+**[    2.169300] Tarun: really_probe called armv7-pmu **
+**[    2.170577] Tarun: really_probe called omap_timer **
+**[    2.170958] Tarun: really_probe called omap_timer **
+**[    2.171259] Tarun: really_probe called omap_timer **
+**[    2.171492] Tarun: really_probe called omap_timer **
+**[    2.171719] Tarun: really_probe called omap_timer **
+**[    2.174430] Tarun: really_probe called alarmtimer **
+**[    2.256396] Tarun: really_probe called pinctrl-single **
+**[    2.259770] Tarun: really_probe called pwmss **
+**[    2.263567] Tarun: really_probe called wkup_m3_ipc **
+**[    2.273699] Tarun: really_probe called serial8250 **
+**[    2.274523] Tarun: really_probe called omap8250 **
+**[    3.403429] Tarun: really_probe called omap8250 **
+**[    3.430202] Tarun: really_probe called bone_capemgr **
+**[    3.442251] Tarun: really_probe called cpsw **
+**[    3.462011] Tarun: really_probe called davinci_mdio **
+**[    3.531040] Tarun: really_probe called SMSC LAN8710/LAN8720 **
+**[    3.554097] Tarun: really_probe called cpsw-phy-sel **
+**[    3.602387] Tarun: really_probe called am335x-usb-childs **
+**[    3.609174] Tarun: really_probe called am335x-control-usb **
+**[    3.615905] Tarun: really_probe called am335x-phy-driver **
+**[    3.642382] Tarun: really_probe called musb-dsps **
+**[    3.650403] Tarun: really_probe called musb-hdrc **
+**[    3.659447] Tarun: really_probe called am335x-phy-driver **
+**[    3.686236] Tarun: really_probe called musb-dsps **
+**[    3.694327] Tarun: really_probe called musb-hdrc **
+**[    3.746544] Tarun: really_probe called usb **
+**[    3.751431] Tarun: really_probe called hub **
+**[    3.778321] Tarun: really_probe called cppi41-dma-engine **
+**[    3.815921] Tarun: really_probe called omap_rtc **
+**[    3.837494] Tarun: really_probe called omap_wdt **
+**[    3.859661] Tarun: really_probe called omap_hsmmc **
+**[    3.901517] Tarun: really_probe called omap_hsmmc **
+**[    3.949823] Tarun: really_probe called leds-gpio **
+**[    3.959637] Tarun: really_probe called wkup_m3_rproc **
+**[    3.966571] Tarun: really_probe called ti_emif_sram **
+**[    3.991203] Tarun: really_probe called ti-cpufreq **
+**[    3.991937] Tarun: really_probe called cpufreq-dt **
+**[    3.993219] Tarun: really_probe called pm33xx **
+**[    4.053412] Tarun: really_probe called omap_i2c **
+**[    4.055883] Tarun: really_probe called tps65217 **
+**[    4.078296] Tarun: really_probe called tps65217-pmic **
+**[    4.094190] Tarun: really_probe called tps65217-bl **
+**[    4.097918] Tarun: really_probe called at24 **
+**[    4.101258] Tarun: really_probe called omap_i2c **
+**[    4.106611] Tarun: really_probe called at24 **
+**[    4.107651] Tarun: really_probe called at24 **
+**[    4.108591] Tarun: really_probe called at24 **
+**[    4.113659] Tarun: really_probe called at24 **
+**[    4.114848] Tarun: really_probe called wkup_m3_ipc **
+**[    4.121816] Tarun: really_probe called bone_capemgr **
+**[    4.285377] Tarun: really_probe called cpufreq-dt **
+**[    4.295314] Tarun: really_probe called pm33xx **
+**[    4.393862] Tarun: really_probe called mmcblk **
+**[    4.581108] Tarun: really_probe called mmcblk** 
+
+
+
+
+1. trace_init_flags_sys_exit                        
+2. trace_init_flags_sys_enter                       
+3. cpu_suspend_alloc_sp                             						arch/arm/kernel/suspend.c						:early_initcall(cpu_suspend_alloc_sp);
+4. init_static_idmap                                						arch/arm/mm/idmap.c							:early_initcall(init_static_idmap); 
+5. omap4_sar_ram_init                               						arch/arm/mach-omap2/omap4-common.c			:omap_early_initcall(omap4_sar_ram_init); 
+6. omap4430_phy_power_down                          					arch/arm/mach-omap2/omap_phy_internal.c			:omap_early_initcall(omap4430_phy_power_down);
+7. spawn_ksoftirqd                                  						kernel/softirq.c									:early_initcall(spawn_ksoftirqd); 
+
+=== 8. 	init_workqueues                                  			kernel/workqueue.c						:early_initcall(init_workqueues); ===
+9. migration_init                                   							kernel/sched/core.c						:early_initcall(migration_init); 
+10. check_cpu_stall_init                             						kernel/rcu/update.c						:early_initcall(check_cpu_stall_init); 
+11. rcu_spawn_gp_kthread            								kernel/rcu/tree.c						:early_initcall(rcu_spawn_gp_kthread);                 
+12. rcu_spawn_core_kthreads                          						kernel/rcu/tree.c						:early_initcall(rcu_spawn_core_kthreads);
+13. create_clock_set_delay_thread                						kernel/time/hrtimer.c					:early_initcall(create_clock_set_delay_thread);    
+14. posix_cpu_thread_init   									kernel/time/posix-cpu-timers.c				:early_initcall(posix_cpu_thread_init);                         
+15. create_cmos_delay_thread    								kernel/time/ntp.c						:early_initcall(create_cmos_delay_thread);                     
+16. cpu_stop_init 											kernel/stop_machine.c					:early_initcall(cpu_stop_init);                                   
+17. relay_init                                       							kernel/relay.c							:early_initcall(relay_init);
+18. init_events                                      							kernel/trace/trace_output.c				:early_initcall(init_events);
+19. init_trace_printk                                           					kernel/trace/trace_printk.c				:early_initcall(init_trace_printk);
+20. event_trace_enable_again                                    				kernel/trace/trace_events.c				:early_initcall(event_trace_enable_again);
+21. dynamic_debug_init                                         	 				lib/dynamic_debug.c					:early_initcall(dynamic_debug_init);
+22. rand_initialize                                             					drivers/char/random.c					:early_initcall(rand_initialize);
+23. dummy_timer_register                                        				drivers/clocksource/dummy_timer.c			:early_initcall(dummy_timer_register);
+24. ipc_ns_init                                                 						ipc/shm.c								:pure_initcall(ipc_ns_init);
+25. init_mmap_min_addr                                          				security/min_addr.c						:pure_initcall(init_mmap_min_addr);
+26. init_cpufreq_transition_notifier_list                       				drivers/cpufreq/cpufreq.c					:pure_initcall(init_cpufreq_transition_notifier_list);
+27. net_ns_init                                                 					net/core/net_namespace.c				:pure_initcall(net_ns_init);
+28. vfp_init                                                    						arch/arm/vfp/vfpmodule.c				:core_initcall(vfp_init);
+29. ptrace_break_init                                           					arch/arm/kernel/ptrace.c					:core_initcall(ptrace_break_init);
+30. register_cpufreq_notifier                                  				 	arch/arm/kernel/smp.c					:core_initcall(register_cpufreq_notifier);
+31. twd_clk_init                                                					arch/arm/kernel/smp_twd.c				:core_initcall(twd_clk_init);
+32. v6_userpage_init                                           	 				arch/arm/mm/copypage-v6.c				:core_initcall(v6_userpage_init);
+33. omap_serial_early_init                                      					arch/arm/mach-omap2/serial.c				:omap_core_initcall(omap_serial_early_init);
+34. omap_hwmod_setup_all                                        				arch/arm/mach-omap2/omap_hwmod.c		:omap_core_initcall(omap_hwmod_setup_all);
+35. omap_device_init                                            					arch/arm/mach-omap2/omap_device.c		:omap_core_initcall(omap_device_init);
+36. cpu_hotplug_pm_sync_init                                    				kernel/cpu.c							:core_initcall(cpu_hotplug_pm_sync_init);
+37. alloc_frozen_cpus                                           					kernel/cpu.c							:core_initcall(alloc_frozen_cpus);
+38. wq_sysfs_init                                               					kernel/workqueue.c						:core_initcall(wq_sysfs_init);
+39. ksysfs_init                                                 						kernel/ksysfs.c							:core_initcall(ksysfs_init);
+40. pm_init                                                     						kernel/power/main.c						:core_initcall(pm_init);
+41. pm_disk_init                                                					kernel/power/hibernate.c					:core_initcall(pm_disk_init);
+42. swsusp_header_init                                          					kernel/power/swap.c						:core_initcall(swsusp_header_init);
+43. init_jiffies_clocksource                                    					kernel/time/jiffies.c						:core_initcall(init_jiffies_clocksource);
+44. cgroup_wq_init                                              					kernel/cgroup.c						:core_initcall(cgroup_wq_init);
+45. ftrace_mod_cmd_init                                         					kernel/trace/ftrace.c						:core_initcall(ftrace_mod_cmd_init);
+46. init_function_trace                                         					kernel/trace/trace_functions.c				:core_initcall(init_function_trace);
+47. init_graph_trace                                            					kernel/trace/trace_functions_graph.c		:core_initcall(init_graph_trace);
+48. cpu_pm_init                                                 					kernel/cpu_pm.c						:core_initcall(cpu_pm_init);
+49. perf_workqueue_init                                         					kernel/events/core.c						:core_initcall(perf_workqueue_init);           
+50. init_per_zone_wmark_min                                    	 			mm/page_alloc.c						:core_initcall(init_per_zone_wmark_min)
+51. init_zero_pfn                                               					mm/memory.c							:core_initcall(init_zero_pfn);
+52. cma_init_reserved_areas      								mm/cma.c							:core_initcall(cma_init_reserved_areas);         
+53. fsnotify_init                                               						fs/notify/fsnotify.c						:core_initcall(fsnotify_init);
+54. filelock_init                                               						fs/locks.c								:core_initcall(filelock_init);
+55. init_script_binfmt                                          					fs/binfmt_script.c						:core_initcall(init_script_binfmt);
+56. init_elf_binfmt                                            		 			fs/binfmt_elf.c							:core_initcall(init_elf_binfmt);
+57. configfs_init                                              						fs/configfs/mount.c						:core_initcall(configfs_init);
+58. debugfs_init                                                					fs/debugfs/inode.c						:core_initcall(debugfs_init);
+59. tracefs_init                                                						fs/tracefs/inode.c						:core_initcall(tracefs_init);
+60. securityfs_init                                             					security/inode.c						:core_initcall(securityfs_init);
+61. calibrate_xor_blocks                                        					crypto/xor.c							:core_initcall(calibrate_xor_blocks);
+62. prandom_init                                                					lib/random32.c							:core_initcall(prandom_init);
+63. **pinctrl_init                                                						drivers/pinctrl/core.c					:core_initcall(pinctrl_init);**
+64. virtio_init                                                 						drivers/virtio/virtio.c						:core_initcall(virtio_init);
+65. regulator_init                                              					drivers/regulator/core.c					:core_initcall(regulator_init);
+66. iommu_init                                                  					arch/sparc/mm/iommu.c					:subsys_initcall(iommu_init);
+67. opp_debug_init                                              					drivers/base/power/opp/debugfs.c				:core_initcall(opp_debug_init);
+68. soc_bus_register                                            					drivers/base/soc.c							:core_initcall(soc_bus_register);
+69. vexpress_syscfg_init                                        					drivers/misc/vexpress-syscfg.c					:core_initcall(vexpress_syscfg_init);
+70. vexpress_sysreg_init                                        					drivers/mfd/vexpress-sysreg.c					:core_initcall(vexpress_sysreg_init);
+71. cpufreq_core_init                                           					drivers/cpufreq/cpufreq.c						:core_initcall(cpufreq_core_init);
+72. cpuidle_init                                                					drivers/cpuidle/cpuidle.c						:core_initcall(cpuidle_init);
+73. sock_init                                                   						net/socket.c								:core_initcall(sock_init);	/* early initcall */
+74. net_inuse_init                                             					net/core/sock.c								:core_initcall(net_inuse_init);
+75. init_default_flow_dissectors                                					net/core/flow_dissector.c						:core_initcall(init_default_flow_dissectors);
+76. netpoll_init                                               	 					net/core/netpoll.c							:core_initcall(netpoll_init);
+77. netlink_proto_init                                          					net/netlink/af_netlink.c						:core_initcall(netlink_proto_init);
+78. atomic_pool_init                                            					arch/arm/mm/dma-mapping.c					:postcore_initcall(atomic_pool_init);
+79. omap_gpmc_init                                              					arch/arm/mach-omap2/devices.c				:omap_postcore_initcall(omap_gpmc_init);
+80. omap3_l3_init                                               					arch/arm/mach-omap2/devices.c				:omap_postcore_initcall(omap3_l3_init);
+81. omap2_common_pm_init                                       		 		arch/arm/mach-omap2/pm.c					:omap_postcore_initcall(omap2_common_pm_init);
+82. omap2_gpio_init                                             					arch/arm/mach-omap2/gpio.c					:omap_postcore_initcall(omap2_gpio_init);
+83. bdi_class_init                                              					mm/backing-dev.c							:postcore_initcall(bdi_class_init);
+84. mm_sysfs_init                                              					mm/mm_init.c								:postcore_initcall(mm_sysfs_init);
+85. kobject_uevent_init                                         					lib/kobject_uevent.c							:postcore_initcall(kobject_uevent_init);
+86. vexpress_config_init                                        					drivers/bus/vexpress-config.c					:postcore_initcall(vexpress_config_init);
+87. gpiolib_sysfs_init                                          					drivers/gpio/gpiolib-sysfs.c					:postcore_initcall(gpiolib_sysfs_init);
+88. omap_gpio_drv_reg                                           					drivers/gpio/gpio-omap.c						:postcore_initcall(omap_gpio_drv_reg);
+89. backlight_class_init                                        					drivers/video/backlight/backlight.c				:postcore_initcall(backlight_class_init);
+90. tty_class_init                                              					drivers/tty/tty_io.c							:postcore_initcall(tty_class_init);
+91. vtconsole_class_init                                        					drivers/tty/vt/vt.c							:postcore_initcall(vtconsole_class_init);
+92. iommu_dev_init                                              					drivers/iommu/iommu-sysfs.c					:postcore_initcall(iommu_dev_init);
+93. wakeup_sources_debugfs_init                                 				drivers/base/power/wakeup.c					:postcore_initcall(wakeup_sources_debugfs_init);
+94. regmap_initcall                                             					drivers/base/regmap/regmap.c					:postcore_initcall(regmap_initcall);
+95. sram_init                                                   						drivers/misc/sram.c							:postcore_initcall(sram_init);
+96. syscon_init                                                 					drivers/mfd/syscon.c						:postcore_initcall(syscon_init);
+97. spi_init                                                    						drivers/spi/spi.c							:postcore_initcall(spi_init);
+98. i2c_init                                                    						drivers/i2c/i2c-core.c						:postcore_initcall(i2c_init);
+99. init_ladder                                                  					drivers/cpuidle/governors/ladder.c				:postcore_initcall(init_ladder);
+100. init_menu                                                 					drivers/cpuidle/governors/menu.c				:postcore_initcall(init_menu);
+101. omap_hwspinlock_init                               					drivers/hwspinlock/omap_hwspinlock.c			:postcore_initcall(omap_hwspinlock_init);
+102. gpmc_init                                                 					drivers/memory/omap-gpmc.c					:postcore_initcall(gpmc_init);
+103. omap3_l3_init                                          						arch/arm/mach-omap2/devices.c				:omap_postcore_initcall(omap3_l3_init);
+104. omap_l3_init                                            						arch/arm/mach-omap2/devices.c				:omap_postcore_initcall(omap3_l3_init);
+105. gate_vma_init                                         			 			arch/arm/kernel/process.c					:arch_initcall(gate_vma_init);
+106. customize_machine                                 						arch/arm/kernel/setup.c						:arch_initcall(customize_machine);
+107. init_atags_procfs                                      					arch/arm/kernel/atags_proc.c					:arch_initcall(init_atags_procfs);
+108. arch_hw_breakpoint_init                          						arch/arm/kernel/hw_breakpoint.c				:arch_initcall(arch_hw_breakpoint_init);
+109. vdso_init                                                  					arch/hexagon/kernel/vdso.c					:arch_initcall(vdso_init);
+110. exceptions_init                                            					arch/arm/mm/fault.c						:arch_initcall(exceptions_init);
+111. omap2_init_devices                                         					arch/arm/mach-omap2/devices.c					:omap_arch_initcall(omap2_init_devices);
+112. omap2_dm_timer_init                                        				arch/arm/mach-omap2/timer.c						:omap_arch_initcall(omap2_dm_timer_init);
+113. omap2_system_dma_init                                      				arch/arm/mach-omap2/dma.c						:omap_arch_initcall(omap2_system_dma_init);
+114. omap2_mcbsp_init                                           				arch/arm/mach-omap2/mcbsp.c					:omap_arch_initcall(omap2_mcbsp_init);
+115. omap4_sram_init                                            					arch/arm/mach-omap2/omap4-common.c			:omap_arch_initcall(omap4_sram_init);
+116. pm_dbg_init                                                					arch/arm/mach-omap2/pm-debug.c					:omap_arch_initcall(pm_dbg_init);
+117. omap_system_dma_init                                       				arch/arm/plat-omap/dma.c						:arch_initcall(omap_system_dma_init);
+118. kcmp_cookies_init                                          					kernel/kcmp.c									:arch_initcall(kcmp_cookies_init);
+119. dma_bus_init                                               					drivers/dma/dmaengine.c							:arch_initcall(dma_bus_init);
+120. dma_channel_table_init                                     				drivers/dma/dmaengine.c							:arch_initcall(dma_channel_table_init);
+121. omap_dmaxbar_init                                          				drivers/dma/ti-dma-crossbar.c						:arch_initcall(omap_dmaxbar_init);
+122. topology_init                                              					arch/arm/kernel/setup.c							:subsys_initcall(topology_init);
+123. omap_init_wdt                                              					arch/arm/mach-omap2/wd_timer.c					:omap_subsys_initcall(omap_init_wdt);
+124. omap_i2c_cmdline                                           					arch/arm/mach-omap1/i2c.c						:subsys_initcall(omap_i2c_cmdline);
+125. prm_late_init                                              					arch/arm/mach-omap2/prm_common.c				:subsys_initcall(prm_late_init);
+126. omap_init_pmu                                              					arch/arm/mach-omap2/pmu.c						:omap_subsys_initcall(omap_init_pmu);
+127. uid_cache_init                                             					kernel/user.c									:subsys_initcall(uid_cache_init);
+128. param_sysfs_init                                           					kernel/params.c								:subsys_initcall(param_sysfs_init);
+129. proc_schedstat_init                                        					kernel/sched/stats.c								:subsys_initcall(proc_schedstat_init);
+130. pm_sysrq_init                                              					kernel/power/poweroff.c							:subsys_initcall(pm_sysrq_init);
+131. create_proc_profile                                        					kernel/profile.c									:subsys_initcall(create_proc_profile);
+132. crash_save_vmcoreinfo_init                                 	kernel/kexec_core.c								:subsys_initcall(crash_save_vmcoreinfo_init);
+133. crash_notes_memory_init                                 	kernel/kexec_core.c								:subsys_initcall(crash_notes_memory_init);
+134. user_namespaces_init                                       	kernel/user_namespace.c							:subsys_initcall(user_namespaces_init);
+135. hung_task_init                                             		kernel/hung_task.c								:subsys_initcall(hung_task_init);
+136. default_bdi_init                                           		mm/backing-dev.c								:subsys_initcall(default_bdi_init);
+137. percpu_enable_async                                       	mm/percpu.c										:subsys_initcall(percpu_enable_async);
+138. init_reserve_notifier                                      		mm/mmap.c										:subsys_initcall(init_reserve_notifier);
+139. init_admin_reserve                                         		mm/nommu.c										:subsys_initcall(init_admin_reserve);
+140. init_user_reserve                                          		mm/nommu.c										:subsys_initcall(init_user_reserve);
+141. ksm_init                                                   		mm/ksm.c										:subsys_initcall(ksm_init);
+142. mem_cgroup_swap_init                                       	mm/memcontrol.c									:subsys_initcall(mem_cgroup_swap_init);
+143. mem_cgroup_init                                            		mm/memcontrol.c									:subsys_initcall(mem_cgroup_init);
+144. crypto_wq_init                                             		crypto/crypto_wq.c								:subsys_initcall(crypto_wq_init);
+145. cryptomgr_init                                             		crypto/algboss.c								:subsys_initcall(cryptomgr_init);
+146. init_bio                                                   			block/bio.c									:subsys_initcall(init_bio);
+147. blk_settings_init                                          		block/blk-settings.c								:subsys_initcall(blk_settings_init);
+148. blk_ioc_init                                               		block/blk-ioc.c									:subsys_initcall(blk_ioc_init);
+149. blk_softirq_init                                           		block/blk-softirq.c								:subsys_initcall(blk_softirq_init);
+150. blk_iopoll_setup                                           		block/blk-iopoll.c								:subsys_initcall(blk_iopoll_setup);
+151. blk_mq_init                                                		block/blk-mq.c									:subsys_initcall(blk_mq_init);
+152. genhd_device_init                                          		block/genhd.c									:subsys_initcall(genhd_device_init);
+153. raid6_select_algo                                          		lib/raid6/algos.c								:subsys_initcall(raid6_select_algo);
+154. omap_control_phy_init                                      	drivers/phy/phy-omap-control.c					:subsys_initcall(omap_control_phy_init);
+155. gpiolib_debugfs_init                                       		drivers/gpio/gpiolib.c							:subsys_initcall(gpiolib_debugfs_init);
+156. pca953x_init                                               		drivers/gpio/gpio-pca953x.c						:subsys_initcall(pca953x_init);
+157. sx150x_init                                                		drivers/gpio/gpio-sx150x.c						:subsys_initcall(sx150x_init);
+158. palmas_gpio_init                                          	 	drivers/gpio/gpio-palmas.c						:subsys_initcall(palmas_gpio_init);
+159. tps65910_gpio_init                                         		drivers/gpio/gpio-tps65910.c						:subsys_initcall(tps65910_gpio_init);
+160. gpio_twl4030_init                                          		drivers/gpio/gpio-twl4030.c						:subsys_initcall(gpio_twl4030_init);
+161. pwm_debugfs_init                                           		drivers/pwm/core.c								:subsys_initcall(pwm_debugfs_init);
+162. pwm_sysfs_init                                             		drivers/pwm/sysfs.c								:subsys_initcall(pwm_sysfs_init);
+163. fbmem_init                                                 		drivers/video/fbdev/core/fbmem.c					:subsys_initcall(fbmem_init);
+164. omap_dma_init                                              		drivers/dma/omap-dma.c							:subsys_initcall(omap_dma_init);
+165. dw_init                                                    			drivers/dma/dw/platform.c						:subsys_initcall(dw_init);
+166. edma_init                                                  		drivers/dma/edma.c								:subsys_initcall(edma_init);
+167. regulator_fixed_voltage_init                               	drivers/regulator/fixed.c						:subsys_initcall(regulator_fixed_voltage_init);
+168. gpio_regulator_init                                        		drivers/regulator/gpio-regulator.c				:subsys_initcall(gpio_regulator_init);
+169. palmas_init                                                		drivers/regulator/palmas-regulator.c				:subsys_initcall(palmas_init);
+170. tps_65023_init                                             		drivers/regulator/tps65023-regulator.c			:subsys_initcall(tps_65023_init);
+171. tps6507x_pmic_init                                         		drivers/regulator/tps6507x-regulator.c			:subsys_initcall(tps6507x_pmic_init);
+172. tps65217_regulator_init                                    	drivers/regulator/tps65217-regulator.c			:subsys_initcall(tps65217_regulator_init);
+173. tps65910_init                                              		drivers/regulator/tps65910-regulator.c			:subsys_initcall(tps65910_init);
+174. twlreg_init                                                		drivers/regulator/twl-regulator.c				:subsys_initcall(twlreg_init);
+175. misc_init                                                  		drivers/char/misc.c								:subsys_initcall(misc_init);
+176. omap_iommu_init                                           	 	drivers/iommu/omap-iommu.c						:subsys_initcall(omap_iommu_init);
+177. omapdss_boot_init                                         		drivers/gpu/drm/omapdrm/dss/omapdss-boot-init.c		:subsys_initcall(omapdss_boot_init);
+178. tilcdc_slave_compat_init                                   	drivers/gpu/drm/tilcdc/tilcdc_slave_compat.c			:subsys_initcall(tilcdc_slave_compat_init);
+179. cn_init                                                    			drivers/connector/connector.c						:subsys_initcall(cn_init);
+180. tps65217_init                                              		drivers/mfd/tps65217.c							:subsys_initcall(tps65217_init);
+181. tps65910_i2c_init                                          		drivers/mfd/tps65910.c							:subsys_initcall(tps65910_i2c_init);
+182. da9052_spi_init                                            		drivers/mfd/da9052-spi.c							:subsys_initcall(da9052_spi_init);
+183. da9052_i2c_init                                            		drivers/mfd/da9052-i2c.c							:subsys_initcall(da9052_i2c_init);
+184. palmas_i2c_init                                            		drivers/mfd/palmas.c							:subsys_initcall(palmas_i2c_init);
+185. sec_pmic_init                                              		drivers/mfd/sec-core.c							:subsys_initcall(sec_pmic_init);
+186. dma_buf_init                                               		drivers/dma-buf/dma-buf.c						:subsys_initcall(dma_buf_init);
+187. init_scsi                                                  			drivers/scsi/scsi.c								:subsys_initcall(init_scsi);
+188. ata_init                                                   			drivers/ata/libata-core.c							:subsys_initcall(ata_init);
+189. phy_init                                                   			drivers/net/phy/phy_device.c						:subsys_initcall(phy_init);
+190. usb_init                                                   			drivers/usb/core/usb.c							:subsys_initcall(usb_init);
+191. usb_phy_generic_init                                       		drivers/usb/phy/phy-generic.c						:subsys_initcall(usb_phy_generic_init);
+192. usb_udc_init                                               		drivers/usb/gadget/udc/udc-core.c					:subsys_initcall(usb_udc_init);
+193. serio_init                                                 			drivers/input/serio/serio.c							:subsys_initcall(serio_init);
+194. input_init                                                	 		drivers/input/input.c								:subsys_initcall(input_init);
+195. rtc_init                                                   			drivers/rtc/class.c								:subsys_initcall(rtc_init);
+196. i2c_gpio_init                                              
+197. omap_i2c_init_driver                                       		drivers/i2c/busses/i2c-omap.c						:subsys_initcall(omap_i2c_init_driver);
+198. media_devnode_init                                         		drivers/media/media-devnode.c				    	:subsys_initcall(media_devnode_init);
+199. videodev_init                                              		drivers/media/v4l2-core/v4l2-dev.c			   		:subsys_initcall(videodev_init);
+200. init_dvbdev                                                		drivers/media/dvb-core/dvbdev.c				    	:subsys_initcall(init_dvbdev);
+201. rc_core_init                                               		drivers/media/rc/rc-main.c					    	:subsys_initcall(rc_core_init);
+202. pps_init                                                   			drivers/pps/pps.c							    	:subsys_initcall(pps_init);
+203. ptp_init                                                   			drivers/ptp/ptp_clock.c						    	:subsys_initcall(ptp_init);
+204. power_supply_class_init                                    	drivers/power/power_supply_core.c			   		:subsys_initcall(power_supply_class_init);
+205. hwmon_init                                                 		drivers/hwmon/hwmon.c						    	:subsys_initcall(hwmon_init);
+206. mmc_init                                                   		drivers/mmc/core/core.c						    	:subsys_initcall(mmc_init);
+207. leds_init                                                 	 		drivers/leds/led-class.c					    		:subsys_initcall(leds_init);
+208. omap_mbox_init                                             		drivers/mailbox/omap-mailbox.c				    	:subsys_initcall(omap_mbox_init);
+209. devfreq_init                                              		drivers/devfreq/devfreq.c					   		 :subsys_initcall(devfreq_init);
+210. devfreq_simple_ondemand_init                               	drivers/devfreq/governor_simpleondemand.c	    		:subsys_initcall(devfreq_simple_ondemand_init);
+211. devfreq_performance_init                                   	drivers/devfreq/governor_performance.c		   		 :subsys_initcall(devfreq_performance_init);
+212. devfreq_powersave_init                                     	drivers/devfreq/governor_powersave.c		   	 	:subsys_initcall(devfreq_powersave_init);
+213. devfreq_userspace_init                                     	drivers/devfreq/governor_userspace.c		    		:subsys_initcall(devfreq_userspace_init);
+214. ras_init                                                   			drivers/ras/ras.c							    	:subsys_initcall(ras_init);
+215. nvmem_init                                                 		drivers/nvmem/core.c						    	:subsys_initcall(nvmem_init);
+216. proto_init                                                 		net/core/sock.c								    	:subsys_initcall(proto_init);
+217. net_dev_init                                               		net/core/dev.c								    	:subsys_initcall(net_dev_init);
+218. neigh_init                                                 		net/core/neighbour.c						    	:subsys_initcall(neigh_init);
+219. fib_rules_init                                             		net/core/fib_rules.c						    		:subsys_initcall(fib_rules_init);
+220. init_cgroup_netprio                                        		net/core/netprio_cgroup.c					    	:subsys_initcall(init_cgroup_netprio);
+221. pktsched_init                                              		net/sched/sch_api.c							    	:subsys_initcall(pktsched_init);
+222. tc_filter_init                                             			net/sched/cls_api.c							    	:subsys_initcall(tc_filter_init);
+223. tc_action_init                                             		net/sched/act_api.c							    	:subsys_initcall(tc_action_init);
+224. genl_init                                                 	 		net/netlink/genetlink.c						    	:subsys_initcall(genl_init);
+225. ipv4_netfilter_init                                        		net/ipv4/netfilter.c						    		:subsys_initcall(ipv4_netfilter_init);
+226. cipso_v4_init                                              		net/ipv4/cipso_ipv4.c						    	:subsys_initcall(cipso_v4_init);
+227. wireless_nlevent_init                                      		net/wireless/wext-core.c					    		:subsys_initcall(wireless_nlevent_init);
+228. netlbl_init                                                			net/netlabel/netlabel_kapi.c				    		:subsys_initcall(netlbl_init);
+229. watchdog_init                                              		drivers/watchdog/intel_scu_watchdog.c		    :late_initcall(intel_scu_watchdog_init);
+230. proc_cpu_init                                              		arch/arm/kernel/setup.c						    :fs_initcall(proc_cpu_init);
+231. dma_debug_do_init                                          	arch/arm/mm/dma-mapping.c					    :fs_initcall(dma_debug_do_init);
+232. alignment_init                                             		arch/arm/mm/alignment.c						    :fs_initcall(alignment_init);
+233. clocksource_done_booting                                   	kernel/time/clocksource.c					    :fs_initcall(clocksource_done_booting);
+234. ftrace_init_tracefs                                        		kernel/trace/ftrace.c						    :fs_initcall(ftrace_init_tracefs);
+235. tracer_init_tracefs                                        		kernel/trace/trace.c						    :fs_initcall(tracer_init_tracefs);
+236. init_trace_printk_function_export                          	kernel/trace/trace_printk.c					    :fs_initcall(init_trace_printk_function_export);
+237. init_graph_tracefs                                         		kernel/trace/trace_functions_graph.c		    :fs_initcall(init_graph_tracefs);
+238. event_trace_init                                           		kernel/trace/trace_events.c					    :fs_initcall(event_trace_init);
+239. init_kprobe_trace                                         		kernel/trace/trace_kprobe.c					    :fs_initcall(init_kprobe_trace);
+240. init_uprobe_trace                                          		kernel/trace/trace_uprobe.c					    :fs_initcall(init_uprobe_trace);
+241. bpf_init                                                   			kernel/bpf/inode.c							    :fs_initcall(bpf_init);
+242. init_pipe_fs                                               fs/pipe.c									    :fs_initcall(init_pipe_fs);
+243. cgroup_writeback_init                                      fs/fs-writeback.c							    :fs_initcall(cgroup_writeback_init);
+244. inotify_user_setup                                         fs/notify/inotify/inotify_user.c			    :fs_initcall(inotify_user_setup);
+245. eventpoll_init                                             fs/eventpoll.c								    :fs_initcall(eventpoll_init);
+246. anon_inode_init                                            fs/anon_inodes.c							    :fs_initcall(anon_inode_init);
+247. proc_cmdline_init                                          fs/proc/cmdline.c							    :fs_initcall(proc_cmdline_init);
+248. proc_consoles_init                                         fs/proc/consoles.c							    :fs_initcall(proc_consoles_init);
+249. proc_cpuinfo_init                                          fs/proc/cpuinfo.c							    :fs_initcall(proc_cpuinfo_init);
+250. proc_devices_init                                          fs/proc/devices.c							    :fs_initcall(proc_devices_init);
+251. proc_interrupts_init                                       fs/proc/interrupts.c						    :fs_initcall(proc_interrupts_init);
+252. proc_loadavg_init                                          fs/proc/loadavg.c							    :fs_initcall(proc_loadavg_init);
+253. proc_meminfo_init                                          fs/proc/meminfo.c							    :fs_initcall(proc_meminfo_init);
+254. proc_stat_init                                             fs/proc/stat.c								    :fs_initcall(proc_stat_init);
+255. proc_uptime_init                                           fs/proc/uptime.c							    :fs_initcall(proc_uptime_init);
+256. proc_version_init                                          fs/proc/version.c							    :fs_initcall(proc_version_init);
+257. proc_softirqs_init                                         fs/proc/softirqs.c							    :fs_initcall(proc_softirqs_init);
+258. proc_kmsg_init                                             fs/proc/kmsg.c								    :fs_initcall(proc_kmsg_init);
+259. proc_page_init                                             fs/proc/page.c								    :fs_initcall(proc_page_init);
+260. init_ramfs_fs                                              fs/ramfs/inode.c							    :fs_initcall(init_ramfs_fs);
+261. tomoyo_initerface_init                                     security/tomoyo/securityfs_if.c				    :fs_initcall(tomoyo_initerface_init);
+262. aa_create_aafs                                             security/apparmor/apparmorfs.c				    :fs_initcall(aa_create_aafs);
+263. blk_scsi_ioctl_init                                        block/scsi_ioctl.c							    :fs_initcall(blk_scsi_ioctl_init);
+264. dynamic_debug_init_debugfs                                 lib/dynamic_debug.c							    :fs_initcall(dynamic_debug_init_debugfs);
+265. fb_console_init                                            drivers/video/console/fbcon.c				    :fs_initcall(fb_console_init);
+266. simplefb_init                                              drivers/video/fbdev/simplefb.c				    :fs_initcall(simplefb_init);
+267. chr_dev_init                                               drivers/char/mem.c							    :fs_initcall(chr_dev_init);
+268. firmware_class_init                                        drivers/base/firmware_class.c				    :fs_initcall(firmware_class_init);
+269. omap_usbtll_drvinit                                        drivers/mfd/omap-usb-tll.c					    :fs_initcall(omap_usbtll_drvinit);
+270. thermal_init                                               drivers/thermal/thermal_core.c				    :fs_initcall(thermal_init);
+271. cpufreq_gov_performance_init                               drivers/cpufreq/cpufreq_performance.c		    :fs_initcall(cpufreq_gov_performance_init);
+272. sysctl_core_init                                           net/core/sysctl_net_core.c					    :fs_initcall(sysctl_core_init);
+273. eth_offload_init                                           net/ethernet/eth.c							    :fs_initcall(eth_offload_init);
+274. inet_init                                                  net/ipv4/af_inet.c							    :fs_initcall(inet_init);
+275. ipv4_offload_init                                          net/ipv4/af_inet.c							    :fs_initcall(ipv4_offload_init);
+276. af_unix_init                                               net/unix/af_unix.c							    :fs_initcall(af_unix_init);
+277. ipv6_offload_init                                          net/ipv6/ip6_offload.c						    :fs_initcall(ipv6_offload_init);
+278. init_sunrpc                                                net/sunrpc/sunrpc_syms.c					    :fs_initcall(init_sunrpc); /* Ensure we're init279. omap_usbhs_drvinit      
+279. populate_rootfs                                            init/initramfs.c							    :rootfs_initcall(populate_rootfs);
+280. register_armv7_pmu_driver                                  arch/arm/kernel/perf_event_v7.c				    :device_initcall(register_armv7_pmu_driver);
+281. arch_uprobes_init                                          arch/arm/probes/uprobes/core.c				    :device_initcall(arch_uprobes_init);
+282. omap_feed_randpool                                         arch/arm/mach-omap2/id.c					    :omap_device_initcall(omap_feed_randpool);
+283. omap_dm_timer_driver_init                                  
+284. proc_execdomains_init                                      
+285. ioresources_init                                           kernel/resource.c							    :__initcall(ioresources_init);
+286. init_sched_debug_procfs                                    kernel/sched/debug.c						    :__initcall(init_sched_debug_procfs);
+287. snapshot_device_init                                       kernel/power/user.c							    :device_initcall(snapshot_device_init);
+288. irq_gc_init_ops                                            kernel/irq/generic-chip.c					    :device_initcall(irq_gc_init_ops);
+289. irq_pm_init_ops                                            kernel/irq/pm.c								    :device_initcall(irq_pm_init_ops);
+290. init_posix_timers                                          kernel/time/posix-timers.c					    :__initcall(init_posix_timers);
+291. init_posix_cpu_timers                                      kernel/time/posix-cpu-timers.c				    :__initcall(init_posix_cpu_timers);
+292. timekeeping_init_ops                                       kernel/time/timekeeping.c					    :device_initcall(timekeeping_init_ops);
+293. init_clocksource_sysfs                                     kernel/time/clocksource.c					    :device_initcall(init_clocksource_sysfs);
+294. init_timer_list_procfs                                     kernel/time/timer_list.c					    :__initcall(init_timer_list_procfs);
+295. alarmtimer_init                                            kernel/time/alarmtimer.c					    :device_initcall(alarmtimer_init);
+296. clockevents_init_sysfs                                     kernel/time/clockevents.c					    :device_initcall(clockevents_init_sysfs);
+297. sched_clock_syscore_init                                   kernel/time/sched_clock.c					    :device_initcall(sched_clock_syscore_init);
+298. init_tstats_procfs                                         kernel/time/timer_stats.c					    :__initcall(init_tstats_procfs);
+299. futex_init                                                 kernel/futex.c								    :__initcall(futex_init);
+300. proc_modules_init                                                                                          
+301. kallsyms_init                                              kernel/kallsyms.c							    :device_initcall(kallsyms_init);
+302. pid_namespaces_init                                        kernel/pid_namespace.c						    :__initcall(pid_namespaces_init);
+303. ikconfig_init											                                                    
+304. audit_init                                                 kernel/audit.c								    :__initcall(audit_init); 
+305. audit_watch_init                                           kernel/audit_watch.c						    	:device_initcall(audit_watch_init); 
+306. audit_fsnotify_init                                        kernel/audit_fsnotify.c						    :device_initcall(audit_fsnotify_init); 
+307. audit_tree_init                                            kernel/audit_tree.c							    :__initcall(audit_tree_init); 
+308. init_kprobes                                                                                               
+309. utsname_sysctl_init                                        kernel/utsname_sysctl.c						    :device_initcall(utsname_sysctl_init); 
+310. init_tracepoints                                           kernel/tracepoint.c							    :__initcall(init_tracepoints); 
+311. stack_trace_init                                           kernel/trace/trace_stack.c					    :device_initcall(stack_trace_init); 
+312. init_blk_tracer                                            kernel/trace/blktrace.c						    :device_initcall(init_blk_tracer); 
+313. perf_event_sysfs_init                                      kernel/events/core.c						    	:device_initcall(perf_event_sysfs_init); 
+314. init_uprobes                                               kernel/events/uprobes.c						    :__initcall(init_uprobes); 
+315. kswapd_init                                                mm/vmscan.c									    :module_init(kswapd_init)
+316. extfrag_debug_init                                         mm/vmstat.c									    :module_init(extfrag_debug_init);
+317. setup_vmstat                                               mm/vmstat.c									    :module_init(setup_vmstat)
+318. mm_compute_batch_init                                      mm/mm_init.c								    :__initcall(mm_compute_batch_init);  
+319. slab_proc_init                                          	mm/slab.c									    :module_init(slab_proc_init);
+320. workingset_init   											m.txt:mm/workingset.c						    :module_init(workingset_init);                                      
+321. proc_vmalloc_init                   						mm/vmalloc.c								    :module_init(proc_vmalloc_init);                    
+322. memblock_init_debugfs  									mm/memblock.c								    :__initcall(memblock_init_debugfs);                                 
+323. procswaps_init                                          	mm/swapfile.c								    :__initcall(procswaps_init);
+324. init_frontswap												mm/frontswap.c								    :module_init(init_frontswap);
+325. slab_sysfs_init                                         	mm/slub.c									    :__initcall(slab_sysfs_init);
+326. init_zbud                                               	drivers/media/rc/rc-main.c					    :subsys_initcall(rc_core_init);   
+327. fcntl_init                                              	drivers/pps/pps.c							    :subsys_initcall(pps_init);   
+328. proc_filesystems_init                                   	drivers/ptp/ptp_clock.c						    :subsys_initcall(ptp_init);   
+329. start_dirtytime_writeback                               	fs/fs-writeback.c							    :__initcall(start_dirtytime_writeback);
+330. dio_init                                                	drivers/dio/dio.c							    :subsys_initcall(dio_init); 
+331. fsnotify_mark_init   										fs/notify/mark.c							    :device_initcall(fsnotify_mark_init);                                   
+332. dnotify_init                                            	fs/notify/dnotify/dnotify.c					    :module_init(dnotify_init)
+333. fanotify_user_setup                                     	fs/notify/fanotify/fanotify_user.c			    :device_initcall(fanotify_user_setup);
+334. aio_setup                                               	fs/aio.c									    :__initcall(aio_setup);
+335. proc_locks_init                                            drivers/mailbox/pl320-ipc.c					    :subsys_initcall(ipc_init);
+336. init_mbcache                                               
+337. init_grace                                                 
+338. dquot_init                                                 
+339. quota_init                                                 
+340. init_devpts_fs                                             
+341. ext4_init_fs                                               
+342. journal_init                                               
+343. init_fat_fs                                                
+344. init_vfat_fs                                               
+345. init_msdos_fs             									fs/fat/namei_msdos.c						:module_init(init_msdos_fs)                            		     
+346. init_nfs_fs                                                fs/nfs/inode.c								:module_init(init_nfs_fs)
+347. init_nfs_v2                                                fs/nfs/nfs2super.c							:module_init(init_nfs_v2);
+348. init_nfs_v3                                                fs/nfs/nfs3super.c							:module_init(init_nfs_v3);
+349. init_nfs_v4                                                fs/nfs/nfs4super.c							:module_init(init_nfs_v4);
+350. nfs4filelayout_init                                        fs/nfs/filelayout/filelayout.c				:module_init(nfs4filelayout_init);
+351. init_nlm                                                   fs/lockd/svc.c								:module_init(init_nlm);
+352. init_nls_cp437                                             fs/nls/nls_cp437.c							:module_init(init_nls_cp437)
+353. init_nls_iso8859_1                                         fs/nls/nls_iso8859-1.c						:module_init(init_nls_iso8859_1)
+354. init_autofs4_fs                                            fs/autofs4/init.c							:module_init(init_autofs4_fs)
+355. fuse_init                                                  fs/fuse/inode.c								:module_init(fuse_init);
+356. ovl_init                                                   fs/overlayfs/super.c						:module_init(ovl_init);
+357. init_xfs_fs                                                fs/xfs/xfs_super.c							:module_init(init_xfs_fs);
+358. init_f2fs_fs                                               fs/f2fs/super.c								:module_init(init_f2fs_fs)
+359. ipc_init                                                   drivers/mailbox/pl320-ipc.c					:subsys_initcall(ipc_init);
+360. ipc_sysctl_init                                            ipc/ipc_sysctl.c							:device_initcall(ipc_sysctl_init);
+361. init_mqueue_fs                                             ipc/mqueue.c								:device_initcall(init_mqueue_fs);
+362. key_proc_init      										security/keys/proc.c						:__initcall(key_proc_init);                                        
+363. selinux_nf_ip_init  										security/selinux/hooks.c					:__initcall(selinux_nf_ip_init);                                       
+364. init_sel_fs                 								security/selinux/selinuxfs.c				:__initcall(init_sel_fs);                               
+365. selnl_init     											security/selinux/netlink.c					:__initcall(selnl_init);                                            
+366. sel_netif_init                         					security/selinux/netif.c					:__initcall(sel_netif_init);                 
+367. sel_netnode_init   										security/selinux/netnode.c					:__initcall(sel_netnode_init);                                     
+368. sel_netport_init                                        	security/selinux/netport.c					:__initcall(sel_netport_init);
+369. aurule_init     											security/selinux/ss/services.c				:__initcall(aurule_init);                                        
+370. crypto_algapi_init   										crypto/algapi.c								:module_init(crypto_algapi_init);                                   
+371. chainiv_module_init                        				crypto/chainiv.c							:module_init(chainiv_module_init);             
+372. eseqiv_module_init        									crypto/eseqiv.c								:module_init(eseqiv_module_init);                              
+373. seqiv_module_init        									crypto/seqiv.c								:module_init(seqiv_module_init);                               
+374. hmac_module_init          									crypto/hmac.c								:module_init(hmac_module_init);                              
+375. crypto_null_mod_init                       				             			
+376. md5_mod_init  												crypto/crypto_null.c						:module_init(md5_mod_init);                                          
+377. sha1_generic_mod_init                                   	crypto/sha1_generic.c						:module_init(sha1_generic_mod_init);
+378. sha256_generic_mod_init                                 	crypto/sha256_generic.c						:module_init(sha256_generic_mod_init);
+379. crypto_ecb_module_init              						crypto/ecb.c								:module_init(crypto_ecb_module_init);                    
+380. crypto_cbc_module_init                                  	crypto/cbc.c								:module_init(crypto_cbc_module_init);
+381. crypto_cts_module_init                                  	crypto/cts.c								:module_init(crypto_cts_module_init);
+382. crypto_module_init                                      	crypto/lrw.c								:module_init(crypto_module_init);
+383. crypto_ctr_module_init                                  	crypto/ctr.c								:module_init(crypto_ctr_module_init);
+384. aes_init                                                	crypto/aes_generic.c						:module_init(aes_init);
+385. deflate_mod_init                                        	crypto/deflate.c							:module_init(deflate_mod_init);
+386. crc32c_mod_init                                         	crypto/crc32c_generic.c						:module_init(crc32c_mod_init);
+387. crct10dif_mod_init                                      	crypto/crct10dif_generic.c					:module_init(crct10dif_mod_init);
+388. lzo_mod_init                                               crypto/lzo.c								:module_init(lzo_mod_init);
+389. drbg_init                                                  crypto/drbg.c								:module_init(drbg_init);
+390. jent_mod_init                                              crypto/jitterentropy-kcapi.c				:module_init(jent_mod_init);
+391. proc_genhd_init                                            block/genhd.c								:module_init(proc_genhd_init);
+392. init_emergency_pool                                        
+393. bsg_init                                                   
+394. throtl_init                                                block/blk-throttle.c						:module_init(throtl_init);
+395. noop_init                                                  block/noop-iosched.c						:module_init(noop_init);
+396. deadline_init                                              block/deadline-iosched.c					:module_init(deadline_init);
+397. cfq_init                                                   block/cfq-iosched.c							:module_init(cfq_init);
+398. crc_t10dif_mod_init                                        lib/crc-t10dif.c							:module_init(crc_t10dif_mod_init);
+399. libcrc32c_mod_init                                         lib/libcrc32c.c								:module_init(libcrc32c_mod_init);
+400. percpu_counter_startup                                     lib/percpu_counter.c						:module_init(percpu_counter_startup);
+401. audit_classes_init                                         
+402. omap_ocp2scp_driver_init                                   
+403. phy_core_init         										drivers/phy/phy-core.c						:module_init(phy_core_init);                                     
+404. omap_usb2_driver_init  									**                                    
+405. ti_pipe3_driver_init                                       *
+406. palmas_pinctrl_driver_init                                 
+407. pcs_driver_init                                            
+408. ti_iodelay_driver_init                                     
+409. gpio_of_helper_driver_init                                 
+410. bgpio_driver_init                                          
+411. syscon_gpio_driver_init                                    
+412. gpo_twl6040_driver_init                                    
+413. pwmss_driver_init                                          
+414. gpio_backlight_driver_init                                 
+415. pwm_backlight_driver_init                                  
+416. tps65217_bl_driver_init                                 
+417. ssd1307fb_driver_init                                   
+418. cpp41_dma_driver_init                                   
+419. am33xx_pm_driver_init                                   
+420. ti_oppdm_driver_init                                    
+421. wkup_m3_ipc_driver_init                                 
+422. pwm_regulator_driver_init                               
+423. pbias_regulator_driver_init                             
+424. ti_abb_driver_init                                      	
+425. tps65218_regulator_driver_init                          
+426. pty_init                                                	drivers/tty/pty.c							:device_initcall(pty_init);
+427. sysrq_init                                              	drivers/tty/sysrq.c							:device_initcall(sysrq_init);
+428. serial8250_init     										drivers/tty/serial/8250/8250_core.c			:module_init(serial8250_init);                                    
+429. dw8250_platform_driver_init                                
+430. omap8250_platform_driver_init                              
+431. of_platform_serial_driver_init                             
+432. init_kgdboc                                                drivers/tty/serial/kgdboc.c					:module_init(init_kgdboc);
+433. apm_init                                                   drivers/char/apm-emulation.c				:module_init(apm_init);
+434. drm_core_init                                              arch/x86/kernel/apm_32.c					:module_init(apm_init);
+435. omap_dss_init                                              drivers/gpu/drm/drm_drv.c					:module_init(drm_core_init);
+436. opa362_driver_init                                         drivers/gpu/drm/omapdrm/dss/dss6.c			:module_init(omap_dss_init);
+437. tpd_driver_init                                            
+438. dvi_connector_driver_init                                  
+439. hdmi_connector_driver_init                                 
+440. panel_dpi_driver_init                                      
+441. cn_proc_init                                               drivers/connector/cn_proc.c					:module_init(cn_proc_init);
+442. nvm_mod_init                                               drivers/lightnvm/core.c						:module_init(nvm_mod_init);
+443. topology_sysfs_init                                        drivers/base/topology.c						:device_initcall(topology_sysfs_init);
+444. cacheinfo_sysfs_init                                       drivers/base/cacheinfo.c					:device_initcall(cacheinfo_sysfs_init);
+445. devcoredump_init                                           drivers/base/devcoredump.c					:__initcall(devcoredump_init);
+446. at24_init                                                  drivers/misc/eeprom/at24.c					:module_init(at24_init);
+447. at25_driver_init                                           
+448. argus_ups_init                                             drivers/misc/cape_bone_argus/cape_bone_argus.c  :module_init(argus_ups_init);
+449. bone_pinmux_helper_driver_init                             
+450. capemgr_driver_init                                        
+451. tps65218_driver_init                                       
+452. twl_driver_init                                            
+453. twl4030_power_driver_init                                  
+454. twl4030_audio_driver_init                                  
+455. twl6040_driver_init                                        
+456. axp20x_i2c_driver_init                                     
+457. as3722_i2c_driver_init                                     
+458. init_sd              										drivers/scsi/sd.c								:module_init(init_sd);                                      
+459. ahci_driver_init                                           
+460. init_mtd                          							drivers/mtd/mtdcore.c							:module_init(init_mtd);                         
+461. nand_base_init                                             
+462. net_olddevs_init                                           drivers/net/Space.c								:device_initcall(net_olddevs_init);
+463. phy_module_init                                            drivers/usb/phy/phy-mxs-usb.c					:postcore_initcall(mxs_phy_module_init);
+464. phy_module_init                                            
+465. phy_module_init                                            
+466. phy_module_init                                            
+467. phy_module_init                                            
+468. davinci_mdio_init											drivers/net/ethernet/ti/davinci_mdio.c			:device_initcall(davinci_mdio_init);
+469. cpsw_phy_sel_driver_init                                   
+470. cpsw_driver_init                                           
+471. am335x_control_driver_init                                 
+472. am335x_phy_driver_init                                     
+473. gpio_vbus_driver_init                                      
+474. dwc3_driver_init                                           
+475. dwc3_omap_driver_init                                      
+476. ehci_hcd_init                                              
+477. ehci_platform_init                  						drivers/usb/host/ehci-platform.c				:module_init(ehci_platform_init);                       
+478. ehci_omap_init                        						drivers/usb/host/ehci-omap.c					:module_init(ehci_omap_init);                     
+479. xhci_hcd_init          									drivers/usb/host/xhci.c							:module_init(xhci_hcd_init);                                    
+480. xhci_plat_init       										drivers/usb/host/xhci-plat.c					:module_init(xhci_plat_init);                                      
+481. usb_storage_driver_init                                    
+482. musb_driver_init                                           
+483. dsps_usbss_driver_init                                     
+484. am335x_child_init                                          drivers/usb/musb/musb_am335x.c					:module_init(am335x_child_init);
+485. ledtrig_usb_init                                           drivers/usb/common/led.c						:module_init(ledtrig_usb_init);
+486. serport_init                                               drivers/input/serio/serport.c					:module_init(serport_init);                    
+487. input_leds_init                                            drivers/input/input-leds.c						:module_init(input_leds_init);
+488. mousedev_init                          					drivers/input/mousedev.c						:module_init(mousedev_init);
+489. atkbd_init                             					drivers/input/keyboard/atkbd.c					:module_init(atkbd_init);                    
+490. edt_ft5x06_ts_driver_init                                  
+491. palmas_pwron_driver_init                                   
+492. axp20x_pek_driver_init                                     
+493. tps65218_pwron_driver_init                                 
+494. twl4030_pwrbutton_driver_init                              
+495. twl4030_vibra_driver_init                                  
+496. twl6040_vibra_driver_init                                  
+497. uinput_init                                                
+498. as3722_rtc_driver_init                                     
+499. da9052_rtc_driver_init                                     
+500. ds1307_driver_init                                         
+501. isl12057_driver_init                                       
+502. omap_rtc_driver_init                                       
+503. palmas_rtc_driver_init                                     
+504. pcf8523_driver_init                                        
+505. pcf8563_driver_init                                        
+506. s5m_rtc_driver_init                                        
+507. snvs_rtc_driver_init                                       
+508. twl4030rtc_driver_init                                     
+509. i2c_dev_init    											drivers/i2c/i2c-dev.c							:module_init(i2c_dev_init);                                           
+510. pca954x_driver_init                                    	    
+511. i2c_mux_pinctrl_driver_init                                
+512. ir_kbd_driver_init                                         
+513. gpio_fan_driver_init                                       
+514. ti_bandgap_sensor_driver_init                              
+515. omap_wdt_driver_init                                       
+516. cpufreq_stats_init                                     	drivers/cpufreq/cpufreq_stats.c					:module_init(cpufreq_stats_init);    
+517. cpufreq_gov_powersave_init                             	drivers/cpufreq/cpufreq_powersave.c				:module_init(cpufreq_gov_powersave_init);   
+518. cpufreq_gov_userspace_init                             	drivers/cpufreq/cpufreq_userspace.c				:module_init(cpufreq_gov_userspace_init);    
+519. cpufreq_gov_dbs_init                                       
+520. cpufreq_gov_dbs_init                                       
+521. dt_cpufreq_platdrv_init                                    
+522. ti_cpufreq_driver_init                                     
+523. arm_idle_init                                          	drivers/cpuidle/cpuidle-arm.c					:device_initcall(arm_idle_init);    
+524. mmc_blk_init                                           	drivers/mmc/card/block.c						:module_init(mmc_blk_init);    
+525. mmc_omap_driver_init                                       
+526. omap_hsmmc_driver_init                                     
+527. gpio_led_driver_init                                       
+528. timer_trig_init                                            
+529. oneshot_trig_init                                          
+530. heartbeat_trig_init                                        
+531. bl_trig_init                                               
+532. gpio_trig_init                                             
+533. defon_trig_init                                            
+534. hid_init    												drivers/hid/hid-core.c							:module_init(hid_init);                                               
+535. uhid_init                          						drivers/hid/uhid.c								:module_init(uhid_init);                        
+536. hid_generic_init                   						                        
+537. lg_driver_init                     						                        
+538. logi_djreceiver_driver_init        						                        
+539. hidpp_driver_init                  						                        
+540. hid_init                           						drivers/hid/hid-core.c							:module_init(hid_init);                                                                       
+541. staging_init             									drivers/staging/staging.c						:module_init(staging_init);                                  
+542. ion_page_pool_init                 						                        
+543. ashmem_init                        						                        
+544. timed_output_init                  						                        
+545. palmas_clks_driver_init            						                        
+546. twl6040_clk_driver_init            						                        
+547. dra7_atl_clk_driver_init           						                        
+548. remoteproc_init                    						drivers/remoteproc/remoteproc_core.c			:module_init(remoteproc_init);                        
+549. wkup_m3_rproc_driver_init          						                        
+550. extcon_class_init         									drivers/extcon/extcon.c							:module_init(extcon_class_init);                                 
+551. gpio_extcon_driver_init            						                        
+552. palmas_usb_driver_init                                     
+553. usb_extcon_driver_init                                     
+554. emif_driver_init                                           
+555. ti_emif_driver_init                                        
+556. binder_init                                                drivers/android/binder.c						:device_initcall(binder_init);
+557. sock_diag_init                                             net/core/sock_diag.c							:device_initcall(sock_diag_init);
+558. blackhole_init                                             net/sched/sch_blackhole.c						:device_initcall(blackhole_init)
+559. gre_offload_init                                           net/ipv4/gre_offload.c							:device_initcall(gre_offload_init);
+560. sysctl_ipv4_init                                           net/ipv4/sysctl_net_ipv4.c						:__initcall(sysctl_ipv4_init);
+561. cubictcp_register                                			net/ipv4/tcp_cubic.c							:module_init(cubictcp_register);          
+562. tcp_memcontrol_init                                		net/ipv4/tcp_memcontrol.c						:__initcall(tcp_memcontrol_init);        
+563. inet6_init                                         		net/ipv6/af_inet6.c								:module_init(inet6_init)        
+564. mip6_init                                          		net/ipv6/mip6.c									:module_init(mip6_init);        
+565. packet_init                                        		net/packet/af_packet.c							:module_init(packet_init);        
+566. init_rpcsec_gss          									net/sunrpc/auth_gss/auth_gss.c					:module_init(init_rpcsec_gss)                                  
+567. dcbnl_init                                                 net/dcb/dcbnl.c									:device_initcall(dcbnl_init);
+568. init_dns_resolver                         					net/dns_resolver/dns_key.c						:module_init(init_dns_resolver)                 
+569. mpls_gso_init              								net/mpls/mpls_gso.c								:module_init(mpls_gso_init);                                
+570. vectors_user_mapping_init_page                             arch/arm/kernel/process.c						:late_initcall(vectors_user_mapping_init_page);
+571. init_machine_late                                          arch/metag/kernel/setup.c						:late_initcall(init_machine_late);
+572. thumbee_init                                               arch/arm/kernel/thumbee.c						:late_initcall(thumbee_init);
+573. swp_emulation_init                                         arch/arm/kernel/swp_emulate.c					:late_initcall(swp_emulation_init);
+574. init_oops_id                                               kernel/panic.c									:late_initcall(init_oops_id);
+575. sched_init_debug                                           kernel/sched/core.c								:late_initcall(sched_init_debug);
+576. pm_qos_power_init                                          kernel/power/qos.c								:late_initcall(pm_qos_power_init);
+577. pm_debugfs_init                                            kernel/power/main.c								:late_initcall(pm_debugfs_init);
+578. printk_late_init                                           kernel/printk/printk.c							:late_initcall(printk_late_init);
+579. tk_debug_sleep_time_init                                   kernel/time/timekeeping_debug.c					:late_initcall(tk_debug_sleep_time_init);
+580. debugfs_kprobe_init                                        kernel/kprobes.c								:late_initcall(debugfs_kprobe_init);
+581. taskstats_init                                             kernel/taskstats.c								:late_initcall(taskstats_init);
+582. clear_boot_tracer                                          kernel/trace/trace.c							:late_initcall(clear_boot_tracer);
+583. register_kprobe_prog_ops                                   kernel/trace/bpf_trace.c						:late_initcall(register_kprobe_prog_ops);
+584. kdb_ftrace_register                                        kernel/trace/trace_kdb.c						:late_initcall(kdb_ftrace_register);
+585. register_htab_map                                          kernel/bpf/hashtab.c							:late_initcall(register_htab_map);
+586. register_perf_event_array_map                              kernel/bpf/arraymap.c							:late_initcall(register_perf_event_array_map);
+587. register_prog_array_map                                    kernel/bpf/arraymap.c							:late_initcall(register_prog_array_map);
+588. register_array_map                                         kernel/bpf/arraymap.c							:late_initcall(register_array_map);
+589. fault_around_debugfs                                       mm/memory.c										:late_initcall(fault_around_debugfs);
+590. max_swapfiles_check                                        mm/swapfile.c									:late_initcall(max_swapfiles_check);
+591. init_zswap                                                 mm/zswap.c										:late_initcall(init_zswap);
+592. ubifs_init                                                 fs/ubifs/super.c								:late_initcall(ubifs_init);
+593. init_btrfs_fs                                              fs/btrfs/super.c								:late_initcall(init_btrfs_fs);
+594. init_root_keyring                                          security/keys/process_keys.c					:late_initcall(init_root_keyring);
+595. init_encrypted                                             security/keys/encrypted-keys/encrypted.c		:late_initcall(init_encrypted);
+596. init_profile_hash                                          security/apparmor/crypto.c						:late_initcall(init_profile_hash);
+597. prandom_reseed                                             lib/random32.c									:late_initcall(prandom_reseed);
+598. omap_drm_init                                              drivers/gpu/drm/omapdrm/omap_drv.c				:late_initcall(omap_drm_init);
+599. deferred_probe_initcall                                    drivers/base/dd.c								:late_initcall(deferred_probe_initcall);
+600. ubi_init                                                   mm/memblock.c									:__initcall(memblock_init_debugfs);
+601. gpio_keys_init                                             drivers/input/keyboard/gpio_keys.c				:late_initcall(gpio_keys_init);
+602. rtc_hctosys                                                drivers/rtc/hctosys.c							:late_initcall(rtc_hctosys);
+603. of_cfs_init                                                drivers/of/configfs.c							:late_initcall(of_cfs_init);
+604. of_fdt_raw_init                                            drivers/of/fdt.c								:late_initcall(of_fdt_raw_init);
+605. sync_debugfs_init                                          drivers/staging/android/sync_debug.c			:late_initcall(sync_debugfs_init);
+606. clk_debug_init                                             arch/um/drivers/stdio_console.c					:late_initcall(stdio_init);
+607. register_sk_filter_ops                                     drivers/clk/clk.c								:late_initcall(clk_debug_init);
+608. tcp_congestion_default                                     net/ipv4/tcp_cong.c								:late_initcall(tcp_congestion_default);
+609. ip_auto_config                                             net/ipv4/ipconfig.c								:late_initcall(ip_auto_config);
+610. omap_device_late_init                                      kernel/power/hibernate.c						:late_initcall_sync(software_resume);
+611. software_resume                                            kernel/power/hibernate.c						:late_initcall_sync(software_resume);
+612. regulator_init_complete                                    drivers/regulator/core.c						:late_initcall_sync(regulator_init_complete);
+613. clk_disable_unused         								arch/arm/mach-omap1/clock.c						:late_initcall(clk_disable_unused);
+                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+
+

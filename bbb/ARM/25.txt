@@ -1,0 +1,94 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-18T11:49:50+05:30
+
+====== 25 ======
+Created Tuesday 18 July 2017
+
+====== GPIO Module :-  In BeagleBone-Black ======
+
+== GPIO Introduction :- ==
+
+for each GPIO module there will be a list of GPIO's 
+
+* GPIO 0	32 pins
+	1	32 pins
+	2	32 pins
+	3	32 pins
+* Three steps to set pin in BBB
+	* first Enable CLK & MODULE
+	* selcect the mode for pin
+	* Get the base address of particular port go to the reg & do Operation
+
+* To use any pin there are below steps needs to be followed :-
+	* clock Module
+	* Control Module 
+
+	 {{./screenshot_2017-07-18-150917.png}}
+	
+* Now to use any bank user has to first enable the clk & module 
+	  {{./screenshot_2017-07-18-144829.png}}
+
+	page no 548 chapter 8
+	
+	
+	== Let us the register information  ==
+	== For GPIO 1 2 3 only this register is valid for GPIO-0 no need to do any thing like this ==
+	
+	=== unsigned int setting = (1<<18) | (0x2<<0);  ===
+	=== (1<<18)		-	Enables the clock for a module ===
+	=== (0x2<<0)		-	Enabling the Module ===
+	
+	==== #define CKM_PER_BASE    0x44E00000  // clock module power enable register base, TMR 2.1 ====
+	
+	Base_Register + offset <= setting;
+	BASE_REG = 0x44E0-0000
+	OFFSET 0xAC
+	
+	
+     {{./screenshot_2017-07-18-144931.png}}
+	
+	
+	====== Let us change the mode of a particular pin  ======
+
+	Let us see the total no of pins for each GPIO bank
+
+
+	{{./screenshot_2017-07-18-145935.png}}
+
+
+	For GPIO1 → Base_Register + PIN-offset <= MODE;
+	Port 							=	1
+	CM_MODULE_REGISTER_BASE  		=	0x44E10000
+	OFFSET 						=	21
+	
+	== MODE BITS :- 6 5 4 3 2 1 0 ==
+	
+	== 6 		- 	fast/slow ==
+	== 5		-	In/Op ==
+	== 4		-	Pull UP/Down Selected ==
+	== 3		-	Pull Up/Down Enabled ==
+	== 2 1 0 	-	used for GPIO selection ==
+
+	For each GPIO here 7 modes means it has 7 different functionality user has to decide for which purpose user to has to decide
+	
+	{{./screenshot_2017-07-18-150531.png}}
+	
+	
+	====== Let us understand how to set outout for a GPIO  ======
+	
+	
+	**static const unsigned int GPIO_BASE_ARRAY[4] = {0x44E07000, 0x4804C000, 0x481AC000, 0x481AE000};**
+	
+	* Based on GPIO port base register is selected 
+	* {{./screenshot_2017-07-18-151146.png}}
+
+	
+	== #define GPIO_OE                 0x134 ==
+	
+	{{./screenshot_2017-07-18-150844.png}}
+	
+	{{./screenshot_2017-07-18-150814.png}}
+
+	
+	BASE_Reg + Particular register offset <= dir<<pin;

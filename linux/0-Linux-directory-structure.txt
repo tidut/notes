@@ -1,0 +1,7 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-06-04T13:28:40+05:30
+
+====== 0-Linux-directory-structure ======
+Created Sunday 04 June 2017
+

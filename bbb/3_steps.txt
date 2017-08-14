@@ -1,0 +1,265 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-09T09:13:57+05:30
+
+====== 3 steps ======
+Created Tuesday 09 May 2017
+
+
+**/* Keep these in sync with initcalls in include/linux/init.h */**
+**static char *initcall_level_names[] __initdata = {**
+**	"early",**
+**	"core",**
+**	"postcore",**
+**	"arch",**
+**	"subsys",**
+**	"fs",**
+**	"device",**
+**	"late",**
+**};**
+
+
+=== Step 1 :-  ####################################################################################### ===
+
+               
+**[    0.242379] T * **
+**[    0.250818] T * **
+**[    0.253963] Brought up 1 CPUs**
+**[    0.254049] SMP: Total of 1 processors activated (546.81 BogoMIPS).**
+**[    0.254067] MY CPU: All CPU(s) started in SVC mode.**
+**[    0.256817] devtmpfs: initialized**
+
+{{./screenshot_2017-05-09-091647.png}}
+
+
+	
+	**kernel/smp.c:	smp_init();**
+	**init/main.c: 		static noinline void __init kernel_init_freeable(void)**
+	**init/main.c: 		static int __ref kernel_init(void *unused)**
+	
+	{{./screenshot_2017-05-09-093511.png}}
+
+
+== arch/arm/kernel/setup.c:		pr_info("MY CPU: All CPU(s) started in SVC mode.\n"); ==
+	**arch/arm/kernel/setup.c:		void __init hyp_mode_check(void)**
+	**arch/arm/kernel/smp.c:		smp_cpus_done()**
+	**kernel/smp.c:				smp_init();**
+	
+
+== drivers/base/devtmpfs.c:	printk(KERN_INFO "devtmpfs: initialized\n"); ==
+	
+	**drivers/base/init.c:		devtmpfs_init();**
+	**drivers/base/devtmpfs.c:	int __init devtmpfs_init(void)**
+	**drivers/base/init.c:		void __init driver_init(void)**
+	**init/main.c:				driver_init();**
+	**init/main.c:				static void __init do_basic_setup(void)**
+	**init/main.c:				static noinline void __init kernel_init_freeable(void)**
+	**init/main.c: 				static int __ref kernel_init(void *unused)**
+
+		
+		{{./screenshot_2017-05-09-103435.png}}
+
+
+=== Step 2 :-  ####################################################################################### ===
+
+               
+**[    0.302350] VFP support v0.3: implementor 41 architecture 3 part 30 variant c rev 3**
+**[    0.346588] omap_hwmod: debugss: _wait_target_disable failed**
+**[    0.405179] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns**
+
+
+	**arch/arm/vfp/vfpmodule.c:		pr_info("VFP support v0.3: ");**
+	**arch/arm/vfp/vfpmodule.c:		static int __init vfp_init(void)**
+	**arch/arm/vfp/vfpmodule.c:		core_initcall(vfp_init);**
+
+
+	**arch/arm/mach-omap2/omap_hwmod.c:		pr_warn("omap_hwmod: %s: _wait_target_disable failed\n",**
+	**arch/arm/mach-omap2/omap_hwmod.c:		omap_core_initcall(omap_hwmod_setup_all);**
+
+
+=== Step 3 :-  ####################################################################################### ===
+
+               
+**[    0.406239] T * **
+**[    0.415157] xor: measuring software checksum speed**
+**[    0.453897]    arm4regs  :   669.000 MB/sec**
+**[    0.493865]    8regs     :   599.000 MB/sec**
+**[    0.533855]    32regs    :   598.000 MB/sec**
+**[    0.573859]    neon      :   911.000 MB/sec**
+**[    0.573880] xor: using function: neon (911.000 MB/sec)**
+**[    0.573949] pinctrl core: initialized pinctrl subsystem**
+**[    0.577642] NET: Registered protocol family 16**
+**[    0.587113] DMA: preallocated 256 KiB pool for atomic coherent allocations**
+**[    0.587903] tidu Module gpiolib_sysfs_init successfully started **
+**[    0.588079] tidu Module gpiolib_sysfs_init successfully done **
+
+
+	**crypto/xor.c:					printk(KERN_INFO "xor: measuring software checksum speed\n");**
+	**crypto/xor.c:					printk(KERN_INFO "xor: using function: %s (%d.%03d MB/sec)\n",**
+	**crypto/xor.c:					static int __init	calibrate_xor_blocks(void)**
+	**crypto/xor.c:					core_initcall(calibrate_xor_blocks);**
+
+
+	**drivers/pinctrl/core.c:			pr_info("initialized pinctrl subsystem\n");**
+	**drivers/pinctrl/core.c:			static int __init pinctrl_init(void)**
+	**drivers/pinctrl/core.c:			core_initcall(pinctrl_init);**
+
+
+	**net/socket.c:					pr_info("NET: Registered protocol family %d\n", ops->family);**
+**        net/socket.c:					int sock_register(const struct net_proto_family *ops)  ---- not clear**
+
+
+	**arch/arm/mm/dma-mapping.c:			pr_info("DMA: preallocated %zd KiB pool for atomic coherent allocations\n",**
+	**arch/arm/mm/dma-mapping.c:			static int __init atomic_pool_init(void)**
+	**arch/arm/mm/dma-mapping.c:			postcore_initcall(atomic_pool_init);**
+
+
+	**drivers/gpio/gpiolib-sysfs.c:			printk(KERN_ALERT "tidu Module gpiolib_sysfs_init successfully started \n");**
+	**drivers/gpio/gpiolib-sysfs.c:			static int __init gpiolib_sysfs_init(void)**
+	**drivers/gpio/gpiolib-sysfs.c:			postcore_initcall(gpiolib_sysfs_init);**
+
+
+=== Step 4 :-  ####################################################################################### ===
+
+               
+**[    0.589466] T * **
+**[    0.590103] T * **
+**[    0.593990] T * **
+**[    0.597972] cpuidle: using governor ladder**
+	
+	**drivers/cpuidle/governor.c:				printk(KERN_INFO "cpuidle: using governor %s\n", gov->name);**
+	**drivers/cpuidle/governor.c:				int cpuidle_switch_governor(struct cpuidle_governor *gov)**
+	**drivers/cpuidle/governors/ladder.c:		return cpuidle_register_governor(&ladder_governor);**
+
+**[    0.605953] T * **
+**[    0.609932] cpuidle: using governor menu**
+
+	**drivers/cpuidle/governors/menu.c:		return cpuidle_register_governor(&ladder_governor);**
+
+
+=== Step 5 :-  ####################################################################################### ===
+
+[    0.621286] Tidu Module omap_gpio_probe successfully started 
+[    0.623198] OMAP GPIO hardware version 0.1
+[    0.623349] Tidu Module omap_gpio_probe successfully done 
+[    0.624168] Tidu Module omap_gpio_probe successfully started 
+[    0.626076] Tidu Module omap_gpio_probe successfully done 
+[    0.626900] Tidu Module omap_gpio_probe successfully started 
+[    0.628565] Tidu Module omap_gpio_probe successfully done 
+[    0.629355] Tidu Module omap_gpio_probe successfully started 
+[    0.631154] Tidu Module omap_gpio_probe successfully done 
+
+
+	**drivers/gpio/gpio-omap.c:	printk(KERN_ALERT "Tidu Module omap_gpio_probe successfully started \n");**
+	**drivers/gpio/gpio-omap.c:	postcore_initcall(omap_gpio_drv_reg);**
+
+
+=== Step ####################################################################################### ===
+
+
+[    0.653523] No ATAGs?
+[    0.653580] hw-breakpoint: debug architecture 0x4 unsupported.
+[    0.654727] omap4_sram_init:Unable to allocate sram needed to handle errata I688
+[    0.654760] omap4_sram_init:Unable to get sram pool needed to handle errata I688
+
+
+	**arch/arm/kernel/atags_proc.c:				pr_info("No ATAGs?");**
+												**arch_initcall(init_atags_procfs);**
+	
+	**arch/arm/kernel/hw_breakpoint.c:			pr_info("debug architecture 0x%x unsupported.\n", debug_arch);**
+									**			static int __init arch_hw_breakpoint_init(void)**
+												**  arch_initcall(arch_hw_breakpoint_init);**
+	
+	**arch/arm/mach-omap2/omap4-common.c:		pr_warn("%s:Unable to allocate sram needed to handle errata I688\n",**
+												**omap_arch_initcall(omap4_sram_init);**
+												**omap_arch_initcall(omap4_sram_init);**
+
+
+=== Step ####################################################################################### ===
+
+
+[    0.778071] raid6: int32x1  gen()   127 MB/s
+[    0.846049] raid6: int32x1  xor()    96 MB/s
+[    0.913965] raid6: int32x2  gen()   160 MB/s
+[    0.982152] raid6: int32x2  xor()   109 MB/s
+[    1.049995] raid6: int32x4  gen()   155 MB/s
+[    1.117965] raid6: int32x4  xor()   111 MB/s
+[    1.186128] raid6: int32x8  gen()   157 MB/s
+[    1.254102] raid6: int32x8  xor()   100 MB/s
+[    1.321921] raid6: neonx1   gen()   794 MB/s
+[    1.389876] raid6: neonx1   xor()   462 MB/s
+[    1.457908] raid6: neonx2   gen()  1054 MB/s
+[    1.525879] raid6: neonx2   xor()   656 MB/s
+[    1.593900] raid6: neonx4   gen()   597 MB/s
+[    1.661860] raid6: neonx4   xor()   370 MB/s
+[    1.729975] raid6: neonx8   gen()   414 MB/s
+[    1.797875] raid6: neonx8   xor()   356 MB/s
+[    1.797895] raid6: using algorithm neonx2 gen() 1054 MB/s
+[    1.797912] raid6: .... xor() 656 MB/s, rmw enabled
+[    1.797927] raid6: using intx1 recovery algorithm
+	
+	**lib/raid6/algos.c:			pr_info("raid6: %-8s gen() %5ld MB/s\n", (*algo)->name**
+								**int __init raid6_select_algo(void)**
+								**subsys_initcall(raid6_select_algo);**
+
+
+=== Step ####################################################################################### ===
+
+
+[    1.820580] edma 49000000.edma: TI EDMA DMA engine driver
+[    1.830078] SCSI subsystem initialized
+**drivers/dma/edma.c:		dev_info(dev, "TI EDMA DMA engine driver\n");**
+								subsys_initcall(edma_init);
+
+
+=== ####################################################################################### ===
+
+[    1.834491] GARG: usb_init called
+[    1.834921] usbcore: registered new interface driver usbfs
+[    1.835104] usbcore: registered new interface driver hub
+[    1.835331] usbcore: registered new device driver usb
+
+	**drivers/usb/core/usb.c:			printk("GARG: usb_init called");**
+									subsys_initcall(usb_init);
+
+
+[    1.836573] Tarun: really_probe called omap_i2c 
+[    1.836650] omap_i2c 44e0b000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c0_pins, deferring probe
+[    1.836712] Tarun: really_probe called omap_i2c 
+[    1.836762] omap_i2c 4819c000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c2_pins, deferring probe
+
+	**drivers/i2c/busses/i2c-omap.c		subsys_initcall(omap_i2c_init_driver);**
+	**arch/arm/mach-omap2/i2c.c			omap_subsys_initcall(omap_i2c_cmdline);**
+	
+	
+
+=== ####################################################################################### ===
+
+[    1.837049] media: Linux media interface: v0.10
+[    1.837214] Linux video capture interface: v2.00
+[    1.837432] pps_core: LinuxPPS API ver. 1 registered
+
+	**drivers/media/media-devnode.c:	subsys_initcall(media_devnode_init);**
+	**drivers/media/media-devnode.c:	pr_info("Linux media interface: v0.10\n");**
+	
+	**drivers/media/v4l2-core/v4l2-dev.c:		printk(KERN_INFO "Linux video capture interface: v2.00\n");**
+	**drivers/media/v4l2-core/v4l2-dev.c:		subsys_initcall(videodev_init);**
+
+
+	**drivers/pps/pps.c:	pr_info("LinuxPPS API ver. %d registered\n", PPS_API_VERS);**
+
+
+=== ####################################################################################### ===
+[    1.837451] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    1.837512] PTP clock support registered
+[    1.838531] Tarun: really_probe called omap-mailbox 
+[    1.839690] omap-mailbox 480c8000.mailbox: omap mailbox rev 0x400\
+
+
+**linux/drivers/pps/pps.c:		pr_info("Software ver. %s - Copyright 2005-2007 Rodolfo Giometti "**
+								**subsys_initcall(pps_init);**
+
+**linux/drivers/ptp/ptp_clock.c:	pr_info("PTP clock support registered\n");**
+								**subsys_initcall(ptp_init);**
+
+
