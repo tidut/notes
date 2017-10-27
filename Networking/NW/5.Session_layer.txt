@@ -1,0 +1,36 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:16:47+05:30
+
+====== 5.Session layer ======
+Created Saturday 14 October 2017
+
+=== This layer sets up, coordinates and terminates conversations. Services include authentication and reconnection after an interruption.    On the Internet, Transmission Control Protocol (TCP) and User Datagram Protocol (UDP) provide these services for most applications. ===
+
+* The session layer provides the mechanism for opening, closing and managing a session between end-user application processes,
+* Communication sessions consist of requests and responses that occur between applications. 
+* Session-layer services are commonly used in application environments that make use of remote procedure calls (RPCs).
+
+**An example of a session-layer protocol is the OSI protocol suite session-layer protocol, also known as X.225 or ISO 8327.** 
+
+1. In case of a connection loss this protocol may try to recover the connection. 
+2. If a connection is not used for a long period, the session-layer protocol may close it and re-open it. 
+3. It provides for either full duplex or half-duplex operation and provides synchronization points in the stream of exchanged messages
+4. Sessions are most commonly implemented on Web browsers using protocols such as the Zone Information Protocol, the AppleTalk Protocol and the Session Control Protocol. 
+
+
+{{./screenshot_2017-10-15-144621.png}}
+
+{{./screenshot_2017-10-15-144653.png}}
+
+
+====== Services ======
+
+== Authentication ==
+
+== Authorization ==
+
+== Session restoration (checkpointing and recovery) ==
+
+
+

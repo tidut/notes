@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:16:38+05:30
+
+====== 6.Presentation layer ======
+Created Saturday 14 October 2017
+
+=== This layer is usually part of an operating system (OS) and converts incoming and outgoing data from one presentation format to another (for example, from clear text to encrypted text at one end and back to clear text at the other) ===
+
+* Serves as the data translator for the network also known as syntax layer.
+* Traslates the data between Application layer & Network layer
+* Responsible for integrating all the formats to standard format for effective communication
+* Application layer should be able to point at the data to be moved, and the presentation layer will deal with the rest.
+* Encryption is typically done at this level too, although it can be done on the application, session, transport, or network layers, each having its own advantages and disadvantages. Decryption is also handled at the presentation layer. For example, when logging on to bank account sites the presentation layer will decrypt the data as it is received
+* For example, when you accessed your bank account via the Internet, you used a secure connection provided by the presentation layer. The presentation layer also encrypted your account login information prior to transmission. Finally, at your financial institution's Internet server, the presentation layer decrypted your account login information, making it available for processing. 
+
+
+
+**An example of a presentation service would be the conversion of an EBCDIC-coded text computer file to an ASCII-coded file.**
+
+
+		{{./screenshot_2017-10-15-133450.png}}
+
+
+{{./screenshot_2017-10-15-133606.png}}
+
+
+==== Roles, Functions and Protocols ====
+
+As the translator, the presentation layer converts the data sent by the application layer of the transmitting node into an acceptable and compatible data format based on the applicable network protocol and architecture. 
+
+
+As a functional part of the OSI model ,the presentation layer performs a multitude of data conversion algorithms and character translation functions. 
+
+=== The first function is: ===
+ 
+**Character-Code Translation:** Where the presentation layer translates from the American standard code for information interchange (ASCII) to the extended binary code decimal interchange code (EBCDIC).
+
+=== The second function is: ===
+
+ **Data Conversion:** This is where the presentation layer performs bit order reversal functions, converts CR (byte code for a carriage return) to CR/LF, (byte code for a carriage return with a line feed) and converts integer numbers to floating point numbers.
+
+=== Third function is: ===
+
+**Data Compression,** by reducing the number of bits requiring transmission, which improves the data throughput.
+
+=== The fourth function is: ===
+
+**Data Encryption and Decryption:** Encryption is needed for security purposes when sending data across networks. An encryption algorithm is used during transmission, while a decryption algorithm is used at the receiving node. Encryption and decryption typically involves the secure sockets layer (SSL) protocol, which has become more popular when used by the presentation layer.
+
+=== The fifth functionr is: ===
+
+**Data Translation:** Networks provide the capability of connecting different types of computers, servers and mainframes on the same network and may employ different character sets. The presentation layer is responsible for fixing any irregularities while making translations transparent between networked systems.
+
+{{./screenshot_2017-10-15-142923.png}}
+
+{{./screenshot_2017-10-15-143018.png}}
+
+
+
+

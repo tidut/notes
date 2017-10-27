@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-18T11:31:18+05:30
+
+====== 8 ======
+Created Tuesday 18 July 2017
+
+====== PoWER REsET CLoCK  ManaGement :- ======
+
+Clock Management :-
+
+PRCM module along with control module manages the clocking to device modules.
+
+
+{{./screenshot_2017-07-18-113516.png}}
+{{./screenshot_2017-07-18-113535.png}}
+
+

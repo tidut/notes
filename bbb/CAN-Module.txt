@@ -1,0 +1,511 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-06-06T10:09:38+05:30
+
+====== CAN-Module ======
+Created Tuesday 06 June 2017
+
+{{./screenshot_2017-06-06-101343.png}}
+{{./screenshot_2017-06-06-101411.png}}
+
+
+
+
+== 1. CTL   			CAN-CONTROL ==
+
+	**BIT No		Description :-	**
+	25			Automatic wakes up CAN bus in lower power mode
+	24			Set the lower power mode
+	20			Enable DMA request for IF3
+	19			Enable DMA request for IF2
+	18			Enable DMA request for IF1
+	17			Enable interrupt
+	16			Init Debug enable
+	15 			SW reset enable
+	13-10		Parity on/off
+	9			Auto Bus ON enable
+	8			Interruption debug support enable
+	7			Test mode enable
+	6			configuration change enable
+	5			Disable automatic re-transmission
+	3			Error interrupt enable
+	2			status change interrupt enable
+	1			Interrupt line 0 enable
+	0			Normal/Initialization mode
+
+
+== 2. ES  			ERROR & STATUS  ==
+
+	**BIT No		Description :-	**
+	10			lower power downmode ack
+	9			wakeup pending
+	8			parity error detected
+	7			Bus off state
+	6			warning state
+	5			error passive state
+	4			Received a message successfully
+	3			Transmitted a message successfully
+	2-0			Last error code
+					0 	no error
+					1	stuff error
+					2	form error
+					3	Ack error
+					4	bit1 error
+					5	bit0 error
+					6	CRC error
+					7 	No CAN bus event was detected
+
+
+== 3. ERRC  			ERROR count register ==
+	**BIT No		Description :-	**
+	15			Rx error passive
+	14-8			Rx error counter
+	13-0			Transmit error counter
+
+
+== 4. BTR  			Bit timing register ==
+	**BIT No		Description :-	**	
+	19-16		Baud rate prescalar extension
+	14-12		time segment after sample point
+	11-8			time segment before sample point
+	7-6			Synchronizaton jump width
+	5-0			Baud rate prescalar
+
+
+== 5. INT			Register ==
+	**BIT No		Description**
+	23-16		interrupt 1 identifier
+	15-0			interrupt 0 identifier
+
+
+== 6. Test			Register ==
+	**BIT No		Description**
+	9			RAM direct access enable
+	8			External loopback mode
+	7			Rx pin
+	6-5			Tx pin
+	4 			Loop
+	3			Silent
+
+
+== 7. PEER ==
+	**BIT No		Description**
+	10-8			Word number where parity error has been detected
+	7-0			Message number
+
+
+== 8. ABOTR		Register ==
+	**BIT No		Description**
+	31-0			Number of OCP clock cycles before a Bus off recovery sequence is started 
+	
+== 9. TXRQ_X		Register ==
+	**BIT No		Description**
+	15-0			trasnmit request for Reg 8 to 1
+				  each reg takes 2 bit
+
+
+== 10. TXRQ12		Register ==
+	**BIT No		Description**
+	31-16		Tx req bits
+	15-0			Tx req bits
+
+
+== 11. TXRQ34		Register ==
+	**BIT No		Description**
+	31-16		Tx req bits
+	15-0			Tx req bits
+
+12. 
+== TXRQ56 ==
+
+	**BIT No		Description**
+	31-16		Tx req bits
+	15-0			Tx req bits
+
+13. 
+== TXRQ78 ==
+
+	**BIT No		Description**
+	31-16		Tx req bits
+	15-0			Tx req bits
+
+14. 
+== NWDAT_X_  ==
+
+	**BIT No		Description**
+	15-0			New trasnmit request for Reg 8 to 1
+				  each reg takes 2 bit
+
+15. 
+== NWDAT12 Register ==
+
+**BIT No		Description**
+31-16		New data bits
+15-0			New Data bits
+
+16. == NWDAT34 Register ==
+
+	**BIT No		Description**
+	31-16		New data bits
+	15-0			New Data bits
+
+17. 
+== NWDAT56 Register ==
+
+	**BIT No		Description**
+	31-16		New data bits
+	15-0			New Data bits
+
+== 18. NWDAT56 Register ==
+	**BIT No		Description**
+	31-16		New data bits
+	15-0			New Data bits
+
+
+== 19. NWDAT78 Register ==
+	**BIT No		Description**
+	31-16		New data bits
+	15-0			New Data bits
+
+20. 
+== INTPND_X  ==
+
+	**BIT No		Description**
+	15-0			INTERRUPT pending for Reg 8 to 1
+				  each reg takes 2 bit
+
+21. 
+== INTPND_12 ==
+
+	**BIT No		Description**
+	31-16		INTERRUPT pending bits
+	15-0			INTERRUPT pending bits
+
+22. 
+== INTPND_34 ==
+
+	**BIT No		Description**
+	31-16		INTERRUPT pending bits
+	15-0			INTERRUPT pending bits  
+
+22. == INTPND_56 ==
+
+	**BIT No		Description**
+	31-16		INTERRUPT pending bits
+	15-0			INTERRUPT pending bits  
+
+23. == INTPND_78 ==
+
+	**BIT No		Description**
+	31-16		INTERRUPT pending bits
+	15-0			INTERRUPT pending bits  
+
+24. == MSGVAL_X ==
+
+	**BIT No		Description**
+	15-0			For 8 registers 2 bits for 8 registers  
+
+25. == MSGVAL12 ==
+
+	**BIT No		Description**
+	31-16		MSG Valid bits
+	15-0			MSG Valid bits
+
+26. 
+== MSGVAL34 ==
+
+	**BIT No		Description**
+	31-16		MSG Valid bits
+	15-0			MSG Valid bits
+
+== 27. MSGVAL56 ==
+	**BIT No		Description**
+	31-16		MSG Valid bits
+	15-0			MSG Valid bits
+
+28. == MSGVAL78 ==
+
+	**BIT No		Description**
+	31-16		MSG Valid bits
+	15-0			MSG Valid bits
+
+29. == INTMUX12 ==
+
+	**BIT No		Description**
+	31-16		Multiplexes [[IntPnd]] value to either DCA 0 or 1
+	15-0			Multiplexes [[IntPnd]] value to either DCA 0 or 1
+
+
+== 30. INTMUX34 ==
+	**BIT No		Description**
+	31-16		Multiplexes [[IntPnd]] value to either DCA 0 or 1
+	15-0			Multiplexes [[IntPnd]] value to either DCA 0 or 1
+
+
+== 31. INTMUX56 ==
+	**BIT No		Description**
+	31-16		Multiplexes [[IntPnd]] value to either DCA 0 or 1
+	15-0			Multiplexes [[IntPnd]] value to either DCA 0 or 1
+
+
+== 32. INTMUX78 ==
+	**BIT No		Description**
+	31-16		Multiplexes [[IntPnd]] value to either DCA 0 or 1
+	15-0			Multiplexes [[IntPnd]] value to either DCA 0 or 1
+
+31. 
+== IF1CMD  ==
+
+	**BIT No		Description**
+	23			R/W data direction
+	22			Access mask bits
+	21			Access arbitraion bits
+	20			Access control bits
+	19			control Int pneding bits
+	18 			Access transmission req bits
+	17			Access data bytes 0 to 3
+	16			Access data bytes 4 to 7
+	15			Busy flag
+	14			dma Active
+	7-0			Message no	
+	
+32. == IF1MSK ==
+
+	**BIT No		Description**
+	31			mASK EXTENDED IDENTIFIER
+	30			Mark message Direction
+	28-0			Indentifier Mask
+	
+33. == IF1ARB ==
+
+	**BIT No		Description**
+	31			Msg valid
+	30			Extended indentifier
+	29			Message direction
+	28-0			Message indentifier
+
+34. 
+== IF1MCTL ==
+
+	**BIT No		Description**
+	15			New data
+	14			Msg Lost
+	13			Interrupt Pending
+	12			Use acceptance Mask
+	11			Transmit Interrupt Enable
+	10			Receive Interrupt Enable
+	9			Remote Enable
+	8			Transmit Request
+	7			Data frame 0 to 8 data bits
+	3-0			Data length code
+	
+34. == IF1Dat A Reg ==
+
+	**BIT No		Description**
+	31-24		Data 3
+	23-16		Data 2
+	15-8			Data 1
+	7-0			Data 0
+
+
+== IF1Dat B Reg ==
+	**BIT No		Description**
+	31-24		Data 7
+	23-16		Data 6
+	15-8			Data 5
+	7-0			Data 4
+
+
+== 36. IF2CMD  ==
+	**BIT No		Description**
+	23			R/W data direction
+	22			Access mask bits
+	21			Access arbitraion bits
+	20			Access control bits
+	19			control Int pneding bits
+	18 			Access transmission req bits
+	17			Access data bytes 0 to 3
+	16			Access data bytes 4 to 7
+	15			Busy flag
+	14			dma Active
+	7-0			Message no	
+	
+== 37. IF2MSK ==
+	**BIT No		Description**
+	31			mASK EXTENDED IDENTIFIER
+	30			Mark message Direction
+	28-0			Indentifier Mask
+	
+== 38. IF2ARB ==
+	**BIT No		Description**
+	31			Msg valid
+	30			Extended indentifier
+	29			Message direction
+	28-0			Message indentifier
+
+ 
+
+== 39. IF2MCTL ==
+	**BIT No		Description**
+	15			New data
+	14			Msg Lost
+	13			Interrupt Pending
+	12			Use acceptance Mask
+	11			Transmit Interrupt Enable
+	10			Receive Interrupt Enable
+	9			Remote Enable
+	8			Transmit Request
+	7			Data frame 0 to 8 data bits
+	3-0			Data length code
+	
+40. == IF2Dat A Reg ==
+
+	**BIT No		Description**
+	31-24		Data 3
+	23-16		Data 2
+	15-8			Data 1
+	7-0			Data 0
+
+
+== 41. IF2Dat B Reg ==
+	**BIT No		Description**
+	31-24		Data 7
+	23-16		Data 6
+	15-8			Data 5
+	7-0			Data 4
+	
+42. == IF3OBS ==
+
+	**BIT No		Description**
+	15			IF3 UPDATE DATA
+	12			Status of data B read access
+	11			Status of data A read access
+	10			Status of control bits read access
+	9			Status of Arbitraion data read access
+	8			Status of mask data read access
+	4			Data B read observation
+	3			Data A read observation
+	2			Control Read observation
+	1			Arbitration data read observation
+	0			Mask  data read observation
+
+43. 
+== IF3MSK ==
+
+	**BIT No		Description**
+	31			Mask extended indentifier
+	30			Mask message Direction
+	28-0			Indentifier Mask
+
+44. 
+== IF3ARB ==
+
+	**BIT No		Description**
+	31			Message Valid
+	30			Extended identifier
+	29			Message Direction
+	28-0			Message identifier
+	
+45. == IF3MCTL ==
+
+	**BIT No		Description**
+	15			New Data
+	14			Msg lost
+	13			Interrupt Pending
+	12			use acceptance mask
+	11			Tx Interrupt enable
+	10			Rx Interrupt enable
+	9			Remote enable
+	8			Tx Req
+	7			Data frame 0 to 8 data bits 
+	3-0			Data length code
+
+46. 
+== IF3DATA ==
+
+	**BIT No		Description**
+	31-24		DATA-3
+	23-16		DATA-2
+	15-8			DATA-1
+	7-0			DATA-0
+
+
+== 47. IF3DATB ==
+	**BIT No		Description**
+	31-24		DATA-7
+	23-16		DATA-6
+	15-8			DATA-5
+	7-0			DATA-4
+
+48. == IF3UPD12 ==
+
+	**BIT No		Description**
+	31-16		IF3 UPDATE ENABLED
+	15-0			IF3 UPDATE ENABLED
+
+
+==  49. IF3UPD34 ==
+	**BIT No		Description**
+	31-16		IF3 UPDATE ENABLED
+	15-0			IF3 UPDATE ENABLED
+	
+==  50. IF3UPD56 ==
+	**BIT No		Description**
+	31-16		IF3 UPDATE ENABLED
+	15-0			IF3 UPDATE ENABLED
+
+
+==  51. IF3UPD78 ==
+	**BIT No		Description**
+	31-16		IF3 UPDATE ENABLED
+	15-0			IF3 UPDATE ENABLED
+
+52. == TIOC ==
+
+**BIT No		Description**
+18			CAN-TX PULL UP/DOWN SEL
+17			CAN_TX PULL DISABLE
+16			CAN_TX OPEN DRAIN ENABLE
+3			CAN_TX FUNCTION
+2			CAN_TX DATA DIRECTION
+1			CAN0_TX DATA OUT WRITE
+0			CAN_TX DATA IN
+
+== 53. RIOC ==
+	**BIT No		Description**
+	18			CAN-TX PULL UP/DOWN SEL
+	17			CAN_TX PULL DISABLE
+	16			CAN_TX OPEN DRAIN ENABLE
+	3			CAN_TX FUNCTION
+	2			CAN_TX DATA DIRECTION
+	1			CAN0_TX DATA OUT WRITE
+	0			CAN_TX DATA I
+	
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	**BIT No		Description**
+	
+
+
+
+

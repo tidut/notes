@@ -1,0 +1,96 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:04:24+05:30
+
+====== ARP ======
+Created Monday 16 October 2017
+
+* The Address Resolution Protocol (ARP) feature performs a required function in IP routing. 
+* ARP finds the hardware address, also known as Media Access Control (MAC) address, of a host from its known IP address. 
+* ARP maintains a cache (table) in which MAC addresses are mapped to IP addresses. ARP is part of all Cisco systems that run IP. 
+
+===== How ARP Works =====
+
+When an incoming packet destined for a host machine on a particular local area network arrives at a gateway, the gateway asks the **ARP program to find a physical host or MAC address that matches the IP address.** 
+
+The **ARP program looks in the ARP cache** and, if it finds the address, provides it so that the packet can be converted to the right packet length and format and sent to the machine. 
+
+**If no entry is found for the IP address, ARP broadcasts a request packet** in a special format to all the machines on the LAN to see if one machine knows that it has that IP address associated with it. A machine that recognizes the IP address as its own returns a reply so indicating. **ARP updates the ARP cache for future reference and then sends the packet to the MAC address that replied.**
+
+{{./screenshot_2017-10-16-212122.png}}{{./screenshot_2017-10-16-212142.png}}
+
+* Layer 2 addresses are used for local transmissions between devices that are directly connected. 
+* Layer 3 addresses are used for indirectly connected devices in an internetwork environment. 
+* Each network uses addressing to identify and group devices so that transmissions can be sent and received. 
+* Ethernet (802.2, 802.3, Ethernet II, and Subnetwork Access Protocol [SNAP]), Token Ring, and Fiber Distributed Data Interface (FDDI) use media access control (MAC) addresses that are "burned in" to the network interface card (NIC). The most commonly used network types are Ethernet II and SNAP. 
+
+In order for devices to be able to communicate with each when they are not part of the same network, **the 48-bit MAC address must be mapped to an IP address**. **Some of the Layer 3 protocols used to perform the mapping are:**
+
+* __Address Resolution Protocol (ARP)__
+* __Reverse ARP (RARP)__
+* __Serial Line ARP (SLARP)__
+* __Inverse ARP__
+
+For the purposes of IP mapping, Ethernet, Token Ring, and FDDI frames contain the destination and source addresses. Frame Relay and Asynchronous Transfer Mode (ATM) networks, which are packet-switched, data packets take different routes to reach the same destination. At the receiving end, the packet is reassembled in the correct order.
+
+
+{{./screenshot_2017-10-16-212647.png}}
+
+The Address Resolution Protocol (ARP) was developed to enable communications on an internetwork and is defined by RFC 826. 
+Layer 3 devices need ARP to map IP network addresses to MAC hardware addresses so that IP packets can be sent across networks. 
+
+* Before a device sends a datagram to another device, it looks in its ARP cache to see if there is a MAC address and corresponding IP address for the destination device. 
+* If there is no entry, the source device sends a broadcast message to every device on the network. 
+* Each device compares the IP address to its own. Only the device with the matching IP address replies to the sending device with a packet containing the MAC address for the device (except in the case of "proxy ARP"). 
+* The source device adds the destination device MAC address to its ARP table for future reference, creates a data-link header and trailer that encapsulates the packet, and proceeds to transfer the data. The figure below illustrates the ARP broadcast and response process. 
+
+{{./screenshot_2017-10-16-212805.png}}
+
+* When the destination device lies on a remote network, one beyond another Layer 3 device, the process is the same except that the sending device sends an ARP request for the MAC address of the default gateway. 
+* After the address is resolved and the default gateway receives the packet, the default gateway broadcasts the destination IP address over the networks connected to it.
+* The Layer 3 device on the destination device network uses ARP to obtain the MAC address of the destination device and delivers the packet.
+* Encapsulation of IP datagrams and ARP requests and replies on IEEE 802 networks other than Ethernet use Subnetwork Access Protocol (SNAP). 
+
+
+{{./screenshot_2017-10-16-213018.png}}
+
+{{./screenshot_2017-10-16-213052.png}}
+
+* **Mapping of IP addresses to media access control (MAC) addresses occurs at each hop (Layer 3 device)** on the network for every datagram sent over an internetwork, performance of the network could be compromised.
+* To minimize broadcasts and limit wasteful use of network resources, **Address Resolution Protocol (ARP) caching was implemented.**
+
+**ARP caching is the method of storing network addresses and the associated data-link addresses in memory for a period of time as the addresses are learned.** 
+
+This minimizes the use of valuable network resources to broadcast for the same address each time a datagram is sent. The cache entries must be maintained because the information could become outdated, so it is critical that the cache entries are set to expire periodically. Every device on a network updates its tables as addresses are broadcast.
+
+There are static ARP cache entries and dynamic ARP cache entries. 
+* **Static entries** are manually configured and kept in the cache table on a permanent basis. **Static entries** are best for devices that have to communicate with other devices usually in the same network on a regular basis. 
+* **Dynamic entries** are added by Cisco software, kept for a period of time, and then removed.
+
+{{./screenshot_2017-10-16-213534.png}}
+
+When a network is divided into two segments, a bridge joins the segments and filters traffic to each segment based on Media Access Control (MAC) addresses. 
+The **bridge builds its own address table**, which uses **MAC addresses only, as opposed to a router**, which has an Address Resolution Protocol (ARP) cache that contains both IP addresses and the corresponding MAC addresses. 
+
+{{./screenshot_2017-10-16-213544.png}}
+
+
+{{./screenshot_2017-10-16-213552.png}}
+
+* Reverse ARP (RARP) works the same way as the Address Resolution Protocol (ARP), except that the RARP request packet requests an IP address instead of a media access control (MAC) address. 
+* RARP often is used by diskless workstations because this type of device has no way to store IP addresses to use when they boot. 
+* The only address that is known is the MAC address because it is burned in to the hardware. 
+
+{{./screenshot_2017-10-16-213902.png}}
+
+
+Because of the limitations with RARP, most businesses use Dynamic Host Configuration Protocol (DHCP) to assign IP addresses dynamically. 
+DHCP is cost-effective and requires less maintenance than RARP. 
+
+__The most important limitations with RARP are as follows:__
+* Because RARP uses hardware addresses, if the internetwork is large with many physical networks, a RARP server must be on every segment with an additional server for redundancy. 
+* Maintaining two servers for every segment is costly.
+* Each server must be configured with a table of static mappings between the hardware addresses and the IP addresses. 
+* Maintenance of the IP addresses is difficult.
+* RARP only provides IP addresses of the hosts but not subnet masks or default gateways.
+

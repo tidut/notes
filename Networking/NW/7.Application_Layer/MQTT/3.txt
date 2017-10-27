@@ -1,0 +1,83 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T11:50:25+05:30
+
+====== 3 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-115206.png}}
+
+* The SUBSCRIBE message allows a client to register an interest in one or more topic names with the broker. 
+* Messages published to these topics are delivered from the broker to the client as PUBLISH messages. 
+* The SUBSCRIBE message also specifies the QoS level at which the subscriber wants to receive published messages.
+
+=== Fixed header ===
+
+**QoS level**
+	* SUBSCRIBE messages **use QoS level 1 to acknowledge multiple subscription requests**. The corresponding **SUBACK message is identified by matching the Message ID**. 	
+	* This also handles SUBSCRIBE messages retries in the same way as PUBLISH messages.
+
+**DUP flag**
+	* DUP flag is set to zero (0) to indicate that the message is being sent for the first time. 
+	* If this message is being re-sent because a SUBACK message has not arrived after a specified timeout period, the DUP bit is set to indicate to the broker that it might be a duplicate of a message already received.
+
+**RETAIN flag**
+	* Not used.
+
+**Remaining Length field**
+	* The length of the payload. It can be a multibyte field. 
+
+	{{./screenshot_2017-10-21-115226.png}}
+
+
+
+=== Variable header ===
+
+* The variable header contains a Message ID because a SUBSCRIBE message has a QoS level of 1.
+* Protocol library generates the Message ID, and passes it back to the publishing application, 
+* This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs.
+* Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. 
+* Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian).
+
+The table below shows an example format for the variable header with a Message ID of 10.
+{{./screenshot_2017-10-21-120109.png}}
+
+
+=== Payload ===
+* The payload of a SUBSCRIBE message contains a list of topic names to which the client wants to subscribe, and the QoS level at which the client wants to receive the messages. 
+* The strings are UTF-encoded, and the QoS level occupies 2 bits of a single byte. 
+* These topic/QoS pairs are packed contiguously as shown in the example payload in the table below.
+
+
+			  {{./screenshot_2017-10-21-120211.png}}
+
+
+{{./screenshot_2017-10-21-120359.png}}
+
+**A SUBACK message is sent by the broker to the client to confirm receipt of a SUBSCRIBE message.**
+
+{{./screenshot_2017-10-21-120500.png}}{{./screenshot_2017-10-21-120521.png}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

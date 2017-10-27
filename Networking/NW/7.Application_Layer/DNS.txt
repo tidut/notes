@@ -1,0 +1,120 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:01:28+05:30
+
+====== DNS ======
+Created Monday 16 October 2017
+
+* **The Domain Name System (DNS)** is a hierarchical decentralized naming system for computers, services, or other resources connected to the Internet or a private network.
+* It associates various information with domain names assigned to each of the participating entities. 
+* Most prominently, it translates more readily memorized domain names to the numerical IP addresses needed for locating and identifying computer services and devices with the underlying network protocols. 
+* The Domain Name System delegates the responsibility of assigning domain names and mapping those names to Internet resources by designating authoritative name servers for each domain.
+
+**The Domain Name System** also specifies the technical functionality of the database service that is at its core. It defines the DNS protocol, a detailed specification of the data structures and data communication exchanges used in the DNS, as part of the Internet Protocol Suite. 
+
+
+The Internet maintains two principal namespaces, 
+1. **Domain name hierarchy**
+2. **Internet Protocol (IP) address spaces.**
+ 
+The Domain Name System maintains the domain name hierarchy and provides translation services between it and the address spaces. Internet name servers and a communication protocol implement the Domain Name System. **A DNS name server is a server that stores the DNS records** for a domain; a **DNS name server** responds with answers to queries against its database.
+
+{{./screenshot_2017-10-16-150638.png}}
+{{./screenshot_2017-10-16-150655.png}}
+
+
+{{./screenshot_2017-10-16-150839.png}}
+{{./screenshot_2017-10-16-150857.png}}
+
+{{./screenshot_2017-10-16-151046.png}}
+{{./screenshot_2017-10-16-151147.png}}
+
+{{./screenshot_2017-10-16-151244.png}}
+
+=== How DNS works ?. ===
+
+When user type when user type www.google.com then check with local server if local DNS server doesn't know the IP adrress then it sends the request to root DNS server. 
+
+The **root DNS server** replies with delegation that I do not know the **IP address of www.google.com** but know the **IP address of DNS Server**.
+
+The **local DNS server** then asks the **com DNS Server** the same question.
+
+The **com DNS Server** replies the same that it does not know the IP address of www.google.com but knows the address of google.com.
+
+Then the **local DNS** asks the google.com DNS server the same question.
+
+Then **google.com DNS server** replies with **IP address of www.google.com.**
+
+**Now, the local DNS sends the IP address of www.google.com to the computer that sends the request.**
+
+
+=== Let us understand the DNS in depth how it acquires IP address :- ===
+
+__Step 1: OS Recursive Query to DNS Resolver__
+
+-	Since the operating system doesn’t know where “www.google.com” is, it queries a DNS resolver. 
+-	The query the OS sends to the DNS Resolver has a special flag that tells it is a “recursive query.
+-	Resolver must complete the recursion and the response must be either an IP address or an error.
+
+DNS resolver is provided by their Internet Service Provider (ISP), or they are using an open source alternative 
+such as Google DNS (8.8.8.8) or OpenDNS (208.67.222.222). 
+
+**Resolver goes through a process called recursion to convert the domain name into an IP address.**
+
+__Step 2: DNS Resolver Iterative Query to the Root Server__
+
+* The resolver starts by querying one of the root DNS servers for the IP of “www.google.com.” 
+This query does not have the recursive flag and therefore is an “iterative query,” meaning its response must be an address, the location of an authoritative name server, or an error. The root is represented in the hidden trailing “.” at the end of the domain name. Typing this extra “.” is not necessary as your browser automatically adds it.
+
+* There are 13 root server clusters named A-M with servers in over 380 locations. 
+* They are managed by 12 different organizations that report to the Internet Assigned Numbers Authority (IANA), such as Verisign, who controls the A and J clusters. 
+* All of the servers are copies of one master server run by IANA.
+
+__Step 3: Root Server Response__
+
+* These **root servers hold the locations of all of the top level domains (TLDs)** such as .com, .de, .io, and newer generic TLDs such as .camera.
+* The root doesn’t have the IP info for “www.google.com,” but it knows that .com might know, so it returns the location of the .com servers. 
+* The root responds with a list of the 13 locations of the .com gTLD servers, listed as NS or “name server” records.
+
+__Step 4:  DNS Resolver Iterative Query to the TLD Server__
+
+**Next the resolver queries one of the .com name servers for the location of google.com.** Like the Root Servers, each of the TLDs have 4-13 clustered name servers existing in many locations. 
+There are two types of TLDs: 
+	country codes (ccTLDs) run by government organizations
+	generic (gTLDs). Every gTLD has a different commercial entity responsible for running these servers. 
+
+In this case, we will be using the gTLD servers controlled by Verisign, who run the .com, .net, .edu, and .gov among gTLDs.
+
+__Step 5: TLD Server Response__
+
+**Each TLD server holds a list of all of the authoritative name servers for each domain in the TLD.** 
+For example, each of the 13 .com gTLD servers has a list with all of the name servers for every single .com domain. 
+
+* The .com gTLD server does not have the IP addresses for google.com, but it knows the location of google.com’s name servers. 
+* The .com gTLD server responds with a list of all of google.com’s NS records. 
+* In this case Google has four name servers, “ns1.google.com” to “ns4.google.com.”
+
+__Step 6: DNS Resolver Iterative Query to the Google.com NS__
+
+Finally, the **DNS resolver queries one of Google’s name server** for the IP of “www.google.com.”
+
+__Step 7: Google.com NS Response__
+
+This time the queried Name Server knows the IPs and responds with an A or AAAA address record (depending on the query type) for IPv4 and IPv6, respectively.
+
+__Step 8: DNS Resolver Response to OS__
+
+At this point the resolver has finished the recursion process and is able to respond to the end user’s operating system with an IP address.{{./screenshot_2017-10-16-154315.png}}
+
+
+__Step 9: Browser Starts TCP Handshake__
+
+At this point the operating system, now in possession of www.google.com’s IP address, provides the IP to the Application (browser), which initiates the TCP connection to start loading the page. For more information of this process, we wrote a blog post on the anatomy of HTTP.
+
+As mentioned earlier, this is worst case scenario in terms of the length of time to complete the resolution. In most cases, if the user has recently accessed URLs of the same domain, or other users relying on the same DNS resolver have done such requests, there will be no DNS resolution required, or it will be limited to the query on the local DNS resolver. We will cover this in later articles.
+
+In this DNS non-cached case, four sets of DNS servers were involved, hence a lot could have gone wrong. The end user has no idea what is happening behind the scenes; they are simply are waiting for the page to load and all of these DNS queries have to happen before the browser can request the webpage.
+
+This is why we stress the importance of fast DNS. You can have a fast and well-built site, but if your DNS is slow, your webpage will still have poor response time.
+
+

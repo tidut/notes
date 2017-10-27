@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:17:00+05:30
+
+====== 4.Transport layer ======
+Created Saturday 14 October 2017
+
+=== This layer manages packetization of data, then the delivery of the packets, including checking for errors in the data once it arrives.             On the Internet, TCP and UDP provide these services for most applications as well. ===
+
+* Transmission Control Protocol (TCP) is one of the main protocols of the Internet protocol suite.
+* The protocols of the layer provide host-to-host communication services for applications.
+* It provides services such as **connection-oriented data stream support, reliability, flow control, and multiplexing.**
+
+
+=== The transport layer can provide some or all of the following services: ===
+
+ **Connection-Oriented Communication:** 
+* Devices at the end points of network communication establish a handshake protcols beofre they start exhanging the data.
+* For Each message delivery acknowledghement is required 
+* Due to repeated request causes significant slowdown of network speed.
+
+**Same Order Delivery:**
+* Always ensure packets should be delivered in the sequence.
+* Although Network is responsible for fixing any discrepencies caused by packets drops or device interrruption But Transport layer also can fix it.
+
+**Data Integrity:** 
+* Here checksums helps for data integrity across all the delivery layers.
+* Checksum gaurantees that data transmitted is same as the data received.
+
+**Flow Control:** 
+Devices at each end of a network connection often have no way of knowing each other's capabilities in terms of data throughput and can therefore send data faster than the receiving device is able to buffer or process it. In these cases, buffer overruns can cause complete communication breakdowns. Conversely, if the receiving device is not receiving data fast enough, this causes a buffer underrun, which may well cause an unnecessary reduction in network performance.
+    
+**Traffic Control:** Digital communications networks are subject to bandwidth and processing speed restrictions, which can mean a huge amount of potential for data congestion on the network. This network congestion can affect almost every part of a network. The transport layer can identify the symptoms of overloaded nodes and reduced flow rates.
+
+**Multiplexing:** The transmission of multiple packet streams from unrelated applications or other sources (multiplexing) across a network requires some very dedicated control mechanisms, which are found in the transport layer. This multiplexing allows the use of simultaneous applications over a network such as when different internet browsers are opened on the same computer. In the OSI model, multiplexing is handled in the service layer.
+
+**Byte orientation:** Some applications prefer to receive byte streams instead of packets; the transport layer allows for the transmission of byte-oriented data streams if required.
+
+
+	  {{./screenshot_2017-10-15-213745.png}}
+
+			 {{./screenshot_2017-10-15-213931.png}}
+
+
+
+

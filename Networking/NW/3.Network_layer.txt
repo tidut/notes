@@ -1,0 +1,39 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:17:12+05:30
+
+====== 3.Network layer ======
+Created Saturday 14 October 2017
+
+=== This layer handles the addressing and routing of the data (sending it in the right direction to the right destination on outgoing transmissions and receiving incoming transmissions at the packet level). IP is the network layer for the Internet. ===
+
+* Network layer, is most commonly known as the layer where routing takes place. 
+* A router's main job is to get packets from one network to another.
+* Data is transferred in the form of packets via logical network paths in an ordered format controlled by the network layer. 
+* The network layer is considered the backbone of the OSI Model. It selects and manages the best logical path for data transfer between nodes.
+* This layer contains hardware devices such as routers, bridges, firewalls and switches, but it actually creates a logical image of the most efficient communication route and implements it with a physical medium
+
+{{./screenshot_2017-10-15-222757.png}}{{./screenshot_2017-10-15-222829.png}}
+
+
+{{./screenshot_2017-10-15-222849.png}}
+{{./screenshot_2017-10-15-223015.png}}
+
+{{./screenshot_2017-10-15-222930.png}}
+
+{{./screenshot_2017-10-15-224353.png}}
+
+
+a) How to handle store-and-forward packet switching - This is about how to break up the message into smaller pieces so the whole thing will reassemble at the destination in one meaningful piece.
+
+(b) What services you are going to provide for the transport layer just above - This lets the layer above know what the network layer can be expected to do - there isn't really a standard, so it's a design issue.
+
+(c) How you're going to implement a connection-based service - Wired connections need to be handled on this layer.
+
+(d) How you're going to implement a connection-less service - Wireless connections also need to be handled here.
+
+(e) Whether you are going to use virtual circuits or datagrams - This is a bit out of our scope, but just realize it's important to know which of these will be used since each has its pros and cons.
+
+
+
+{{./screenshot_2017-10-16-001110.png}}

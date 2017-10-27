@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-17T11:15:03+05:30
+
+====== 3 ======
+Created Monday 17 July 2017
+
+== This is all about chapter 3	:- ARM MPU Subsystem:- ==
+
+
+{{./screenshot_2017-07-17-111856.png}}
+
+== Architecture :- ==
+-	Architecture version v7
+-	L1 & L2 Instruction & Data cache
+-	Neon Processor
+-	Embedded Trace Macrocell
+
+== AXI2COP Bridge :- ==
+-	Allows communication between ARM INTC & OCP Modules
+
+== Interrupt controller :- ==
+
+== Emulation & Debug :- ==
+
+== Clock Generation :- ==
+
+== I2ASYNC :-  ==
+-	Provides interface between OCP to OCP
+-	As well as between T2Async & betwee external MPU sub-system
+
+== Clock Divider :- ==
+
+
+{{./screenshot_2017-07-17-113128.png}}
+
+
+=== If You look at diagram you can find clock distribution ===
+
+====== PRCM :- Power & Control Management ======
+
+{{./screenshot_2017-07-17-113931.png}}
+
+
+====== RESET  ======
+
+{{./screenshot_2017-07-17-114131.png}}
+{{./screenshot_2017-07-17-114150.png}}
+
+
+====== Open Core Protocol ======
+====== From Wikipedia, the free encyclopedia ======
+
+1. The Open Core Protocol (OCP) is a protocol for on-chip subsystem communications. 
+2. It is an openly licensed, core-centric protocol and defines a bus-independent, configurable interface. 
+3. OCP International Partnership (OCP-IP) produces OCP specifications. 
+4. OCP data transfer models range from simple request-grant handshaking through pipelined request-response to complex out-of-order operations.
+
+
+
+

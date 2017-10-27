@@ -1,0 +1,162 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-24T21:21:02+05:30
+
+====== Telnet ======
+Created Tuesday 24 October 2017
+
+====== Concept : - ======
+
+* Telent is Terminal Network. 
+* It is standard TCP/IP protocol for virtual terminal as proposed by ISO
+* Telent enables the establishment of a connection to a remote system in such a way that local terminal appears to be a terminal at the remote system.
+* Rlogin is a remote login protocol provided by BSD Unix.
+* Purpose of the TELNET Protocol is to provide a fairly general,   bi-directional, eight-bit byte oriented communications facility.
+* Primary goal is to allow a standard method of interfacing terminal  devices and terminal-oriented processes to each other.  
+* Protocol may also be used for terminal-terminal  communication ("linking") and process-process communication.
+* A TELNET connection is a Transmission Control Protocol (TCP)  connection used to transmit data with TELNET control information.
+
+
+
+**Telnet is a client-server protocol**, based on a reliable connection-oriented transport. 
+Typically, this protocol is used to establish a connection to Transmission Control Protocol (TCP) port number 23, 
+where a Telnet server application (telnetd) is listening. 
+Telnet, however, predates TCP/IP and was originally run over Network Control Program (NCP) protocols.
+
+
+**TELNET Protocol is built upon three main ideas:**  
+
+	1. Cconcept of a "Network Virtual Terminal"
+	2. The principle of negotiated options 
+	3. A symmetric view of terminals and processes.
+
+
+== Time sharing Environment :- ==
+* It is basically a time sharing environment.
+* A large computers supports multiple users.
+* The interaction between a user & computer through a terminal 
+
+=== Login ===
+
+* In time sharing environment users are part of system with some rights to access teh resource
+* Each authorized has identification & probably a paswword also
+* User authentification dfines the user as a part of system
+* To access sysetm user logs into the system with user id or login name.
+* The system also facilitates password checks the password
+
+=== Types of Login :- ===
+
+	1. === Local Login : - ===
+
+	* When user logs to local system
+	* when user types on terminal then whatever uswer types on terminal it is accepted by terminal driver which passes characters to OS
+	* Based on user inputs terminal driver executes application.
+
+													   {{./screenshot_2017-10-24-214837.png}}
+
+ 
+
+=== Remote Login :- ===
+
+
+	* When user wants to access asn application program or utility located on remote machine
+	* Telnet client & server program comes into use
+	* Here user send the keystrokes to terminal driver where the local OS accespts characters but does not interpret them.
+	* Characters send to Telent client which transforms the characters to a universal characters called **Network Terminal Characters** & delivers them to local TCP/IP stack.
+            
+							  {{./screenshot_2017-10-24-215429.png}}
+
+
+	* The commands or text in NVT form which travels through the Internet & arrives at TCP/IP stack at the remote machine
+	* Characters are delivered to OS & passed to Telnet server which can understand the characters by remote computers.
+	* But remember characters cannot passed directly to OS from Telent server
+	* It is designed to receive the characters from TELNET server.
+	* OS basically gets the data through terminal driver.
+
+
+=== Network Virtual Terminal (NVT):- ===
+
+* Basically todays world we work with many different types of systems
+* To access remote system we must know what types of computer used by that computer
+
+	**But TELNET solves this problem**
+
+* Provides the universal interface called Netowrk Virtual Terminal (NVT) character set
+* Telent client translates into NVT form & delivers them to network.
+* The Telnet Server translates data & command from NVT form which is acceptable by remote computer
+
+
+			  {{./screenshot_2017-10-24-220317.png}}
+
+
+=== NVT Character set : ===
+	
+	Types 
+	1. one for Data
+	2. one for Remote control
+
+	Both are 8 bit bytes
+	
+
+=== Data Characters : - ===
+* NVT normally uses called NVT ASCII
+* This is 8 bit character set in which 7 lower bits same as US ASCII & highest order bit is 0
+* It is possible to send highest order bit is 0 or 1 but must be agreed upon client & server
+
+
+				{{./screenshot_2017-10-24-222031.png}}
+
+=== Remote control Characters : - ===
+* NVT uses an eight bit charcter set in which highest order bit is set.
+
+						 {{./screenshot_2017-10-24-222101.png}} 
+				  {{./screenshot_2017-10-24-222153.png}}
+
+
+
+=== Embedding :- ===
+
+* Telent uses only one TCP connection
+* Server uses port 23 & cleint uses an ephemeral port.
+* Same connection is sued for sending the both data & remote control characters
+
+
+=== Options : - ===
+
+* During the use of Telent TELNET can negotiate options before or during the services.
+         
+
+				   {{./screenshot_2017-10-24-223053.png}}
+
+
+{{./screenshot_2017-10-24-223142.png}}
+
+=== Option Negotiation :- ===
+
+* To use any option first requires negotiation between client & server.
+* Four control characters are used for this purpose.
+		{{./screenshot_2017-10-24-223804.png}}
+
+
+
+
+			  {{./screenshot_2017-10-24-224003.png}}
+
+		  {{./screenshot_2017-10-24-224108.png}}                    
+
+	   {{./screenshot_2017-10-24-224122.png}}
+
+
+			 {{./screenshot_2017-10-24-224209.png}}
+
+
+
+
+
+
+
+
+
+
+
+

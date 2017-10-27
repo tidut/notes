@@ -1,0 +1,116 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T14:57:22+05:30
+
+====== 3 ======
+Created Saturday 21 October 2017
+
+
+====== Requests ======
+
+* CoAP supports the basic methods of GET, POST, PUT, and DELETE, which  are easily mapped to HTTP.  
+* GET method is safe; therefore, it MUST NOT take any other action on a resource other than retrieval.  
+* The GET, PUT, and DELETE methods MUST  be performed in such a way that they are idempotent.  
+* POST is not idempotent, because its effect is determined by the origin server and dependent on the target resource
+* it usually results in a new  resource being created or the target resource being updated.
+* A request is initiated by setting the Code field in the CoAP header of a Confirmable or a Non-confirmable message to a Method Code including request information.
+
+====== Responses ======
+
+* After receiving and interpreting a request, a server responds with a  CoAP response matched to the request by means of a client-
+   generated token.
+* Note that this is different from the Message ID that matches a Confirmable message to its Acknowledgement.
+* A response is identified by the Code field in the CoAP header being  set to a Response Code.  Similar to the HTTP Status Code, 
+* CoAP Response Code indicates the result of the attempt to understand and  satisfy the request.  
+* The Response Code numbers to be set in the Code field of the CoAP header are maintained in the CoAP Response Code Registry
+
+							  0
+							  0 1 2 3 4 5 6 7
+							 +-+-+-+-+-+-+-+-+
+							 |class|  detail |
+							 +-+-+-+-+-+-+-+-+
+
+				 Structure of a Response Code
+   There are 3 classes of Response Codes:
+
+   2 - Success:  The request was successfully received, understood, and  accepted.
+
+   4 - Client Error:  The request contains bad syntax or cannot be   fulfilled.
+
+   5 - Server Error:  The server failed to fulfill an apparently valid request.
+
+
+
+====== Options ======
+
+   Both requests and responses may include a list of one or more
+   options.  For example, the URI in a request is transported in several
+   options, and metadata that would be carried in an HTTP header in HTTP
+   is supplied as options as well.
+
+   CoAP defines a single set of options that are used in both requests
+   and responses:
+
+   o  Content-Format
+
+   o  ETag
+
+   o  Location-Path
+
+   o  Location-Query
+
+   o  Max-Age
+
+   o  Proxy-Uri
+
+   o  Proxy-Scheme
+
+   o  Uri-Host
+
+   o  Uri-Path
+
+   o  Uri-Port
+
+   o  Uri-Query
+
+   o  Accept
+
+   o  If-Match
+
+   o  If-None-Match
+
+   o  Size1
+
+====== GET ======
+
+The GET method retrieves the information of the resource identified by the request URI. Upon success a 200 (OK) response SHOULD be sent.
+
+====== POST ======
+
+The POST method is used to request the server to create a new subordinate resource under the requested parent URI. If a resource has been created on the server, the response SHOULD be 201 (Created) including the URI of the new resource in a Location Option with any possible status in the message body. If the POST succeeds but does not result in a new resource being created on the server, a 200 (OK) response code SHOULD be returned.
+
+====== PUT ======
+
+The PUT method requests that the resource identified by the request URI be updated or created with the enclosed message body. If a resource exists at that URI the message body SHOULD be considered a modified version of that resource, and a 200 (OK) response SHOULD be returned. If no resource exists then the server MAY create a new resource with that URI, resulting in a 201 (Created) response. If the resource could not be created or modified, then an appropriate error response code SHOULD be sent.
+
+====== DELETE ======
+
+The DELETE method requests that the resource identified by the request URI be deleted. The response 200 (OK) SHOULD be sent on success.
+
+
+====== URIs ======
+
+The Universal Resource Identifier (URI) [RFC3986] is an important feature of the web architecture. CoAP supports URIs similarly to HTTP, e.g. coap://[2001:DB8::101]/s/temp, where the authority and path identify the resource to be manipulated.
+
+The CoAP header splits the URI up into four parts with the default coap:// scheme plus Uri-Authority, Uri-Path and Uri-Query CoAP header options. 
+
+The full URI is reconstructed as follows:
+
+{{./screenshot_2017-10-21-152056.png}}
+
+
+{{./screenshot_2017-10-21-152227.png}}
+
+
+**coap-URI = "coap:" "//" host [ ":" port ] path-abempty [ "?" query ]**
+

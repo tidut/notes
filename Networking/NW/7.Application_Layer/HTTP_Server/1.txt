@@ -1,0 +1,50 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T15:39:42+05:30
+
+====== 1 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-154001.png}}
+
+{{./screenshot_2017-10-21-154110.png}}{{./screenshot_2017-10-21-154131.png}}
+
+{{./screenshot_2017-10-21-154253.png}}{{./screenshot_2017-10-21-154314.png}}
+
+
+{{./screenshot_2017-10-21-154414.png}}
+
+
+{{./screenshot_2017-10-21-162607.png}}
+
+
+== Request Header Fields ==
+
+We will study General-header and Entity-header in a separate chapter when we will learn HTTP header fields. For now, let's check what Request header fields are.
+
+The request-header fields allow the client to pass additional information about the request, and about the client itself, to the server. These fields act as request modifiers.Here is a list of some important Request-header fields that can be used based on the requirement:
+
+	Accept-Charset
+	Accept-Encoding
+	Accept-Language
+	Authorization
+	Expect
+	From
+	Host
+	If-Match
+	If-Modified-Since
+	If-None-Match
+	If-Range
+	If-Unmodified-Since
+	Max-Forwards
+	Proxy-Authorization
+	Range
+	Referer
+	TE
+	User-Agent
+
+
+{{./screenshot_2017-10-21-160715.png}}
+{{./screenshot_2017-10-21-161121.png}}
+{{./screenshot_2017-10-21-161026.png}}
+

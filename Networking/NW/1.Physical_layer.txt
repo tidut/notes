@@ -1,0 +1,22 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:17:30+05:30
+
+====== 1.Physical layer ======
+Created Saturday 14 October 2017
+
+=== This layer conveys the bit stream through the network at the electrical, optical or radio level. It provides the hardware means of sending and receiving data on a carrier network. ===
+
+* Physical layer is the lowest layer of all. It is responsible for sending bits from one computer to another. 
+* This layer is not concerned with the meaning of the bits and deals with the physical connection to the network and with transmission and reception of signals.
+* This layer defines electrical and physical details represented as 0 or a 1. 
+* How many pins a network will contain, when the data can be transmitted or not and how the data would be synchronized. 
+
+{{./screenshot_2017-10-16-000515.png}}
+
+{{./screenshot_2017-10-16-000623.png}}{{./screenshot_2017-10-16-000635.png}}
+
+
+
+{{./screenshot_2017-10-16-000744.png}}
+

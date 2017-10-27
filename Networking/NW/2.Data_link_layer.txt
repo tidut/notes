@@ -1,0 +1,67 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:17:22+05:30
+
+====== 2.Data link layer ======
+Created Saturday 14 October 2017
+
+=== This layer sets up links across the physical network, putting packets into network frames. This layer has two sub-layers, the Logical Link Control Layer and the Media Access Control Layer. ===
+
+=== Ethernet is the main data link layer in use. ===
+
+The data link layer or layer 2 is the second layer of the seven-layer OSI model of computer networking. 
+
+* This layer is the protocol layer that transfers data between adjacent network nodes in a wide area network (WAN) or between nodes on the same local area network (LAN) segment.[
+* The data link layer provides the functional and procedural means to transfer data between network entities and might provide the means to detect and possibly correct errors that may occur in the physical layer.
+* The data link layer is concerned with local delivery of frames between devices on the same LAN. 
+* Data-link frames, as these protocol data units are called, do not cross the boundaries of a local network. 
+* Inter-network routing and global addressing are higher-layer functions, allowing data-link protocols to focus on local delivery, addressing, and media arbitration. 
+* Data-link protocols specify how devices detect and recover from such collisions, and may provide mechanisms to reduce or prevent them.
+
+**Examples of data link protocols** are Ethernet for local area networks (multi-node), the Point-to-Point Protocol (PPP), HDLC and ADCCP for point-to-point (dual-node) connections. In the Internet Protocol Suite (TCP/IP), the data link layer functionality is contained within the link layer, the lowest layer of the descriptive model.
+
+
+
+ {{./screenshot_2017-10-15-225132.png}}
+
+
+**The data link layer has two sublayers: logical link control (LLC) and media access control (MAC).**
+
+=== 1. Logical link control sublayer ===
+
+	* LLC, multiplexes protocols running at the top of data link layer
+	* Provides flow control, acknowledgment, and error notification. 
+	* The LLC provides addressing and control of the data link. 
+	* It specifies which mechanisms are to be used for addressing stations over the transmission medium and for controlling the data exchanged between the originator and recipient machines.
+2. 
+
+== Media access control sublayer ==
+
+
+	* MAC may refer to the sublayer that determines who is allowed to access the media at any one time (e.g. CSMA/CD). 
+	* Other times it refers to a frame structure delivered based on MAC addresses inside.
+
+	The Media Access Control sublayer also determines where one frame of data ends and the next one starts – **frame synchronization.** 
+	There are **four** means of frame synchronization: **time based, character counting, byte stuffing and bit stuffing.**
+
+
+== The time based approach : ==
+	 Simply puts a specified amount of time between frames. The major drawback of this is that new gaps can be introduced or old gaps can be lost due to external influences.
+		
+
+== Character counting ==
+	Simply notes the count of remaining characters in the frame's header. This method, however, is easily disturbed if this field gets faulty in some way, thus making it hard to keep up synchronization.
+		
+
+== Byte stuffing ==
+		Precedes the frame with a special byte sequence such as DLE STX and succeeds it with DLE ETX. Appearances of DLE (byte value 0x10) have to be escaped with another DLE. The start and stop marks are detected at the receiver and removed as well as the inserted DLE characters.
+
+
+== Bit stuffing ==
+	Replaces these start and end marks with flag consisting of a special bit pattern (e.g. a 0, six 1 bits and a 0). Occurrences of this bit pattern in the data to be transmitted are avoided by inserting a bit. To use the example where the flag is 01111110, a 0 is inserted after 5 consecutive 1's in the data stream. The flags and the inserted 0's are removed at the receiving end. This makes for arbitrary long frames and easy synchronization for the recipient. Note that this stuffed bit is added even if the following data bit is 0, which could not be mistaken for a sync sequence, so that the receiver can unambiguously distinguish stuffed bits from normal bits.
+
+{{./screenshot_2017-10-15-235822.png?type=None}}
+
+{{./screenshot_2017-10-15-235949.png}}{{./screenshot_2017-10-16-000003.png}}
+
+

@@ -1,0 +1,209 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:07:05+05:30
+
+====== MQTT ======
+Created Monday 16 October 2017
+
+* MQTT stands for Message Queue Telemetry Transport. 
+* it’s a protocol for transporting messages between two points. 
+* MQTT super lightweight architecture, which is ideal for scenarios where bandwidth is not optimal.
+
+== The MQTT high-level architecture is primarily divided into two parts – a broker and a client. ==
+
+{{./screenshot_2017-10-20-184139.png}}
+
+**Broker :-** 
+* Acts as a hesrt of architectur with capabilities of both subscriber & publisher.
+* Point of contact for all contacts.
+* Primary job is queue & transmit messages from a publisher client to subscriber client.
+* Possess capabilites such as SSL certification, logs, Database storage etc.
+
+**Client is sub divided into** 
+	* Publisher
+	* Subsscriber
+
+* **Clients** very specific & simplified tasks
+* **Publisher client** publishes messages with **TOPIC & QUALITY**
+* **Subscriber client** subscribes to **MESSAGE** with a **TOPIC & QUALITY**.
+
+{{./screenshot_2017-10-20-185050.png}}
+
+* Typically called Message Payload 
+* Formatted as a plain tect giving the user flexibility to structure the message payload to any required format.
+
+
+{{./screenshot_2017-10-20-185116.png}}
+
+* A single unique topic defines a unique pipeline or connection between publisher & subsciber
+* Essentially if the topic of the message published matches the topic subscribed, the subscriber gets the message.
+
+{{./screenshot_2017-10-20-185651.png}}
+
+* MQTT even allows hiearchies to be defined with in topics.
+* Hierarchy levels are separated by slash.
+* A topic for sending temprarture in any room could be “house/living-room/temperature.
+
+
+{{./screenshot_2017-10-20-210546.png}}
+
+ {{./screenshot_2017-10-20-221433.png}}
+* When MQTT client has to send the message to broker then it includes below ones :-
+	* Topic name,
+	* Client ID
+	* User name
+	* Passwords
+* These all are encoded as UTF-8 strings
+
+
+
+
+{{./screenshot_2017-10-20-222011.png}}
+
+{{./screenshot_2017-10-21-085218.png}}
+
+
+MQTT is the primary protocol that devices and applications use to communicate with the IBM Watson™ IoT Platform. Client libraries, information, and samples are provided to help you to connect and integrate your devices with Watson IoT Platform.
+
+====== 1. MQTT  FIXED HEADER :- ======
+
+{{./screenshot_2017-10-20-222040.png}}
+
+{{./screenshot_2017-10-20-222137.png}}
+
+
+{{./screenshot_2017-10-20-222221.png}}
+
+=== DUP ===
+
+* Position: byte 1, bit 3.
+* This flag is set when the client or server attempts to re-deliver a PUBLISH, PUBREL, SUBSCRIBE or UNSUBSCRIBE message. 
+* This applies to messages where the value of QoS is greater than zero (0), and an acknowledgment is required. 
+* When the DUP bit is set, the variable header includes a Message ID.
+* The recipient should treat this flag as a hint as to whether the message may have been previously received. It should not be relied on to detect duplicates.
+
+
+{{./screenshot_2017-10-20-222555.png}}
+
+
+{{./screenshot_2017-10-20-222615.png}}
+
+* Position: byte 1, bit 0.
+* **BIT = 1**  Retain flag indicates that the broker holds the message, and sends it as an initial message to new subscribers to this topic. This means that a new client connecting to the broker can quickly establish the current number of topics. This is useful where publishers send messages on a "report by exception" basis, and it might be some time before a new subscriber receives data on a particular topic. The data has a value of retained or Last Known Good (LKG).
+
+* After sending a **SUBSCRIBE message** to one or more topics, **a subscriber receives a SUBACK message**, followed by **one message for each newly subscribed topic that has a retained value.** The retained value is **published from the broker to the subscriber with the Retain flag set** and with the same QoS with which it was originally published, and is therefore subject to the usual QoS delivery assurances. The Retain flag is set in the message to the subscribers, to distinguish it from "live" data so that it is handled appropriately by the subscriber.
+
+* Because a broker might no longer hold a previously Retained PUBLISH message, there is no guarantee that the subscriber will receive an initial Retained PUBLISH message on a topic.
+
+
+{{./screenshot_2017-10-20-224804.png}}
+
+* This is the Byte 2
+* Indicates the number of remaining bytes in message  including data in the variable header and the payload.
+* Variable length encoding scheme uses a single byte for messages up to 127 bytes long. 
+* Longer messages are handled as follows. Seven bits of each byte encode the Remaining Length data, and the eighth bit indicates any following bytes in the representation. 
+* Protocol limits the number of bytes in the representation to a maximum of four. This allows applications to send messages of up to 268 435 455 (256 MB). The representation of this number on the wire is: 0xFF, 0xFF, 0xFF, 0x7F.
+
+
+
+{{./screenshot_2017-10-20-224825.png}}
+
+====== 2. MQTT  VARIABLE HEADER :- ======
+
+* The message header for some types of MQTT command message contains a variable header. It resides between the fixed header and the payload.
+* The format of the variable header fields are described in the following topics, in the order in which they must appear in the header:
+* The variable length Remaining Length field is not part of the variable header. The bytes of the Remaining Length field do not contribute to the byte count of the Remaining Length value. This value only takes account of the variable header and the payload. See Fixed header for more information.
+
+{{./screenshot_2017-10-20-232137.png}}
+
+**Protocol Version**
+{{./screenshot_2017-10-20-232209.png}}
+
+0. **Reserved flag**
+
+1**. Clean session flag : **
+	a. If this bit 1 broker discards any outstanding messages deletes all subscription for the client & Reset Mesaage ID to 1 
+
+**2. will flag**
+	a. When a message is published by Broker on behalf of client by the broker.
+	b. If the Will flag is set, the Will QoS and Will Retain fields must be present in the Connect flags byte, and the Will Topic and Will Message fields must be present in the payload.
+
+
+**3. will qos**
+4. **will qos **
+	a. bits 4 and 3 of the Connect flags byte.
+	b. Will mesaage is defined in payload of a connect message
+	c. It is sent when client disconnected involuntairly.
+
+5. w**ill retain**
+	a. Will Retain flag indicates whether or not broker should retain the Will message which is published by the broker on behalf of the client in the event that the client is disconnected unexpectedly.
+
+**6. password flag**
+
+7. **username flag**
+
+
+{{./screenshot_2017-10-20-232300.png}}
+
+
+3. ====== PAYLOAD ======
+
+
+The following types of MQTT command message have a payload:
+
+**CONNECT**
+* The payload contains one or more UTF-8 encoded strings. 
+* They specify **a unqiue identifier for the client**, **a Will topic and message and the User Name and Password to us**e. 
+
+**SUBSCRIBE**
+* The **payload contains a list of topic names to which the client can subscribe,** and the QoS level. These strings are UTF-encoded.
+
+**SUBACK**
+* The **payload contains a list of granted QoS levels.** 
+* These are the QoS levels at which the administrators for the server have permitted the client to subscribe to a particular Topic Name. 
+* Granted QoS levels are listed in the same order as the topic names in the corresponding **SUBSCRIBE message.**
+
+====== Message Indentifier ======
+
+
+* The message identifier is present in the variable header of the following MQTT messages: 
+	1. PUBLISH
+	2. PUBACK, 
+	3. PUBREC
+	4. PUBREL
+	5. PUBCOMP
+	6. SUBSCRIBE
+	7. SUBACK
+	8. UNSUBSCRIBE
+	9. UNSUBACK.
+
+* The Message Identifier (Message ID) field is only present in messages where the QoS bits in the fixed header indicate QoS levels 1 or 2.
+* Message ID is a 16-bit unsigned integer.
+* The ordering of the two bytes of the Message Identifier is MSB, then LSB (big-endian).
+* Do not use Message ID 0. It is reserved as an invalid Message ID.
+
+
+{{./screenshot_2017-10-21-092524.png}}
+
+
+5. ====== MQTT and UTF-8 ======
+
+
+* UTF-8 is an efficent encoding of unicode character strings that optimizes the encoding ASCII characters.
+* MQTT protocol uses a subset of UTF-8
+  {{./screenshot_2017-10-21-092709.png}}
+
+
+{{./screenshot_2017-10-21-092831.png}}
+
+
+					  {{./screenshot_2017-10-21-083715.png}}
+
+
+
+Let us undrstand how the connection establish between MQTT **Broker Publisher Subscriber.**
+
+
+
+
+

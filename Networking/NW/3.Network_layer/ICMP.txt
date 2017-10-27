@@ -1,0 +1,117 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:03:49+05:30
+
+====== ICMP ======
+Created Monday 16 October 2017
+
+* ICMP is actually a user of IP protocol--in other words, ICMP messages must be encapsulated within IP packets. 
+* ICMP is implemented as part of the IP layer. So ICMP processing can be viewed as occurring parallel to, or as part of, IP processing. 
+* ICMP is shown as a layer 3 protocol.
+* ICMP is probably most well known as the message protocol used for the ping command. 
+* A ping command sends an ICMP echo request to the target host. 
+* The target host responds with an echo reply. 
+* The ping command is losing some of its usefulness in today's more security-conscious networks: many routers disable responses to echo requests.
+* ICMP for Internet Protocol version 4 is called ICMPv4 and for Internet Protocol version 6 is called ICMPv6. 
+* It is used by network devices, including routers, to send error messages and operational information indicating, for example, that a requested service is not available or that a host or router could not be reached.
+* ICMP differs from transport protocols such as TCP and UDP because it is not typically used to exchange data between systems.
+* ICMP messages are typically used for diagnostic or control purposes or generated in response to errors in IP operations
+
+
+{{./screenshot_2017-10-18-000823.png}}
+
+
+{{./screenshot_2017-10-18-001329.png}}
+
+
+
+
+{{./screenshot_2017-10-19-195933.png}}
+{{./screenshot_2017-10-19-200133.png}}
+
+
+
+{{./screenshot_2017-10-19-200219.png}}
+
+* ICMP uses the  Type 8 & 0 because ICMP uses these mesaages types to test the connectivity.
+* Initiating the generation of echo request to test IP.
+* Once Test machine gets the ping request then it reply back to source host.
+
+
+{{./screenshot_2017-10-19-200525.png}}
+
+* ICMP type 3 messages Destination unreachable alterts a source host of delivery problems while trying to reach destination.
+* Remember Destination host can send only code types 2 & 3 But router can send all codes.
+* Destination unreachable uses the several codes values to Source host Which describes the function of ICMP message being sent.
+
+{{./screenshot_2017-10-20-175335.png}}
+
+* Router canot find the destination network address.
+* Router cannot deliver or forward an IP datagram to destination network.
+
+{{./screenshot_2017-10-20-175522.png}}
+* The host unreachable message alerts the sending host that the destination host requested cannot be found
+
+{{./screenshot_2017-10-20-180326.png}}
+
+* Protocol unreachable indicates that the Transport layer protocol (UDP or TCP) is not available. 
+* The destination host or an intervening gateway might send this message.
+
+{{./screenshot_2017-10-20-180505.png}}
+
+* When application get failed on host itself.
+* The destination host might send this message but host is not able to receive.
+
+{{./screenshot_2017-10-20-180536.png}}
+
+* This message occurs when a router receives a datagram that requires fragmentation.
+* But the router has the DF flag turned on.
+
+{{./screenshot_2017-10-20-180549.png}}
+
+* Message occurs if a router encounters a next hop in the source route that does not reside on a directly connected network.
+
+{{./screenshot_2017-10-20-180600.png}}
+
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular network because it is unknown.
+
+{{./screenshot_2017-10-20-180613.png}}
+
+* Mmessage occurs when a router receives an IP datagram that it cannot deliver or forward to a particular host because it is unknown.
+
+{{./screenshot_2017-10-20-180627.png}}
+
+{{./screenshot_2017-10-20-180638.png}}
+
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular network because it is not allowed. 
+* Access to this network has been prohibited.
+{{./screenshot_2017-10-20-180651.png}}
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular host because it is not allowed. 
+* Access to this host has been prohibited.
+
+{{./screenshot_2017-10-20-180702.png}}
+
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular network because the ToS requested is not available.
+
+{{./screenshot_2017-10-20-180720.png}}
+
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular host because the ToS requested is not available.
+{{./screenshot_2017-10-20-180735.png}}
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular host because it is not allowed. 
+* An administratively configured filter has prohibited access to this process or application.
+
+
+{{./screenshot_2017-10-20-180746.png}}
+
+* Message occurs when a router receives an IP datagram that it cannot deliver or forward to a particular host because the precedence level requested does not match, and is not accepted or is invalid.
+
+{{./screenshot_2017-10-20-180754.png}}
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,8 @@ Created Tuesday 28 March 2017
 
 **Introduction:-** In linux everythng is file.
 
-**Directories:-**	Each file has some contents like name, file creation table, modification date ,file permission. These all 				properites are stored in file' node. A directory is a file that holds node number
+**Directories:-**	Each file has some contents like name, file creation table, modification date ,file permission. 
+These all properites are stored in file' node. A directory is a file that holds node number
 
 Holds below info:
 	1. Node number
@@ -79,7 +80,7 @@ VFS is abstraction layer between application program & filesystem implementation
 {{./screenshot_2017-03-30-134124.png}}{{./screenshot_2017-03-30-134141.png}}
 
 
-{{./screenshot_2017-03-30-134358.png}}{{./screenshot_2017-03-30-134415.png}}
+**used**{{./screenshot_2017-03-30-134358.png}}{{./screenshot_2017-03-30-134415.png}}
 
 __Dentry state : - Three states used unused and negative.__
 

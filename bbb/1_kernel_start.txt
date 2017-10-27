@@ -1,0 +1,80 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-09T08:53:50+05:30
+
+====== 1 kernel start ======
+Created Tuesday 09 May 2017
+
+=== These are the functions which are executed before entering into cpu idle loop ===
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Initializing cgroup subsys cpuset
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 4.4.41+ (taa5kor@KOR1066068VM) (gcc version 5.2.0 (Sourcery CodeBench 2015.12-138) ) #7 SMP PREEMPT RT Fri May 5 16:25:59 IST 2017
+[    0.000000] CPU: ARMv7 Processor [413fc082] revision 2 (ARMv7), cr=10c5387d
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] Machine model: TI AM335x BeagleBone Black
+[    0.000000] cma: Reserved 48 MiB at 0x9c800000
+[    0.000000] Memory policy: Data cache writeback
+[    0.000000] MY CPU: All CPU(s) started in SVC mode.
+[    0.000000] AM335X ES2.1 (sgx neon )
+[    0.000000] PERCPU: Embedded 14 pages/cpu @df908000 s25760 r8192 d23392 u57344
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 129408
+[    0.000000] Kernel command line: console=ttyO0,115200n8 root=/dev/mmcblk0p2 rw; rootfstype=ext4 rootwait; selinux=0
+[    0.000000] PID hash table entries: 2048 (order: 1, 8192 bytes)
+[    0.000000] Dentry cache hash table entries: 65536 (order: 7, 524288 bytes)
+[    0.000000] Inode-cache hash table entries: 32768 (order: 5, 131072 bytes)
+[    0.000000] Memory: 449304K/522240K available (11518K kernel code, 940K rwdata, 3832K rodata, 704K init, 961K bss, 23784K reserved, 49152K cma-reserved, 0K highmem)
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]     vector  : 0xffff0000 - 0xffff1000   (   4 kB)
+[    0.000000]     fixmap  : 0xffc00000 - 0xfff00000   (3072 kB)
+[    0.000000]     vmalloc : 0xe0800000 - 0xff800000   ( 496 MB)
+[    0.000000]     lowmem  : 0xc0000000 - 0xe0000000   ( 512 MB)
+[    0.000000]     pkmap   : 0xbfe00000 - 0xc0000000   (   2 MB)
+[    0.000000]     modules : 0xbf000000 - 0xbfe00000   (  14 MB)
+[    0.000000]       .text : 0xc0008000 - 0xc0f05b4c   (15351 kB)
+[    0.000000]       .init : 0xc0f06000 - 0xc0fb6000   ( 704 kB)
+[    0.000000]       .data : 0xc0fb6000 - 0xc10a1164   ( 941 kB)
+[    0.000000]        .bss : 0xc10a4000 - 0xc11947e0   ( 962 kB)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Preemptible hierarchical RCU implementation.
+[    0.000000]  Build-time adjustment of leaf fanout to 32.
+[    0.000000]  RCU restricting CPUs from NR_CPUS=2 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=32, nr_cpu_ids=1
+[    0.000000] NR_IRQS:16 nr_irqs:16 16
+[    0.000000] IRQ: Found an INTC at 0xfa200000 (revision 5.0) with 128 interrupts
+[    0.000000] OMAP clockevent source: timer2 at 24000000 Hz
+[    0.000024] sched_clock: 32 bits at 24MHz, resolution 41ns, wraps every 89478484971ns
+[    0.000046] clocksource: timer1: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 79635851949 ns
+[    0.000059] OMAP clocksource: timer1 at 24000000 Hz
+[    0.001785] clocksource_probe: no matching clocksources found
+[    0.002207] Console: colour dummy device 80x30
+[    0.002514] WARNING: Your 'console=ttyO0' has been replaced by 'ttyS0'
+[    0.002519] This ensures that you still see kernel messages. Please
+[    0.002523] update your kernel commandline.
+[    0.029853] Calibrating delay loop... 546.81 BogoMIPS (lpj=1093632)
+[    0.029863] pid_max: default: 32768 minimum: 301
+[    0.030106] Security Framework initialized
+[    0.030118] Yama: becoming mindful.
+[    0.030166] AppArmor: AppArmor disabled by boot time parameter
+[    0.030457] Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.030472] Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    0.032046] Initializing cgroup subsys io
+[    0.032083] Initializing cgroup subsys memory
+[    0.032150] Initializing cgroup subsys devices
+[    0.032173] Initializing cgroup subsys freezer
+[    0.032195] Initializing cgroup subsys net_cls
+[    0.032215] Initializing cgroup subsys perf_event
+[    0.032237] Initializing cgroup subsys net_prio
+[    0.032274] Initializing cgroup subsys pids
+[    0.032466] CPU: Testing write buffer coherency: ok
+[    0.032479] ftrace: allocating 34453 entries in 102 pages
+[    0.216170] rest_init() function is called  
+[    0.216970] CPU0: thread -1, cpu 0, socket -1, mpidr 0
+[    0.217264] Setting up static identity map for 0x80008280 - 0x800082e0
+[    0.217734] Tidu cpu_startup_entry() function is called  
+[    0.217741] T * 
+[    0.218214] T * 

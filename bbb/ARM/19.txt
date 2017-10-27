@@ -1,0 +1,76 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-18T16:48:50+05:30
+
+====== 19 ======
+Created Tuesday 18 July 2017
+
+====== UART Module :- ======
+
+{{./screenshot_2017-07-18-164943.png}}
+
+{{./screenshot_2017-07-19-103628.png}}
+
+Let us understand from above code. How is UART is initialized in BBB.
+
+==== Function UART_initUART :- ====
+
+	1. First user should know which uart is selected  & it belongs to which port.
+		a. Port has to be initialized
+		b. GPIO_initPort(GPIO1);
+	2. No user has to select the CM module (UART)
+	3. Select the mode for those HW pins.
+  
+	{{./screenshot_2017-07-18-165742.png}}
+   
+	
+	=== CKM_PER     			 = 0x44E00000, ===
+	
+	=== CKM_PER_GPIO1_CLKCTRL = 0x0AC, ===
+    
+{{./screenshot_2017-07-19-094158.png}}
+
+    {{./screenshot_2017-07-19-093928.png}}
+
+
+This is above the minimum configuration is required from user to understand the UART.
+Apart from this there are other registers also where user has to do setting:
+
+* CKM_setCLKModuleRegister(CKM_WKUP,CKM_WKUP_CLKSTCTRL,temp);  		temp is 0b10
+* CKM_setCLKModuleRegister(CKM_PER,CKM_PER_L4HS_CLKSTCTRL,temp);		temp is 0b10
+* CKM_setCLKModuleRegister(CKM_WKUP,CKM_WKUP_UART0_CLKCTRL,temp);		temp is 0b10
+* CKM_setCLKModuleRegister(CKM_PER,CKM_PER_UART1_CLKCTRL,temp);			temp is 0b10
+
+===== Now the UART module is set user has to configure the config register for UART. =====
+
+== static const unsigned int UART_ARRAY_BASE[] = {0x44E09000, 0x48022000, 0x48024000, 0x481A6000, 0x481A8000, 0x481AA000}; ==
+== unsigned int uart_base = UART_ARRAY_BASE[uart]; ==
+
+1. **Reset the Module :-**
+		**temp = GET32(uart_base+0x54);    // SYSC**
+		**temp |= 0x2;      // uart module reset**
+		**PUT32(uart_base+0x54,temp);**
+		**while((GET32(uart_base+0x58)&1)==0);   // wait for reset to be complete**
+
+
+	    **temp = GET8(uart_base+0x54);**
+**            temp |= (0x1<<3); // no idle**
+**            PUT8(uart_base+0x54,temp);            **
+**            while(((GET32(uart_base+0x14)&0x40)!=0x40));    // wait for txfifo to be empty**
+**3.         PUT8(uart_base+0x04,0);**
+**            PUT8(uart_base+0x20,0x7);        // Disable modeselect (default) TRM table 19-50**
+**            PUT8(uart_base+0x0C,~(0x7C));    // divisor latch enable, access DLL DHL, set uart as 8bit**
+**            PUT8(uart_base+0x00,0);          // DLL = 0**
+**            PUT8(uart_base+0x04,0);          // DHL = 0**
+**            PUT8(uart_base+0x0C,0x3);        // set uart as 8bit**
+**            PUT8(uart_base+0x10,0x3);        // force /rts & /drt to active (low) (?!)**
+**            PUT8(uart_base+0x08,0x7);        // clear rx&tx FIFOs, and enables them (each 64 bytes deep)**
+**            PUT8(uart_base+0x0C,~(0x7C));    // divisor latch enable, access DLL DHL, set uart as 8bit**
+**            PUT8(uart_base+0x00,intdiv&0xFF);          // DLL = 0**
+**            PUT8(uart_base+0x04,(intdiv>>8)&0x3F);          // DHL = 0**
+
+**//          PUT8(uart_base+0x00,26);         // DLL/DHL value for 115200**
+**            PUT8(uart_base+0x0C,0x3);        // set uart as 8 bit**
+**            PUT8(uart_base+0x20,0);          // uart 16x oversampling**
+
+

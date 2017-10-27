@@ -1,0 +1,64 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-07-18T10:02:24+05:30
+
+====== 7 ======
+Created Tuesday 18 July 2017
+
+====== Memory sub-system :- ======
+
+4 types are there :- 
+
+* GPMC
+* OCMC-RAM
+* EMIF
+* ELM
+
+====== GPMC ======
+
+* Genereal purpose memeory controller is unified memeory controller dedeicated to interfacing external memorries.
+* SRAM,NAND,NOR,Pseudo-SRAM devices
+
+== Features :-  ==
+* Data path to external memeory device can be 16 or 8 bit wide
+* 32 bit OCPIP 2.0 compliant core
+* up to 100 MHZ
+
+
+{{./screenshot_2017-07-18-101546.png}}
+
+{{./screenshot_2017-07-18-101735.png}}
+
+
+
+
+====== OCMC-RAM ======
+
+
+OCMC RAM On chip memeory controller consist of two separate modules that are OCP to memeory wrappers.
+
+* First Wrapper is for a ROM.
+* Second is RAM
+
+
+====== EMIF  ======
+
+General features of the EMIF modules are :- 
+* 16 bit data path to external SDRAM memory
+* one 128 bit OCPIP 2.2 interface
+* support for the following devices :-
+	* mDDR
+	* DDR2
+	* DDR3
+
+
+====== ELM ======
+
+Sometimes  Non managed NAND flashes are more error prone In this case some level correction is required.
+In case of NAND modules with no internal correction capabilities better refer to bare -Nands.
+the correction process is delegated to memory controller.
+
+ELM can detect errors, compute number of errors & give location of each error bit.
+
+
+

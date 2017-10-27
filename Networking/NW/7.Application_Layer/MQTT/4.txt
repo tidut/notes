@@ -1,0 +1,55 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T11:51:27+05:30
+
+====== 4 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-121615.png}}
+
+**An UNSUBSCRIBE message is sent by the client to the broker to unsubscribe from named topics.**
+
+=== Fixed Header ===
+
+{{./screenshot_2017-10-21-121628.png}}
+
+
+**QoS level**
+	* The level of QoS is 1 to acknowledge multiple unsubscribe requests. 
+	* Corresponding UNSUBACK message is identified by the Message ID. Retries are handled in the same way as PUBLISH messages.
+**DUP flag**
+	* DUP flag is set to zero (0) to indicate that the message is being sent for the first time.
+	* If this message is being re-sent because a SUBACK message has not arrived after a specified timeout period, the DUP bit is set to indicate to the broker that it might be a duplicate of a message already received.
+**RETAIN flag**
+	* Not used.
+**Remaining Length**
+	* This is the length of the Payload. It can be a multibyte field. 
+
+=== Variable header ===
+
+	* The variable header contains a Message ID because an UNSUBSCRIBE message has a QoS level of 1.
+	* Typically, the protocol library generates the Message ID, and passes it back to the publishing application, for example as a return handle. This prevents multiple applications, or multiple publishing threads, running on a single client from generating duplicate Message IDs.
+	* Message ID 0 (0x0000) is reserved as an invalid Message ID, and must not be used. The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The two bytes of the Message ID are ordered as MSB, followed by LSB (big-endian).
+
+			  {{./screenshot_2017-10-21-121649.png}}
+
+
+{{./screenshot_2017-10-21-122129.png}}
+
+
+=== Fixed Header ===
+
+{{./screenshot_2017-10-21-121738.png}}
+
+**QoS level**
+	* Not used.
+**DUP flag**
+	* Not used.
+**RETAIN flag**
+	* Not used.
+**Remaining Length**
+	* The length of the Variable Header (2 bytes). 
+
+=== Variable ===
+
+{{./screenshot_2017-10-21-122440.png}}=== Variable Header  ===

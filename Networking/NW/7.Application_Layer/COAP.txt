@@ -1,0 +1,130 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:07:29+05:30
+
+====== CoAP ======
+Created Monday 16 October 2017
+
+
+{{./screenshot_2017-10-21-123820.png}}
+
+* **Constrained Application Protocol (CoAP)** is a specialized Internet Application Protocol for constrained devices, as defined in RFC 7228. 
+* It enables those constrained devices called **"nodes" to communicate with the wider Internet using similar protocols.** 
+* **CoAP** is designed for use between devices on the same constrained network (e.g., low-power, lossy networks), **between devices and general nodes on the Internet**, and between **devices on different constrained networks both joined by an internet.** 
+* **CoAP** is also being used via other mechanisms, such as SMS on mobile communication networks.
+* **CoAP** is a **service layer protocol** that is intended for use in **resource-constrained internet devices, such as wireless sensor network nodes.** 
+* **CoAP** is d**esigned to easily translate to HTTP** for simplified integration with the web, while also meeting specialized requirements such as multicast support, very low overhead, and simplicity.[1][2] Multicast, low overhead, and simplicity are extremely important for Internet of Things (IoT) and Machine-to-Machine (M2M) devices, which tend to be deeply embedded and have much less memory and power supply than traditional internet devices have. 
+* **CoAP** can run on most devices that support **UDP or a UDP analogue.**
+* In order to make the protocol **suitable to IoT and M2M applications**, various new functionalities have been added. 
+* The core of the protocol is specified in **RFC 7252;**
+
+====== Features ======
+
+* The nodes often have 8-bit microcontrollers with small amounts of ROM and RAM, while constrained networks such as IPv6 over Low-Power Wireless Personal Area Networks (6LoWPANs) often have high packet error rates and a typical throughput of 10s of kbit/s. 
+* The **protocol is designed for machine-to-machine (M2M)** applications such as smart energy and building automation.[1]
+
+**The CoRE group has designed CoAP with the following features in mind:**
+
+   __CoAP has the following main features:__
+
+   o  Web protocol fulfilling M2M requirements in constrained environments
+
+   o  UDP [RFC0768] binding with optional reliability supporting unicast  and multicast requests.
+
+   o  Asynchronous message exchanges.
+
+   o  Low header overhead and parsing complexity.
+
+   o  URI and Content-type support.
+
+   o  Simple proxy and caching capabilities.
+
+   o  A stateless HTTP mapping, allowing proxies to be built providing  access to CoAP resources via HTTP in a uniform way or for HTTP
+	  simple interfaces to be realized alternatively over CoAP.
+
+   o  Security binding to Datagram Transport Layer Security (DTLS)
+
+====== Introduction to  Constrained Application Protocol ======
+
+
+[ ] [[CoAP]]  is based on client server model of HTTP
+[ ] Cleint sends a request & server reply back with response
+[ ] [[CoAP]]  deal with these interchanges asynchronously over UDP
+[ ] [[CoAP]]  define 4 types of messages
+	[ ] Confirmable
+	[ ] Non-Confirmable
+	[ ] Acknowledgement
+	[ ] Reset 
+[ ] [[CoAP]] uses two layer approach
+	[ ] CoAP messaging layer used to deal with UDP and the asynchronous nature of the interactions
+	[ ] Request/response interactions using Method and Response Codes
+
+{{./screenshot_2017-10-21-130521.png}}
+
+====== Messaging Model ======
+
+[ ] [[CoAP]]  messaging model is based on the exchange of messages over UDP between endpoints
+[ ] [[CoAP]] uses a short fixed length bnary header followed by compact binary options & a payload
+[ ] Message format is shred by requests & responses
+[ ] Each message contains a Message ID used to detect dulicates & for optional reliablity
+[ ] Message ID is 16 bit Max 250 messages per second from one end point to another
+[ ] Reliability is provided by marking a message as confirmable
+	[ ] A confirmable message is transmitted using a default timeout
+	[ ] A message will be retransmitted untill it receives ack with same ID
+
+		 {{./screenshot_2017-10-21-133817.png}}
+		
+		
+	[ ] A message does not require reliability can be send as bob-confirmable message 
+		[ ] No ack req
+		[ ] But still it will have message ID
+		[ ] When recipient is not able to process a Non-Confirmable message it may reply with Reset message.
+			
+			{{./screenshot_2017-10-21-134111.png}}
+			
+	[ ] CoAP runs over UDP, it also supports the use of multicast IP destination addresses, enabling multicast CoAP requests
+
+
+====== Request/Response Model ======
+
+* CoAP request and response semantics are carried in CoAP messages, which include either a Method Code or Response Code, respectively.
+* A Token is  used to match responses to requests independently from the other messages
+* A request is carried in a confirmable or non-confirmable message 
+* if response to request carried in confrimable request results in acknowledgement
+
+			{{./screenshot_2017-10-21-134806.png}}
+
+* If server is not able to respond immediately to a request ccarried in confrimable message
+	* It simply sends the empty string so that client can stop sending
+
+* If message send with non-confrimable style
+
+			{{./screenshot_2017-10-21-135328.png}}
+
+
+* When response is ready then server sends in new-confirmable message
+
+				{{./screenshot_2017-10-21-135143.png}}
+				
+
+* [[CoAP]] make use of GET PUT POST DELETE methods in similar manner to HTTP
+
+
+====== Intermediaries and Caching ======
+
+* [[CoAP]] also supports caching of responses in order to efficently fulfill requets
+* A cache could be located in an end point or an intermediary.
+
+====== Resource Discovery ======
+
+* Resource discovery is important for machine-to-machine interactions   and is supported using the CoRE Link Format
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T16:12:14+05:30
+
+====== 2 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-161239.png}}{{./screenshot_2017-10-21-161252.png}}
+
+
+====== GET Method ======
+
+A GET request retrieves data from a web server by specifying parameters in the URL portion of the request. This is the main method used for document retrieval. 
+
+
+====== HEAD Method ======
+
+The HEAD method is functionally similar to GET, except that the server replies with a response line and headers, but no entity-body.
+
+====== POST Method ======
+
+The POST method is used when you want to send some data to the server, for example, file update, form data, etc. 
+
+====== PUT Method ======
+
+The PUT method is used to request the server to store the included entity-body at a location specified by the given URL.
+
+====== DELETE Method ======
+
+The DELETE method is used to request the server to delete a file at a location specified by the given URL
+
+====== CONNECT Method ======
+
+The CONNECT method is used by the client to establish a network connection to a web server over HTTP.
+
+====== OPTIONS Method ======
+
+The OPTIONS method is used by the client to find out the HTTP methods and other options supported by a web server. The client can specify a URL for the OPTIONS method, or an asterisk (*) to refer to the entire server. 
+
+====== TRACE Method ======
+
+The TRACE method is used to echo the contents of an HTTP Request back to the requester which can be used for debugging purpose at the time of development.
+
+{{./screenshot_2017-10-21-163715.png}}{{./screenshot_2017-10-21-163756.png}}{{./screenshot_2017-10-21-163813.png}}
+
+{{./screenshot_2017-10-21-163851.png}}{{./screenshot_2017-10-21-163904.png}}{{./screenshot_2017-10-21-164019.png}}

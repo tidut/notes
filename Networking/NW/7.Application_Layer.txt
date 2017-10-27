@@ -1,0 +1,74 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-14T23:16:22+05:30
+
+====== 7.Application Layer ======
+Created Saturday 14 October 2017
+
+The OSI model defines the application layer as the user interface responsible for displaying received information to the user.
+
+
+	* Abstraction layer used by host
+	* Usual way of hiding → Implementation details of particular set of functionality
+	* Application layer only standerdize communication :-
+		1. **Peer to peer**
+			a. two or more computers connected to same network without having the dedicated server. 
+				 every connected device can act as server or client
+				
+	2. **Client server model**
+		a. Device who req info is called client. Device who responds is called server
+  
+	3. **host to host**
+	4. Provides set of protocol which are used in this layer
+	5. It is layer where actual communication starts
+	6. Provides end user access to verify of shared services
+	7. Includes error handling recovery Data flow over N/W Full N/W flow
+	8. Helps to develop N/W based application
+	9. When any  **Application Software **sends a message then **Application layer s/w** accespts same                                                                                                      message as I/P from **Application Software **which further adds additional data such as address of target computer.
+	10. May Chop data into chunks
+	11. May wait for reply
+
+=== How Application protocl has to work on both server & client side :- ===
+
+* Must be implemented on both sides
+* Protocol should only establish if both side rules are followed 
+* Protocol specifies how data inside message is stuctured & types of messages
+* Messages should always request for :
+	* Services
+	* Acknowledgement
+	* Data messages
+	* Status messages
+	* Error messages
+
+	
+
+=== Functions of Application Layer :- ===
+	
+	{{./screenshot_2017-10-14-234127.png}}
+
+	{{./pasted_image004.png}}
+	
+	
+
+=== Application layer : ===
+	
+	{{./screenshot_2017-10-14-234649.png}}
+	
+	
+	
+	https://www.quora.com/What-is-the-simplest-explanation-of-the-OSI-model-involving-real-examples
+
+http://www.corenetworkz.com/2009/01/presentation-layer-sixth-layer-in-osi.html
+	
+
+
+
+
+
+
+
+
+
+
+
+

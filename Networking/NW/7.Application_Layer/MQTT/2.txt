@@ -1,0 +1,120 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T10:26:18+05:30
+
+====== 2 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-102634.png}}
+
+* A PUBLISH message is sent by a client to a broker for distribution to interested subscribers. 
+* Each PUBLISH message is associated with a topic name (also known as the Subject or Channel). 
+* A message that is published to a specific topic name is delivered to connected subscribers for that topic.
+
+
+{{./screenshot_2017-10-21-102647.png}}
+
+**QoS level**
+	* Set to 1.
+
+**DUP flag**
+	* Set to zero (0). This means that the message is being sent for the first time.
+	* For messages with QoS level 1 or level 2 that are being re-sent because a failure has been detected, the DUP bit is set to 1. This indicates to the broker that the message might duplicate a message that has already been received. The significance of this information to the broker depends upon the QoS level. The DUP bit is not used for messages with QoS level 0.
+**RETAIN flag**
+	Set to zero. This means do not retain.
+	
+**Remaining Length field**
+	The length of the variable header plus the length of the payload. It can be a multibyte field. 
+
+{{./screenshot_2017-10-21-103414.png}}
+
+The variable header contains the following fields:
+
+{{./screenshot_2017-10-21-102716.png}}
+
+
+**Topic name**
+	* A UTF-encoded string. **a/b**
+
+**Message ID**
+	* Present for messages with QoS level 1 and QoS level 2.
+	* Typically, the protocol library is responsible for generating the Message ID and passing it back to the publishing application, possibly as a return handle. 
+	* This approach avoids the risk of multiple applications, or publishing threads, running on a single client generating duplicate Message IDs.
+	* A Message ID must not be used in the variable header for messages with QoS level 0.
+	* The Message ID is a 16-bit unsigned integer, which typically increases by exactly one from one message to the next, but is not required to do so. The ordering of the 2 bytes of the Message Identifier is MSB, then LSB (big-endian).
+	* Message ID 0 (that is, 0x0000) is reserved as an invalid Message ID, and must not be used.
+
+The table below shows an example variable header for a PUBLISH message.
+
+	{{./screenshot_2017-10-21-102704.png}}
+	
+
+{{./screenshot_2017-10-21-103426.png}}
+
+* Contains the data for publishing. 
+* The content and format of the data is application specific. 
+* Remaining Length field in the fixed header includes both the variable header length and the payload length. As such, it is valid for a PUBLISH to contain a 0-length payload.
+
+{{./screenshot_2017-10-21-104405.png}}
+
+{{./screenshot_2017-10-21-104418.png}}
+
+**PUBLISH messages can be sent either from a publisher to the server, or from the server to a subscriber.** 
+
+The action of the recipient when it receives a message depends on the QoS level of the message:
+
+**QoS 0**
+	Make the message available to any interested parties.
+**QoS 1**
+	Log the message to persistent storage, make it available to any interested parties, and return a PUBACK message to the sender.
+**QoS 2**
+	Log the message to persistent storage, do not make it available to interested parties yet, and return a PUBREC message to the sender.
+
+If the server receives the message, interested parties means subscribers to the topic of the PUBLISH message. If a subscriber receives the message, interested parties means the application on the client which has subscribed to one or more topics, and is waiting for a message from the server.
+
+====== PUBLISH message Reply with QoS level 1. ======
+
+{{./screenshot_2017-10-21-102732.png}}
+
+* A PUBACK message is the response to a PUBLISH message with QoS level 1. 
+* A PUBACK message is sent by a server in response to a PUBLISH message from a publishing client, and by a subscriber in response to a PUBLISH message from the server.
+
+{{./screenshot_2017-10-21-102746.png}}
+
+**QoS level**
+	Not used.
+**DUP flag**
+	Not used.
+**RETAIN flag**
+	Not used.
+**Remaining Length field**
+	This is the length of the variable header (2 bytes). It can be a multibyte field. 
+
+{{./screenshot_2017-10-21-102823.png}}
+
+
+====== PUBLISH message Reply with QoS level 2 ======
+
+{{./screenshot_2017-10-21-113136.png}}
+{{./screenshot_2017-10-21-104924.png}}
+
+
+{{./screenshot_2017-10-21-113722.png}}
+{{./screenshot_2017-10-21-113823.png}}
+
+
+{{./screenshot_2017-10-21-114037.png}}
+
+{{./screenshot_2017-10-21-114102.png}}
+
+
+
+
+
+
+
+
+
+
+
+

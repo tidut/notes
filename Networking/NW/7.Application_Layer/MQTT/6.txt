@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-21T11:51:36+05:30
+
+====== 6 ======
+Created Saturday 21 October 2017
+
+{{./screenshot_2017-10-21-122721.png}}
+{{./screenshot_2017-10-21-122708.png}}

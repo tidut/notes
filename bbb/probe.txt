@@ -1,0 +1,80 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-15T17:22:42+05:30
+
+====== probe ======
+Created Monday 15 May 2017
+
+untitled:155: [    0.574817] Tarun: really_probe called reg-dummy
+untitled:164: [    0.621217] Tarun: really_probe called omap_gpio
+untitled:168: [    0.624147] Tarun: really_probe called omap_gpio
+untitled:171: [    0.626854] Tarun: really_probe called omap_gpio
+untitled:174: [    0.629309] Tarun: really_probe called omap_gpio
+untitled:177: [    0.635845] Tarun: really_probe called omap_hwspinlock
+untitled:178: [    0.644884] Tarun: really_probe called sram
+untitled:179: [    0.645546] Tarun: really_probe called sram
+untitled:185: [    0.656483] Tarun: really_probe called ti-dma-crossbar
+untitled:206: [    1.800839] Tarun: really_probe called edma3-tptc
+untitled:207: [    1.801090] Tarun: really_probe called edma3-tptc
+untitled:208: [    1.801226] Tarun: really_probe called edma3-tptc
+untitled:209: [    1.801649] Tarun: really_probe called edma
+untitled:211: [    1.821447] Tarun: really_probe called reg-fixed-voltage
+untitled:218: [    1.836573] Tarun: really_probe called omap_i2c
+untitled:220: [    1.836712] Tarun: really_probe called omap_i2c
+untitled:227: [    1.838531] Tarun: really_probe called omap-mailbox
+untitled:247: [    2.169397] Tarun: really_probe called armv7-pmu
+untitled:249: [    2.170675] Tarun: really_probe called omap_timer
+untitled:250: [    2.171054] Tarun: really_probe called omap_timer
+untitled:251: [    2.171350] Tarun: really_probe called omap_timer
+untitled:252: [    2.171586] Tarun: really_probe called omap_timer
+untitled:253: [    2.171812] Tarun: really_probe called omap_timer
+untitled:254: [    2.174520] Tarun: really_probe called alarmtimer
+untitled:275: [    2.256453] Tarun: really_probe called pinctrl-single
+untitled:277: [    2.259842] Tarun: really_probe called pwmss
+untitled:278: [    2.263643] Tarun: really_probe called wkup_m3_ipc
+untitled:281: [    2.273783] Tarun: really_probe called serial8250
+untitled:282: [    2.274607] Tarun: really_probe called omap8250
+untitled:285: [    3.403424] Tarun: really_probe called omap8250
+untitled:288: [    3.430191] Tarun: really_probe called bone_capemgr
+untitled:289: [    3.442257] Tarun: really_probe called cpsw
+untitled:290: [    3.461994] Tarun: really_probe called davinci_mdio
+untitled:296: [    3.531034] Tarun: really_probe called SMSC LAN8710/LAN8720
+untitled:299: [    3.554086] Tarun: really_probe called cpsw-phy-sel
+untitled:306: [    3.602387] Tarun: really_probe called am335x-usb-childs
+untitled:307: [    3.609164] Tarun: really_probe called am335x-control-usb
+untitled:308: [    3.615908] Tarun: really_probe called am335x-phy-driver
+untitled:311: [    3.642393] Tarun: really_probe called musb-dsps
+untitled:312: [    3.650411] Tarun: really_probe called musb-hdrc
+untitled:313: [    3.659458] Tarun: really_probe called am335x-phy-driver
+untitled:316: [    3.686229] Tarun: really_probe called musb-dsps
+untitled:317: [    3.694300] Tarun: really_probe called musb-hdrc
+untitled:325: [    3.746511] Tarun: really_probe called usb
+untitled:326: [    3.751419] Tarun: really_probe called hub
+untitled:330: [    3.778306] Tarun: really_probe called cppi41-dma-engine
+untitled:332: [    3.815926] Tarun: really_probe called omap_rtc
+untitled:335: [    3.837553] Tarun: really_probe called omap_wdt
+untitled:338: [    3.859749] Tarun: really_probe called omap_hsmmc
+untitled:341: [    3.901513] Tarun: really_probe called omap_hsmmc
+untitled:344: [    3.949816] Tarun: really_probe called leds-gpio
+untitled:349: [    3.959618] Tarun: really_probe called wkup_m3_rproc
+untitled:353: [    3.966542] Tarun: really_probe called ti_emif_sram
+untitled:360: [    3.991193] Tarun: really_probe called ti-cpufreq
+untitled:361: [    3.991931] Tarun: really_probe called cpufreq-dt
+untitled:362: [    3.993204] Tarun: really_probe called pm33xx
+untitled:370: [    4.053405] Tarun: really_probe called omap_i2c
+untitled:371: [    4.055889] Tarun: really_probe called tps65217
+untitled:373: [    4.078293] Tarun: really_probe called tps65217-pmic
+untitled:374: [    4.094226] Tarun: really_probe called tps65217-bl
+untitled:376: [    4.097909] Tarun: really_probe called at24
+untitled:379: [    4.101247] Tarun: really_probe called omap_i2c
+untitled:380: [    4.106584] Tarun: really_probe called at24
+untitled:382: [    4.107614] Tarun: really_probe called at24
+untitled:384: [    4.108554] Tarun: really_probe called at24
+untitled:386: [    4.113609] Tarun: really_probe called at24
+untitled:389: [    4.114805] Tarun: really_probe called wkup_m3_ipc
+untitled:390: [    4.121817] Tarun: really_probe called bone_capemgr
+untitled:402: [    4.285369] Tarun: really_probe called cpufreq-dt
+untitled:405: [    4.302733] Tarun: really_probe called pm33xx
+untitled:412: [    4.405190] Tarun: really_probe called mmcblk
+untitled:420: [    4.467241] Tarun: really_probe called mmcblk
+Found 72 matches for "really_probe called".

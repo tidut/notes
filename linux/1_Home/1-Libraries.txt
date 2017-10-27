@@ -92,9 +92,11 @@ http://linuxkernel51.blogspot.in/2012/11/dynamic-loading-and-un-loading-of.html
 	Above commands will produce two fresh object files in current directory add.o, and sub.o. The warning option -Wall enables warnings for many common errors, and should always be used. It combines a large number of other, more specific, warning options which can also be selected individually. For details you can see man page for warnings specified.
 	
 	//Now build the library libheymath.so using the following command.//
-	//[root@host ~]# gcc -shared -o libheymath.so add.o sub.o //
 	
-	//[root@host ~]# gcc -o addDemo addDemo.o libheymath.so//
+	== [root@host ~]# gcc -shared -o libheymath.so add.o sub.o  ==
+	
+	
+	== [root@host ~]# gcc -o addDemo addDemo.o libheymath.so ==
 	//or//
 	//[root@host ~]# gcc -o addDemo addDemo.o -lheymath//
 	//You can list the shared library dependencies which your executable is dependent upon. The ldd <name-of-executable> command does that for you.//

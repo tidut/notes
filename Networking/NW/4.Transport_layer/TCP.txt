@@ -1,0 +1,52 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-15T22:13:24+05:30
+
+====== TCP ======
+Created Sunday 15 October 2017
+
+[ ] The Internet protocol suite is the conceptual model and set of communications protocols used on the Internet and similar computer networks. 
+[ ] It is commonly known as **TCP/IP** because the foundational protocols in the suite are the Transmission Control Protocol (TCP) and the Internet Protocol (IP). 
+[ ] It is occasionally known as the **Department of Defense (DoD)** model, because the development of the networking method was funded by the United States **Department of Defense through DARPA.**
+
+
+* The **transmission Control Protocol (TCP)** is one of the most important protocols of Internet Protocols suite. 
+* It is most widely used protocol for data transmission in communication network such as internet.
+
+
+			{{./screenshot_2017-10-26-223422.png}}
+			
+
+
+=== Features ===
+
+* TCP is reliable protocol. That is, the receiver always sends either positive or negative acknowledgement about the data packet to the sender,          so that the sender always has bright clue about whether the data packet is reached the destination or it needs to resend it.
+
+* TCP ensures that the data reaches intended destination in the same order it was sent.
+
+* TCP is connection oriented. TCP requires that connection between two remote points be established before sending actual data.
+
+* TCP provides error-checking and recovery mechanism.
+
+* TCP provides end-to-end communication.
+
+* TCP provides flow control and quality of service.
+
+* TCP operates in Client/Server point-to-point mode.
+
+* TCP provides full duplex server, i.e. it can perform roles of both receiver and sender.
+
+* Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.
+
+=== Network Function :- ===
+
+* Provides a communication service at an intermediate level between an application program and the Internet Protocol. 
+* It provides host-to-host connectivity at the Transport Layer of the Internet model.
+* At the transport layer, the protocol handles all handshaking and transmission details and presents an abstraction of the network connection to the application. 
+* Application doesnot have to bother 
+
+
+
+
+
+

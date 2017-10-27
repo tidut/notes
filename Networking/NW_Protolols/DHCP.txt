@@ -1,0 +1,81 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T11:13:21+05:30
+
+====== DHCP ======
+Created Monday 16 October 2017
+
+
+* **DHCP** is an application-layer protocol that allows a client machine on the network, to get an IP address and other configuration parameters from the server. 
+* It gets information by exchanging packets between a daemon on the client and another on the server. 
+* Most operating systems now provide a **DHCP client** in their base package.
+* **Dynamic Host Configuration Protocol (DHCP)** is a client/server protocol that automatically provides an Internet Protocol (IP) host with its IP address and other related configuration information such as the subnet mask and default gateway.
+* {{./screenshot_2017-10-16-112149.png}}
+
+=== Why We need DHCP ?. ===
+
+1. Every device on a TCP/IP-based network must have a unique unicast IP address to access the network and its resources. Without DHCP, IP addresses must be configured manually for new computers or computers that are moved from one subnet to another, and manually reclaimed for computers that are removed from the network.
+
+2. DHCP enables this entire process to be automated and managed centrally. The DHCP server maintains a pool of IP addresses and leases an address to any DHCP-enabled client when it starts up on the network. Because the IP addresses are dynamic (leased) rather than static (permanently assigned), addresses no longer in use are automatically returned to the pool for reallocation.
+
+3. The network administrator establishes DHCP servers that maintain TCP/IP configuration information and provide address configuration to DHCP-enabled clients in the form of a lease offer. The DHCP server stores the configuration information in a database, which includes:
+		* Valid TCP/IP configuration parameters for all clients on the network.
+		* Valid IP addresses, maintained in a pool for assignment to clients, as well as excluded addresses.
+		* Reserved IP addresses associated with particular DHCP clients. This allows consistent assignment of a single IP address to a single DHCP client.
+		* The lease duration, or the length of time for which the IP address can be used before a lease renewal is required.
+
+{{./screenshot_2017-10-16-112924.png}}
+{{./screenshot_2017-10-16-112800.png}}{{./screenshot_2017-10-16-112832.png}}{{./screenshot_2017-10-16-112847.png}}
+
+== History ==
+
+In 1984  Reverse Address Resolution Protocol (RARP) was introduced to allow simple device such as Diskless Workstations to dyncamically obtain IP address. It works in data link layer which made it difficult to implement aon many server platforms 
+
+Then RARP subseded by Bootstrap Protocol . This introduced the concept of a relay agent, which allowed the forwarding of BOOTP packets across networks, allowing one central BOOTP server to serve hosts on many IP subnets
+
+DHCP is based on BOOTP but can dynamically allocate IP addresses from a pool and reclaim them when they are no longer in use. It can also be used to deliver a wide range of extra configuration parameters to IP clients, including platform-specific parameters.[4] DHCP was first defined in RFC 1531 in October 1993
+
+== Difference between DHCP vs BOOTP ==
+
+	1. DHCP was designed to replace the older bootp
+	2. Bootp can only provide IP only when system boots while DHCP can provide when OS is already loaded
+	3. DHCP primarily used to provide seemlessly IP while BOOTP used to configure & boot diskless computers
+	4. DHCP can automatically rebind or renew their leases while [[BootP]] requires system restart
+
+=== Operations : - ===
+
+* The DHCP employs a connectionless service model, using the User Datagram Protocol (UDP). 
+* It is implemented with two UDP port numbers for its operations which are the same as for the BOOTP protocol. 
+* UDP port number 67 is the destination port of a server, and UDP port number 68 is used by the client.
+
+**DHCP operations fall into four phases:** 
+* Server discovery
+* IP lease offer 
+* IP lease request
+* IP lease acknowledgement. 
+* These stages are often abbreviated as DORA for discovery, offer, request, and acknowledgement.
+
+The DHCP operation begins with clients broadcasting a request. If the client and server are on different subnets, a DHCP Helper or DHCP Relay Agent may be used. Clients requesting renewal of an existing lease may communicate directly via UDP unicast, since the client already has an established IP address at that point.
+{{./screenshot_2017-10-16-113911.png}}
+
+{{./screenshot_2017-10-16-121619.png}}
+
+The client boradcasts messages on the network subnet mask using the destination address 255.255.255.255
+														or
+														using the specific subnet boradcast address
+* DHCP cliebt may request its last known ip address
+* if client is connected to same network then server may grant the request.
+	* otherwise
+* it depends upon server whether authoritative or not.
+* Only authoritative server can handle the request
+* A non-authoritative server simply ignores the request, leading to an implementation-dependent timeout for the client to expire the request and ask for a new IP address.
+
+{{./screenshot_2017-10-16-123602.png}}{{./screenshot_2017-10-16-123620.png}}
+
+{{./screenshot_2017-10-16-125444.png}}{{./screenshot_2017-10-16-125507.png}}{{./screenshot_2017-10-16-125523.png}}
+
+					{{./screenshot_2017-10-16-125613.png}}
+					
+
+{{./screenshot_2017-10-16-125953.png}}{{./screenshot_2017-10-16-130018.png}}
+

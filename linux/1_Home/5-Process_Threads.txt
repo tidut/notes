@@ -21,7 +21,7 @@ Created Thursday 30 March 2017
 * No 1 process manages all process.
 * A Process has its own stack space used for local variables in function & for controlling function calls.
 * Also maitains the Program counter record where it has gotten to execute.
-* each process is represented by a task_struct data structure. The task vector is an array of pointers to every task_struct data structure in the system.
+* each process is represented by a **task_struct data structure**. The task vector is an array of pointers to every task_struct data structure in the system.
 * As processes are created, a new task_struct is allocated from system memory and added into the task vector. To make it easy to find, the current, running, process is pointed to by the current pointer.
 * As well as the normal type of process, Linux supports real time processes. 
 
@@ -47,7 +47,7 @@ This is a halted process which, for some reason, still has a task_struct data st
 == Scheduling:- ==
 * All processes run partially in user mode and partially in system mode. 
 * User mode has far less privileges than system mode. 
-* Each time a process makes a system call it swaps from user mode to system mode and continues executing. 
+* **Each time a process makes a system call it swaps from user mode to system mode and continues executing.** 
 * At this point the kernel is executing on behalf of the process. 
 * In Linux, processes do not preempt the current, running process, they cannot stop it from running so that they can run. 
 * Each process decides to relinquish the CPU that it is running on when it has to wait for some system event.
@@ -75,7 +75,7 @@ Contains the data that describes the executing program.
 
 == Allocating the Process Descriptor:- ==
 	1. The task_struct structure is allocated via slab allocator dynamically along with that thread_info structure info is created.
-	2. Slab allocation is a memory management mechanism intended for the efficient memory allocation of kernel objects. 
+	2. **Slab allocation** is a memory management mechanism intended for the efficient memory allocation of kernel objects. 
 	3. It eliminates fragmentation caused by allocations and deallocations. 
 	4. The technique is used to retain allocated memory that contains a data object of a certain type for reuse upon subsequent allocations of objects of the same type. 
 	5. It is analogous to an object pool, but only applies to memory, not other resources.
@@ -107,64 +107,64 @@ Contains the data that describes the executing program.
 	__  unsigned long        kernel_stack_page;__
 	__  int                  exit_code, exit_signal;__
 	__  /* ??? */__
-	__  unsigned long        personality;__
-	__  int                  dumpable:1;__
-	__  int                  did_exec:1;__
-	__  int                  pid;__
-	__  int                  pgrp;__
-	__  int                  tty_old_pgrp;__
-	__  int                  session;__
-	__  /* boolean value for session group leader */__
-	__  int                  leader;__
-	__  int                  groups[NGROUPS];__
-	__  /* __
-	__   * pointers to (original) parent process, youngest child, younger sibling,__
-	__   * older sibling, respectively.  (p->father can be replaced with __
-	__   * p->p_pptr->pid)__
-	__   */__
-	__  struct task_struct   *p_opptr, *p_pptr, *p_cptr, *p_ysptr, *p_osptr;__
-	__  struct wait_queue    *wait_chldexit;  __
-	__  unsigned short       uid,euid,suid,fsuid;__
-	__  unsigned short       gid,egid,sgid,fsgid;__
-	__  unsigned long        timeout, policy, rt_priority;__
-	__  unsigned long        it_real_value, it_prof_value, it_virt_value;__
-	__  unsigned long        it_real_incr, it_prof_incr, it_virt_incr;__
-	__  struct timer_list    real_timer;__
-	__  long                 utime, stime, cutime, cstime, start_time;__
-	__/* mm fault and swap info: this can arguably be seen as either__
-	__   mm-specific or thread-specific */__
-	__  unsigned long        min_flt, maj_flt, nswap, cmin_flt, cmaj_flt, cnswap;__
-	__  int swappable:1;__
-	__  unsigned long        swap_address;__
-	__  unsigned long        old_maj_flt;    /* old value of maj_flt */__
-	__  unsigned long        dec_flt;        /* page fault count of the last time */__
-	__  unsigned long        swap_cnt;       /* number of pages to swap on next pass */__
-	__/* limits */__
-	__  struct rlimit        rlim[RLIM_NLIMITS];__
-	__  unsigned short       used_math;__
-	__  char                 comm[16];__
-	__/* file system info */__
-	__  int                  link_count;__
-	__  struct tty_struct    *tty;           /* NULL if no tty */__
-	__/* ipc stuff */__
-	__  struct sem_undo      *semundo;__
-	__  struct sem_queue     *semsleeping;__
-	__/* ldt for this task - used by Wine.  If NULL, default_ldt is used */__
-	__  struct desc_struct *ldt;__
-	__/* tss for this task */__
-	__  struct thread_struct tss;__
-	__/* filesystem information */__
-	__  struct fs_struct     *fs;__
-	__/* open file information */__
-	__  struct files_struct  *files;__
-	__/* memory management info */__
-	__  struct mm_struct     *mm;__
-	__/* signal handlers */__
-	__  struct signal_struct *sig;__
-	__#ifdef SMP__
-	__  int                  processor;__
-	__  int                  last_processor;__
-	__  int                  lock_depth;     /* Lock depth. __
+	__  unsigned long        personality;__ just points to task_struct structur
+__  int                  dumpable:1;__
+__  int                  did_exec:1;__
+__  int                  pid;__
+__  int                  pgrp;__
+__  int                  tty_old_pgrp;__
+__  int                  session;__
+__  /* boolean value for session group leader */__
+__  int                  leader;__
+__  int                  groups[NGROUPS];__
+__  /* __
+__   * pointers to (original) parent process, youngest child, younger sibling,__
+__   * older sibling, respectively.  (p->father can be replaced with __
+__   * p->p_pptr->pid)__
+__   */__
+__  struct task_struct   *p_opptr, *p_pptr, *p_cptr, *p_ysptr, *p_osptr;__
+__  struct wait_queue    *wait_chldexit;  __
+__  unsigned short       uid,euid,suid,fsuid;__
+__  unsigned short       gid,egid,sgid,fsgid;__
+__  unsigned long        timeout, policy, rt_priority;__
+__  unsigned long        it_real_value, it_prof_value, it_virt_value;__
+__  unsigned long        it_real_incr, it_prof_incr, it_virt_incr;__
+__  struct timer_list    real_timer;__
+__  long                 utime, stime, cutime, cstime, start_time;__
+__/* mm fault and swap info: this can arguably be seen as either__
+__   mm-specific or thread-specific */__
+__  unsigned long        min_flt, maj_flt, nswap, cmin_flt, cmaj_flt, cnswap;__
+__  int swappable:1;__
+__  unsigned long        swap_address;__
+__  unsigned long        old_maj_flt;    /* old value of maj_flt */__
+__  unsigned long        dec_flt;        /* page fault count of the last time */__
+__  unsigned long        swap_cnt;       /* number of pages to swap on next pass */__
+__/* limits */__
+__  struct rlimit        rlim[RLIM_NLIMITS];__
+__  unsigned short       used_math;__
+__  char                 comm[16];__
+__/* file system info */__
+__  int                  link_count;__
+__  struct tty_struct    *tty;           /* NULL if no tty */__
+__/* ipc stuff */__
+__  struct sem_undo      *semundo;__
+__  struct sem_queue     *semsleeping;__
+__/* ldt for this task - used by Wine.  If NULL, default_ldt is used */__
+__  struct desc_struct *ldt;__
+__/* tss for this task */__
+__  struct thread_struct tss;__
+__/* filesystem information */__
+__  struct fs_struct     *fs;__
+__/* open file information */__
+__  struct files_struct  *files;__
+__/* memory management info */__
+__  struct mm_struct     *mm;__
+__/* signal handlers */__
+__  struct signal_struct *sig;__
+__#ifdef SMP__
+__  int                  processor;__
+__  int                  last_processor;__
+__  int                  lock_depth;     /* Lock depth. __
 											__  We can context switch in and out__
 											__  of holding a syscall kernel lock... */  __
 	__#endif   __
@@ -197,7 +197,7 @@ andl %esp, %eax
 
 This assumes that the stack size is 8KB. When 4KB stacks are enabled, 4096 is used in lieu of 8192. Current dereferences the task member of thread_info to return the task_struct:
 
-Each process on the system is in exactly one of five different states. This value is represented by one of five flags:
+**Each process on the system is in exactly one of five different states. This value is represented by one of five flags:**
 
 == TASK_RUNNING: ==
 The process is runnable; it is either currently running or on a runqueue waiting to run. This is the only possible state for a process executing in user-space; it can also apply to a process in kernel-space that is actively running.

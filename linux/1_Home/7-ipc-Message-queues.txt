@@ -5,7 +5,8 @@ Creation-Date: 2017-03-31T14:25:05+05:30
 ====== 7-ipc-Message-queues ======
 Created Friday 31 March 2017
 
-Message Queue :- 
+
+== Message Queue :- ==
 
 	1. Two or more process can share or exchange information via access to common system message queue. 
 	2. Process must share the common Key

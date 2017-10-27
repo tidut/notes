@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-13T22:30:44+05:30
+
+====== NW ======
+Created Friday 13 October 2017
+
+**Open Systems Interconnection model (OSI model) :-**
+
+The model is a product of the Open Systems Interconnection project at the International Organization for Standardization (ISO), maintained 
+by the identification ISO/IEC 7498-1.
+
+
+			{{./screenshot_2017-10-13-224340.png}}
+			
+
+At each level N, two entities at the communicating devices (layer N peers) exchange protocol data units (PDUs) by means of a layer N protocol. 
+Each PDU contains a payload, called the service data unit (SDU), along with protocol-related headers or footers.
+
+Data processing by two communicating OSI-compatible devices is done as such:
+
+* The data to be transmitted is composed at the topmost layer of the transmitting device (layer N) into a protocol data unit (PDU).
+* The PDU is passed to layer N-1, where it is known as the service data unit (SDU).
+* At layer N-1 the SDU is concatenated with a header, a footer, or both, producing a layer N-1 PDU. It is then passed to layer N-2.
+* The process continues until reaching the lowermost level, from which the data is transmitted to the receiving device.
+* At the receiving device the data is passed from the lowest to the highest layer as a series of SDUs while being successively stripped from each layer's header or footer, until reaching the topmost layer, where the last of the data is consumed.
+
+
+
+		{{./screenshot_2017-10-13-224457.png}}
+		
+	
+	
+			   {{./screenshot_2017-10-15-001211.png}}
+
+
+				{{./screenshot_2017-10-15-001821.png}}
+

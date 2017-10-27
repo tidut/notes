@@ -1,0 +1,308 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-05-09T09:01:15+05:30
+
+[    0.253947] T * T * T * T * T * T * T * T * T * 
+[    0.253949] Brought up 1 CPUs
+[    0.254001] SMP: Total of 1 processors activated (546.81 BogoMIPS).
+[    0.254019] MY CPU: All CPU(s) started in SVC mode.
+[    0.256750] devtmpfs: initialized
+[    0.302257] T * 
+[    0.302323] VFP support v0.3: implementor 41 architecture 3 part 30 variant c rev 3
+[    0.346435] omap_hwmod: debugss: _wait_target_disable failed
+[    0.405024] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.415149] T * 
+[    0.415152] xor: measuring software checksum speed
+[    0.453876]    arm4regs  :   669.000 MB/sec
+[    0.493838]    8regs     :   599.000 MB/sec
+[    0.533836]    32regs    :   598.000 MB/sec
+[    0.573835]    neon      :   911.000 MB/sec
+[    0.573857] xor: using function: neon (911.000 MB/sec)
+[    0.573929] pinctrl core: initialized pinctrl subsystem
+[    0.574817] Tarun: really_probe called reg-dummy 
+[    0.577663] NET: Registered protocol family 16
+[    0.587058] DMA: preallocated 256 KiB pool for atomic coherent allocations
+[    0.587867] tidu Module gpiolib_sysfs_init successfully started 
+[    0.588045] tidu Module gpiolib_sysfs_init successfully done 
+[    0.597943] T * T * T * 
+[    0.597945] cpuidle: using governor ladder
+[    0.609905] T * T * T * 
+[    0.609907] cpuidle: using governor menu
+[    0.621217] Tarun: really_probe called omap_gpio 
+[    0.621354] Tidu Module omap_gpio_probe successfully started 
+[    0.623248] OMAP GPIO hardware version 0.1
+[    0.623403] Tidu Module omap_gpio_probe successfully done 
+[    0.624147] Tarun: really_probe called omap_gpio 
+[    0.624247] Tidu Module omap_gpio_probe successfully started 
+[    0.626090] Tidu Module omap_gpio_probe successfully done 
+[    0.626854] Tarun: really_probe called omap_gpio 
+[    0.626950] Tidu Module omap_gpio_probe successfully started 
+[    0.628585] Tidu Module omap_gpio_probe successfully done 
+[    0.629309] Tarun: really_probe called omap_gpio 
+[    0.629405] Tidu Module omap_gpio_probe successfully started 
+[    0.631202] Tidu Module omap_gpio_probe successfully done 
+[    0.635845] Tarun: really_probe called omap_hwspinlock 
+[    0.644884] Tarun: really_probe called sram 
+[    0.645546] Tarun: really_probe called sram 
+[    0.654185] No ATAGs?
+[    0.654240] hw-breakpoint: debug architecture 0x4 unsupported.
+[    0.654560] Tarun: platform_device_register called 
+[    0.655259] omap4_sram_init:Unable to allocate sram needed to handle errata I688
+[    0.655289] omap4_sram_init:Unable to get sram pool needed to handle errata I688
+[    0.656483] Tarun: really_probe called ti-dma-crossbar 
+[    0.778029] T * T * T * T * T * T * T * T * 
+[    0.778032] raid6: int32x1  gen()   127 MB/s
+[    0.845994] raid6: int32x1  xor()    96 MB/s
+[    0.913974] raid6: int32x2  gen()   160 MB/s
+[    0.981837] raid6: int32x2  xor()   108 MB/s
+[    1.049972] raid6: int32x4  gen()   155 MB/s
+[    1.117942] raid6: int32x4  xor()   111 MB/s
+[    1.186118] raid6: int32x8  gen()   157 MB/s
+[    1.254084] raid6: int32x8  xor()   100 MB/s
+[    1.321871] raid6: neonx1   gen()   794 MB/s
+[    1.389849] raid6: neonx1   xor()   462 MB/s
+[    1.457835] raid6: neonx2   gen()  1053 MB/s
+[    1.525864] raid6: neonx2   xor()   654 MB/s
+[    1.593878] raid6: neonx4   gen()   597 MB/s
+[    1.661897] raid6: neonx4   xor()   370 MB/s
+[    1.729917] raid6: neonx8   gen()   414 MB/s
+[    1.797837] raid6: neonx8   xor()   356 MB/s
+[    1.797856] raid6: using algorithm neonx2 gen() 1053 MB/s
+[    1.797873] raid6: .... xor() 654 MB/s, rmw enabled
+[    1.797889] raid6: using intx1 recovery algorithm
+[    1.800839] Tarun: really_probe called edma3-tptc 
+[    1.801090] Tarun: really_probe called edma3-tptc 
+[    1.801226] Tarun: really_probe called edma3-tptc 
+[    1.801649] Tarun: really_probe called edma 
+[    1.820755] edma 49000000.edma: TI EDMA DMA engine driver
+[    1.821447] Tarun: really_probe called reg-fixed-voltage 
+[    1.830460] SCSI subsystem initialized
+[    1.834116] T * 
+[    1.834475] GARG: usb_init called
+[    1.834907] usbcore: registered new interface driver usbfs
+[    1.835092] usbcore: registered new interface driver hub
+[    1.835320] usbcore: registered new device driver usb
+
+[    1.836573] Tarun: really_probe called omap_i2c 
+[    1.836650] omap_i2c 44e0b000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c0_pins, deferring probe
+[    1.836712] Tarun: really_probe called omap_i2c 
+[    1.836762] omap_i2c 4819c000.i2c: could not find pctldev for node /ocp/l4_wkup@44c00000/scm@210000/pinmux@800/pinmux_i2c2_pins, deferring probe
+
+[    1.837049] media: Linux media interface: v0.10
+[    1.837214] Linux video capture interface: v2.00
+[    1.837432] pps_core: LinuxPPS API ver. 1 registered
+[    1.837451] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    1.837512] PTP clock support registered
+[    1.838531] Tarun: really_probe called omap-mailbox 
+[    1.839690] omap-mailbox 480c8000.mailbox: omap mailbox rev 0x400
+[    1.844028] T * 
+[    1.844030] NetLabel: Initializing
+[    1.844066] NetLabel:  domain hash size = 128
+[    1.844081] NetLabel:  protocols = UNLABELED CIPSOv4
+[    1.844204] NetLabel:  unlabeled traffic allowed by default
+[    1.844921] clocksource: Switched to clocksource timer1
+[    2.159042] NET: Registered protocol family 2
+[    2.160599] TCP established hash table entries: 4096 (order: 2, 16384 bytes)
+[    2.160728] TCP bind hash table entries: 4096 (order: 4, 114688 bytes)
+[    2.161293] TCP: Hash tables configured (established 4096 bind 4096)
+[    2.161449] UDP hash table entries: 256 (order: 2, 16384 bytes)
+[    2.161530] UDP-Lite hash table entries: 256 (order: 2, 16384 bytes)
+[    2.162120] NET: Registered protocol family 1
+[    2.167384] T * T * 
+[    2.167386] RPC: Registered named UNIX socket transport module.
+[    2.167425] RPC: Registered udp transport module.
+[    2.167442] RPC: Registered tcp transport module.
+[    2.167457] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    2.169397] Tarun: really_probe called armv7-pmu 
+[    2.169642] hw perfevents: enabled with armv7_cortex_a8 PMU driver, 5 counters available
+[    2.170675] Tarun: really_probe called omap_timer 
+[    2.171054] Tarun: really_probe called omap_timer 
+[    2.171350] Tarun: really_probe called omap_timer 
+[    2.171586] Tarun: really_probe called omap_timer 
+[    2.171812] Tarun: really_probe called omap_timer 
+[    2.174520] Tarun: really_probe called alarmtimer 
+[    2.175433] futex hash table entries: 256 (order: 2, 16384 bytes)
+[    2.175640] audit: initializing netlink subsys (disabled)
+[    2.175768] audit: type=2000 audit(2.048:1): initialized
+[    2.205506] T * T * 
+[    2.205508] zbud: loaded
+[    2.206867] VFS: Disk quotas dquot_6.6.0
+[    2.207446] VFS: Dquot-cache hash table entries: 1024 (order 0, 4096 bytes)
+[    2.218246] T * T * 
+[    2.218248] NFS: Registering the id_resolver key type
+[    2.218366] Key type id_resolver registered
+[    2.218386] Key type id_legacy registered
+[    2.218442] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
+[    2.219192] fuse init (API version 7.23)
+[    2.220575] SGI XFS with ACLs, security attributes, realtime, no debug enabled
+[    2.249598] T * T * T * T * 
+[    2.249601] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 249)
+[    2.254195] T * T * 
+[    2.254197] io scheduler noop registered
+[    2.254241] io scheduler deadline registered
+[    2.254383] io scheduler cfq registered (default)
+[    2.256453] Tarun: really_probe called pinctrl-single 
+[    2.257762] pinctrl-single 44e10800.pinmux: 142 pins at pa f9e10800 size 568
+[    2.259842] Tarun: really_probe called pwmss 
+[    2.263643] Tarun: really_probe called wkup_m3_ipc 
+[    2.265215] wkup_m3_ipc 44e11324.wkup_m3_ipc: could not get rproc handle
+[    2.268402] Serial: 8250/16550 driver, 6 ports, IRQ sharing disabled
+[    2.273783] Tarun: really_probe called serial8250 
+[    2.274607] Tarun: really_probe called omap8250 
+[    2.275865] 44e09000.serial: ttyS0 at MMIO 0x44e09000 (irq = 158, base_baud = 3000000) is a 8250
+[    3.399053] console [ttyS0] enabled
+[    3.403424] Tarun: really_probe called omap8250 
+[    3.409334] 481a8000.serial: ttyS4 at MMIO 0x481a8000 (irq = 159, base_baud = 3000000) is a 8250
+[    3.421551] [drm] Initialized drm 1.1.0 20060810
+[    3.430191] Tarun: really_probe called bone_capemgr 
+[    3.442257] Tarun: really_probe called cpsw 
+[    3.461994] Tarun: really_probe called davinci_mdio 
+[    3.500923] T * T * T * T * T * T * T * T * T * 
+[    3.500925] davinci_mdio 4a101000.mdio: davinci mdio revision 1.6
+[    3.511720] davinci_mdio 4a101000.mdio: detected phy mask fffffffe
+[    3.518479] davinci_mdio: dt: updated phy_id[0] from phy_mask[fffffffe]
+[    3.531032] T * T * 
+[    3.531034] Tarun: really_probe called SMSC LAN8710/LAN8720 
+[    3.539307] libphy: 4a101000.mdio: probed
+[    3.543480] davinci_mdio 4a101000.mdio: phy[0]: device 4a101000.mdio:00, driver SMSC LAN8710/LAN8720
+[    3.554086] Tarun: really_probe called cpsw-phy-sel 
+[    3.559594] cpsw 4a100000.ethernet: Detected MACID = d0:39:72:97:a1:09
+[    3.566430] cpsw 4a100000.ethernet: cpts: overflow check period 2125
+[    3.576632] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    3.583362] ehci-platform: EHCI generic platform driver
+[    3.589209] ehci-omap: OMAP-EHCI Host Controller driver
+[    3.595516] usbcore: registered new interface driver usb-storage
+[    3.602387] Tarun: really_probe called am335x-usb-childs 
+[    3.609164] Tarun: really_probe called am335x-control-usb 
+[    3.615908] Tarun: really_probe called am335x-phy-driver 
+[    3.622244] 47401300.usb-phy supply vcc not found, using dummy regulator
+[    3.642391] T * T * T * 
+[    3.642393] Tarun: really_probe called musb-dsps 
+[    3.650411] Tarun: really_probe called musb-hdrc 
+[    3.659458] Tarun: really_probe called am335x-phy-driver 
+[    3.665763] 47401b00.usb-phy supply vcc not found, using dummy regulator
+[    3.686227] T * T * T * 
+[    3.686229] Tarun: really_probe called musb-dsps 
+[    3.694300] Tarun: really_probe called musb-hdrc 
+[    3.701280] musb-hdrc musb-hdrc.1.auto: MUSB HDRC host driver
+[    3.707134] musb-hdrc musb-hdrc.1.auto: new USB bus registered, assigned bus number 1
+[    3.715540] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    3.722385] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.729661] usb usb1: Product: MUSB HDRC host driver
+[    3.734667] usb usb1: Manufacturer: Linux 4.4.41+ musb-hcd
+[    3.740195] usb usb1: SerialNumber: musb-hdrc.1.auto
+[    3.746511] Tarun: really_probe called usb 
+[    3.751419] Tarun: really_probe called hub 
+[    3.755823] hub 1-0:1.0: USB hub found
+[    3.759774] hub 1-0:1.0: 1 port detected
+[    3.778304] T * T * T * 
+[    3.778306] Tarun: really_probe called cppi41-dma-engine 
+[    3.806150] mousedev: PS/2 mouse device common for all mice
+[    3.815926] Tarun: really_probe called omap_rtc 
+[    3.822364] omap_rtc 44e3e000.rtc: rtc core: registered 44e3e000.rtc as rtc0
+[    3.832259] i2c /dev entries driver
+[    3.837553] Tarun: really_probe called omap_wdt 
+[    3.843891] omap_wdt: OMAP Watchdog Timer Rev 0x01: initial timeout 60 sec
+[    3.851734] cpuidle: enable-method property 'ti,am3352' found operations
+[    3.859749] Tarun: really_probe called omap_hsmmc 
+[    3.865428] omap_hsmmc 48060000.mmc: Got CD GPIO
+[    3.901511] T * T * T * T * T * T * T * T * 
+[    3.901513] Tarun: really_probe called omap_hsmmc 
+[    3.940774] T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * T * 
+[    3.940776] mmc0: host does not support reading read-only switch, assuming write-enable
+[    3.949816] Tarun: really_probe called leds-gpio 
+[    3.952064] hidraw: raw HID events driver (C) Jiri Kosina
+[    3.957685] usbcore: registered new interface driver usbhid
+[    3.957693] usbhid: USB HID core driver
+[    3.958291] ashmem: initialized
+[    3.959618] Tarun: really_probe called wkup_m3_rproc 
+[    3.960023]  remoteproc0: wkup_m3 is available
+[    3.960033]  remoteproc0: Note: remoteproc is still under development and considered experimental.
+[    3.960042]  remoteproc0: THE BINARY FORMAT IS NOT YET FINALIZED, and backward compatibility isn't yet guaranteed.
+[    3.966542] Tarun: really_probe called ti_emif_sram 
+[    3.980695] NET: Registered protocol family 10
+[    3.989849] mip6: Mobile IPv6
+[    3.989886] NET: Registered protocol family 17
+[    3.990178] Key type dns_resolver registered
+[    3.990197] mpls_gso: MPLS GSO support
+[    3.990574] omap_voltage_late_init: Voltage driver support not added
+[    3.991193] Tarun: really_probe called ti-cpufreq 
+[    3.991931] Tarun: really_probe called cpufreq-dt 
+[    3.993204] Tarun: really_probe called pm33xx 
+[    3.993328] PM: Cannot get wkup_m3_ipc handle
+[    3.993541] ThumbEE CPU extension supported.
+[    3.993592] Registering SWP/SWPB emulation handler
+[    3.997691] registered taskstats version 1
+[    3.998009] zswap: loaded using pool lzo/zbud
+[    4.023452] Btrfs loaded
+[    4.045468] Key type encrypted registered
+[    4.053405] Tarun: really_probe called omap_i2c 
+[    4.055889] Tarun: really_probe called tps65217 
+[    4.057353] input: tps65217_pwr_but as /devices/platform/ocp/44e0b000.i2c/i2c-0/0-0024/input/input0
+[    4.078293] Tarun: really_probe called tps65217-pmic 
+[    4.094226] Tarun: really_probe called tps65217-bl 
+[    4.097406] tps65217 0-0024: TPS65217 ID 0xe version 1.2
+[    4.097909] Tarun: really_probe called at24 
+[    4.098534] at24 0-0050: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    4.099047] omap_i2c 44e0b000.i2c: bus 0 rev0.11 at 400 kHz
+[    4.101247] Tarun: really_probe called omap_i2c 
+[    4.106584] Tarun: really_probe called at24 
+[    4.107219] at24 2-0054: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    4.107614] Tarun: really_probe called at24 
+[    4.108173] at24 2-0055: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    4.108554] Tarun: really_probe called at24 
+[    4.113187] at24 2-0056: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    4.113609] Tarun: really_probe called at24 
+[    4.114135] at24 2-0057: 32768 byte 24c256 EEPROM, writable, 1 bytes/write
+[    4.114233] omap_i2c 4819c000.i2c: bus 2 rev0.11 at 100 kHz
+[    4.114805] Tarun: really_probe called wkup_m3_ipc 
+[    4.121817] Tarun: really_probe called bone_capemgr 
+[    4.122258]  remoteproc0: powering up wkup_m3
+[    4.122285]  remoteproc0: Booting fw image am335x-pm-firmware.elf, size 217148
+[    4.122580]  remoteproc0: remote processor wkup_m3 is now up
+[    4.122676] wkup_m3_ipc 44e11324.wkup_m3_ipc: CM3 Firmware Version = 0x192
+[    4.128326] bone_capemgr bone_capemgr: Baseboard: 'A335BNLT,00C0,0415BBBK07BE'
+[    4.128365] bone_capemgr bone_capemgr: compatible-baseboard=ti,beaglebone-black - #slots=4
+[    4.164907] bone_capemgr bone_capemgr: slot #0: No cape found
+[    4.204902] bone_capemgr bone_capemgr: slot #1: No cape found
+[    4.244899] bone_capemgr bone_capemgr: slot #2: No cape found
+[    4.284898] bone_capemgr bone_capemgr: slot #3: No cape found
+[    4.285061] bone_capemgr bone_capemgr: initialized OK.
+[    4.285369] Tarun: really_probe called cpufreq-dt 
+[    4.288676] cpufreq: cpufreq_online: CPU0: Running at unlisted freq: 550000 KHz
+[    4.300341] cpufreq: cpufreq_online: CPU0: Unlisted initial frequency changed to: 600000 KHz
+[    4.302733] Tarun: really_probe called pm33xx 
+[    4.303015] PM: bootloader does not support rtc-only!
+[    4.304158] omap_rtc 44e3e000.rtc: setting system clock to 2000-01-01 00:00:00 UTC (946684800)
+[    4.304181] of_cfs_init
+[    4.304344] of_cfs_init: OK
+[    4.403253] VFS: Cannot open root device "mmcblk0p2" or unknown-block(0,0): error -6
+[    4.404597] mmc0: new high speed SDHC card at address 0007
+[    4.405190] Tarun: really_probe called mmcblk 
+[    4.417342] mmcblk0: mmc0:0007 SS16G 14.5 GiB 
+[    4.419343]  mmcblk0: p1 p2
+[    4.438964] Please append a correct "root=" boot option; here are the available partitions:
+[    4.447371] b300        15159296 mmcblk0  driver: mmcblk
+[    4.452732]   b301           33792 mmcblk0p1 0006c078-01
+[    4.458085]   b302        15124480 mmcblk0p2 0006c078-02[    4.462920] mmc1: MAN_BKOPS_EN bit is not set
+[    4.466845] mmc1: new high speed MMC card at address 0001
+[    4.467241] Tarun: really_probe called mmcblk 
+
+[    4.478952] mmcblk1: mmc1:0001 MMC04G 3.66 GiB 
+[    4.483792] 
+[    4.485335] Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
+[    4.485347] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 4.4.41+ #14
+[    4.485350] Hardware name: Generic AM33XX (Flattened Device Tree)
+[    4.485401] [<c001b048>] (unwind_backtrace) from [<c0015c88>] (show_stack+0x20/0x24)
+[    4.485420] [<c0015c88>] (show_stack) from [<c05d6908>] (dump_stack+0x90/0xa4)
+[    4.485440] [<c05d6908>] (dump_stack) from [<c01690b4>] (panic+0xfc/0x290)
+[    4.485460] [<c01690b4>] (panic) from [<c0f0758c>] (mount_block_root+0x1bc/0x26c)
+[    4.485473] [<c0f0758c>] (mount_block_root) from [<c0f07770>] (mount_root+0x134/0x150)
+[    4.485483] [<c0f07770>] (mount_root) from [<c0f078ec>] (prepare_namespace+0x160/0x1a8)
+[    4.485492] [<c0f078ec>] (prepare_namespace) from [<c0f07120>] (kernel_init_freeable+0x300/0x32c)
+[    4.485509] [<c0f07120>] (kernel_init_freeable) from [<c0a7989c>] (kernel_init+0x1c/0x104)
+[    4.485528] [<c0a7989c>] (kernel_init) from [<c0011060>] (ret_from_fork+0x14/0x34)
+[    4.576257] ---[ end Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
+[    4.584931] mmcblk1boot0: mmc1:0001 MMC04G partition 1 1.00 MiB
+[    4.620918] mmcblk1boot1: mmc1:0001 MMC04G partition 2 1.00 MiB
+[    4.630662]  mmcblk1: p1 p2
