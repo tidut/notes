@@ -47,15 +47,15 @@ Created Monday 16 October 2017
 ====== Introduction to  Constrained Application Protocol ======
 
 
-[ ] [[CoAP]]  is based on client server model of HTTP
+[ ] [[NW:7.Application Layer:COAP]]  is based on client server model of HTTP
 [ ] Cleint sends a request & server reply back with response
-[ ] [[CoAP]]  deal with these interchanges asynchronously over UDP
-[ ] [[CoAP]]  define 4 types of messages
+[ ] [[NW:7.Application Layer:COAP]]  deal with these interchanges asynchronously over UDP
+[ ] [[NW:7.Application Layer:COAP]]  define 4 types of messages
 	[ ] Confirmable
 	[ ] Non-Confirmable
 	[ ] Acknowledgement
 	[ ] Reset 
-[ ] [[CoAP]] uses two layer approach
+[ ] [[NW:7.Application Layer:COAP]] uses two layer approach
 	[ ] CoAP messaging layer used to deal with UDP and the asynchronous nature of the interactions
 	[ ] Request/response interactions using Method and Response Codes
 
@@ -63,8 +63,8 @@ Created Monday 16 October 2017
 
 ====== Messaging Model ======
 
-[ ] [[CoAP]]  messaging model is based on the exchange of messages over UDP between endpoints
-[ ] [[CoAP]] uses a short fixed length bnary header followed by compact binary options & a payload
+[ ] [[NW:7.Application Layer:COAP]]  messaging model is based on the exchange of messages over UDP between endpoints
+[ ] [[NW:7.Application Layer:COAP]] uses a short fixed length bnary header followed by compact binary options & a payload
 [ ] Message format is shred by requests & responses
 [ ] Each message contains a Message ID used to detect dulicates & for optional reliablity
 [ ] Message ID is 16 bit Max 250 messages per second from one end point to another
@@ -107,12 +107,12 @@ Created Monday 16 October 2017
 				{{./screenshot_2017-10-21-135143.png}}
 				
 
-* [[CoAP]] make use of GET PUT POST DELETE methods in similar manner to HTTP
+* [[NW:7.Application Layer:COAP]] make use of GET PUT POST DELETE methods in similar manner to HTTP
 
 
 ====== Intermediaries and Caching ======
 
-* [[CoAP]] also supports caching of responses in order to efficently fulfill requets
+* [[NW:7.Application Layer:COAP]] also supports caching of responses in order to efficently fulfill requets
 * A cache could be located in an end point or an intermediary.
 
 ====== Resource Discovery ======

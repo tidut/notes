@@ -1,0 +1,70 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-29T12:22:56+05:30
+
+====== BASICS ======
+Created Sunday 29 October 2017
+
+{{./screenshot_2017-10-29-122354.png}}
+{{./screenshot_2017-10-29-122522.png}}
+{{./screenshot_2017-10-29-122549.png}}
+
+
+
+**1. Repeater –** 
+
+A network device used to regenerate or replicate a signal. 
+Repeaters are used in transmission systems to regenerate analog or digital signals distorted by transmission loss. 
+Analog repeaters frequently can only amplify the signal while digital repeaters can reconstruct a signal to near its original quality.
+
+ 
+**2. Hub –**  
+
+A hub is basically a multiport repeater. 
+A hub connects multiple wires coming from different branches, for example, the connector in star topology which connects different stations. 
+Hubs cannot filter data, so data packets are sent to all connected devices.  
+Collision domain of all hosts connected through Hub remains one.  
+Also, **they do not have intelligence** to find out best path for data packets which leads to inefficiencies and wastage.
+
+{{./screenshot_2017-10-29-125602.png}}{{./screenshot_2017-10-29-125616.png}}
+ 
+**3. Bridge –** 
+
+A bridge operates at data link layer. 
+A bridge is a repeater, with add on functionality of filtering content by reading the MAC addresses of source and destination. 
+It is also used for interconnecting two LANs working on the same protocol. 
+It has a single input and single output port, thus making it a 2 port device.
+A bridge connects one point to another in a network. It works at layer 1 and 2 of the OSI model. It only connects two segments of the network.
+
+ 
+**4. Switch –** 
+ 
+A switch is a multi port bridge with a buffer and a design that can boost its efficiency(large number of  ports imply less traffic) and performance. 
+Switch is data link layer device.
+Switch can perform error checking before forwarding data, that makes it very efficient as it does not forward packets that have errors and  forward good packets selectively to correct port only.  
+In other words, switch divides collision domain of hosts, but broadcast domain remains same.
+
+{{./screenshot_2017-10-29-125641.png}}{{./screenshot_2017-10-29-125727.png}}
+
+**Router**
+ 
+Routers forward data packets from one place to another, too!  
+However routers are OSI model Layer 3 devices, and forward data depending on the Network address, not the Hardware (MAC) address.  
+For TCP/IP networks, this means the IP address of the network interface.  
+
+Routers isolate each LAN into a separate subnet, so each network adapter's IP address will have a different third "octet" (Example: 192.168.1.1 and 192.168.2.1 are in different subnets).  
+They are necessary in large networks because the TCP/IP addressing scheme allows only 254 addresses per (Class C) network segment.
+
+Routers, like bridges, provide bandwidth control by keeping data out of subnets where it doesn't belong.   
+
+
+
+{{./screenshot_2017-10-29-125813.png}}{{./screenshot_2017-10-29-125828.png}}{{./screenshot_2017-10-29-125845.png}}
+
+ 
+
+			{{./screenshot_2017-10-29-124741.png}}
+
+{{./screenshot_2017-10-29-124952.png}}{{./screenshot_2017-10-29-125024.png}}{{./screenshot_2017-10-29-125042.png}}
+
+

@@ -1,0 +1,20 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-16T13:08:20+05:30
+
+====== Socket ======
+Created Monday 16 October 2017
+
+* **sockets** are assumed to be associated with a specific socket address, namely the IP address and a port number for the local node,
+* Application programming interface (API) that programs use to communicate with the protocol stack, using network sockets, is called a socket API.
+
+**An Internet socket is characterized by at least the following:**
+
+	* local socket address, consisting of the local IP address and (for TCP and UDP, but not IP) a port numbeR
+	* protocol: A transport protocol, e.g., TCP, UDP, raw IP. This means that (local or remote) endpoints with TCP port 53 and UDP port 53 are distinct sockets, while IP does not have ports.
+
+A socket that has been connected to another socket, e.g., during the establishment of a TCP connection, also has a remote socket address.
+
+{{./screenshot_2017-10-29-120424.png}}
+
+{{./screenshot_2017-10-29-122705.png}}{{./screenshot_2017-10-29-122720.png}}{{./screenshot_2017-10-29-122812.png}}{{./screenshot_2017-10-29-122852.png}}

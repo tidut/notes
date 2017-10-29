@@ -1,0 +1,132 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2017-10-15T22:13:24+05:30
+
+====== TCP ======
+Created Sunday 15 October 2017
+
+[ ] The Internet protocol suite is the conceptual model and set of communications protocols used on the Internet and similar computer networks. 
+[ ] It is commonly known as **TCP/IP** because the foundational protocols in the suite are the Transmission Control Protocol (TCP) and the Internet Protocol (IP). 
+[ ] It is occasionally known as the **Department of Defense (DoD)** model, because the development of the networking method was funded by the United States **Department of Defense through DARPA.**
+
+
+* The **transmission Control Protocol (TCP)** is one of the most important protocols of Internet Protocols suite. 
+* It is most widely used protocol for data transmission in communication network such as internet.
+
+
+			{{./screenshot_2017-10-26-223422.png}}
+			
+
+
+=== Features ===
+
+* TCP is reliable protocol. That is, the receiver always sends either positive or negative acknowledgement about the data packet to the sender,          so that the sender always has bright clue about whether the data packet is reached the destination or it needs to resend it.
+
+* TCP ensures that the data reaches intended destination in the same order it was sent.
+
+* TCP is connection oriented. TCP requires that connection between two remote points be established before sending actual data.
+
+* TCP provides error-checking and recovery mechanism.
+
+* TCP provides end-to-end communication.
+
+* TCP provides flow control and quality of service.
+
+* TCP operates in Client/Server point-to-point mode.
+
+* TCP provides full duplex server, i.e. it can perform roles of both receiver and sender.
+
+* Major Internet applications such as the World Wide Web, email, remote administration, and file transfer rely on TCP.
+
+=== Network Function :- ===
+
+* Provides a communication service at an intermediate level between an application program and the Internet Protocol. 
+* It provides host-to-host connectivity at the Transport Layer of the Internet model.
+* At the transport layer, the protocol handles all handshaking and transmission details and presents an abstraction of the network connection to the application. 
+* Application doesn't have to bother 
+
+
+=== TCP segment structure :- ===
+
+
+{{./screenshot_2017-10-28-222053.png}}
+
+* **Transmission Control Protocol** accepts data from a data stream, divides it into chunks, and **adds a TCP header creating a TCP segment.** 
+
+* **TCP segment** is then encapsulated into an **Internet Protocol (IP) datagram,** and exchanged with peers.
+
+* **TCP packet** appears in both informal and formal usage, refers to the **TCP protocol data unit (PDU), datagram to the IP PDU**, and **frame to the data link layer PDU:**
+
+	[ ] **Processes transmit data → Passing Data buffers ** by calling on the **TCP**
+	[ ] **TCP packages = D**ata from buffers into segments and calls on the internet module to **transmit each segment to the destination TCP.**
+	[ ] **A TCP segment = segment header + data section.** 
+	[ ] **TCP header** contains 10 mandatory fields, and an optional extension field
+	[ ] **Data section**  =  contents are the payload data carried for the application. 
+	[ ] **Length of the data section** is not specified in the **TCP segment header.** 
+	[ ] **Length of the data section = (Total IP datagram length) - (Length of the TCP header + encapsulating IP header)**
+
+
+== TCP Header Format ==
+
+* Each TCP header has ten required fields totaling 20 bytes (160 bits) in size.
+* They can also optionally include an additional data section up to 40 bytes in size.
+
+=== This is the layout of TCP headers: ===
+
+				   {{./screenshot_2017-10-28-231802.png}}
+
+							{{./screenshot_2017-10-28-231201.png}} 
+
+				  {{./screenshot_2017-10-28-232654.png}}
+
+
+		{{./screenshot_2017-10-28-232751.png}}
+		{{./screenshot_2017-10-28-232821.png}}
+		{{./screenshot_2017-10-28-232834.png}}
+		
+
+
+
+**TCP protocol operations may be divided into three phases.**
+* Connections must be properly established in a multi-step handshake process (connection establishment) before entering the data transfer phase. 
+* After data transmission is completed, the connection termination closes established virtual circuits and releases all allocated resources.
+
+
+The TCP three-way handshake in Transmission Control Protocol (also called the TCP-handshake; three message handshake and/or SYN-SYN-ACK) is the method used by TCP set up a TCP/IP connection over an Internet Protocol based network.
+
+ TCP's three way handshaking technique is often referred to as "SYN-SYN-ACK" (or more accurately SYN, SYN-ACK, ACK) because there are three messages transmitted by TCP to negotiate and start a TCP session between two computers. 
+
+The TCP handshaking mechanism is designed so that two computers attempting to communicate can negotiate the parameters of the network TCP socket connection before transmitting data such as SSH and HTTP web browser requests.
+
+This 3-way handshake process is also designed so that both ends can initiate and negotiate separate TCP socket connections at the same time. Being able to negotiate multiple TCP socket connections in both directions at the same time allows a single physical network interface, such as ethernet, to be multiplexed to transfer multiple streams of TCP data simultaneously. 
+
+
+{{./screenshot_2017-10-28-233518.png}}
+
+
+
+	**SYN:**
+	 The active open is performed by the client sending a SYN to the server. The client sets the segment's sequence number to a random value A.
+	
+	**SYN-ACK:** 
+	In response, the server replies with a SYN-ACK. The acknowledgment number is set to one more than the received sequence number i.e. A+1, and the sequence number that the server chooses for the packet is another random number, B.
+	
+	**ACK:** 
+	Finally, the client sends an ACK back to the server. The sequence number is set to the received acknowledgement value i.e. A+1, and the acknowledgement number is set to one more than the received sequence number i.e. B+1.
+
+
+						{{./screenshot_2017-10-28-234515.png}}
+						
+		
+		{{./screenshot_2017-10-28-235106.png}}     
+		
+				   {{./screenshot_2017-10-28-235124.png}}
+		
+		
+
+
+
+
+
+
+

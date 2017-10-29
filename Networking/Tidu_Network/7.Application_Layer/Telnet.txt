@@ -46,7 +46,7 @@ Telnet, however, predates TCP/IP and was originally run over Network Control Pro
 
 === Types of Login :- ===
 
-	1. === Local Login : - ===
+1. **Local Login : -**
 
 	* When user logs to local system
 	* when user types on terminal then whatever uswer types on terminal it is accepted by terminal driver which passes characters to OS
@@ -105,6 +105,7 @@ Telnet, however, predates TCP/IP and was originally run over Network Control Pro
 
 
 				{{./screenshot_2017-10-24-222031.png}}
+
 
 === Remote control Characters : - ===
 * NVT uses an eight bit charcter set in which highest order bit is set.

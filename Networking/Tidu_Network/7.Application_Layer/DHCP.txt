@@ -40,7 +40,7 @@ DHCP is based on BOOTP but can dynamically allocate IP addresses from a pool and
 	1. DHCP was designed to replace the older bootp
 	2. Bootp can only provide IP only when system boots while DHCP can provide when OS is already loaded
 	3. DHCP primarily used to provide seemlessly IP while BOOTP used to configure & boot diskless computers
-	4. DHCP can automatically rebind or renew their leases while [[BootP]] requires system restart
+	4. DHCP can automatically rebind or renew their leases while NW Protolols:BootP requires system restart
 
 === Operations : - ===
 

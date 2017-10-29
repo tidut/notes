@@ -33,4 +33,45 @@ Created Saturday 14 October 2017
 == Session restoration (checkpointing and recovery) ==
 
 
+====== Example :- RPC ======
+
+**Working of Remote Procedure Call :- **
+
+1. RPC is working as a client server model
+
+2. RPC uses different Authentication methods to validate the client request.
+
+3. RPC protocol is independent of transport layer protocols.
+
+4. RPC reuests can use both UDP and TCP but prefer UDP format
+
+In RPC the client issues requests for certain services from server through the network.
+A client is a computer or process that accesses the services or resources of another process or computer on the network. 
+A server is a computer that provides services and resources, and that implements network services.In short the requesting program is a client and the service-providing program is the server. 
+According to the results of RPC authentication server may reject or accept the request.
+
+
+**Remote Procedure Call(RPC) Authentications**
+
+The major Remote Procedure Call (RPC) authentication methods are provided below.
+
+
+**1 Null Authentication**
+
+Often calls must be made where the caller does not know who he is or the server does not care who the caller is.
+
+**2 UNIX Authentication**
+
+The caller of a remote procedure may wish to identify himself as he is identified on a UNIX(tm) system.
+
+**3 DES Authentication**
+
+DES Authentication is the advance form of UNIX Authentication.
+
+UNIX command to display the RPC programs that are registered on a specified computer.
+
+rpcinfo -p
+
+
+
 
