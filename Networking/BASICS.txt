@@ -5,8 +5,8 @@ Creation-Date: 2017-10-29T12:22:56+05:30
 ====== BASICS ======
 Created Sunday 29 October 2017
 
-{{./screenshot_2017-10-29-122354.png}}
-{{./screenshot_2017-10-29-122522.png}}
+		 {{./screenshot_2017-10-29-122354.png}}
+		  {{./screenshot_2017-10-29-122522.png}}
 {{./screenshot_2017-10-29-122549.png}}
 
 

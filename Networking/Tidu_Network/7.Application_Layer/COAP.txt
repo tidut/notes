@@ -18,6 +18,12 @@ Created Monday 16 October 2017
 * In order to make the protocol **suitable to IoT and M2M applications**, various new functionalities have been added. 
 * The core of the protocol is specified in **RFC 7252;**
 
+====== Goal ======
+
+* To design a generic web protocol for the special requirements of this constrained environment, especially  considering energy, 
+	building automation, and other machine-to-machine (M2M) applications.  
+* CoAP is not to blindly compress HTTP, but rather to realize a subset of REST common with HTTP but optimized for M2M applications.  
+
 ====== Features ======
 
 * The nodes often have 8-bit microcontrollers with small amounts of ROM and RAM, while constrained networks such as IPv6 over Low-Power Wireless Personal Area Networks (6LoWPANs) often have high packet error rates and a typical throughput of 10s of kbit/s. 
@@ -27,22 +33,14 @@ Created Monday 16 October 2017
 
    __CoAP has the following main features:__
 
-   o  Web protocol fulfilling M2M requirements in constrained environments
-
-   o  UDP [RFC0768] binding with optional reliability supporting unicast  and multicast requests.
-
+   o  Web protocol fulfilling **M2M** requirements in constrained environments
+   o  **UDP** binding with optional reliability supporting unicast  and multicast requests.
    o  Asynchronous message exchanges.
-
    o  Low header overhead and parsing complexity.
-
-   o  URI and Content-type support.
-
    o  Simple proxy and caching capabilities.
-
    o  A stateless HTTP mapping, allowing proxies to be built providing  access to CoAP resources via HTTP in a uniform way or for HTTP
 	  simple interfaces to be realized alternatively over CoAP.
-
-   o  Security binding to Datagram Transport Layer Security (DTLS)
+   o  Security binding to **Datagram Transport Layer Security** (DTLS)
 
 ====== Introduction to  Constrained Application Protocol ======
 
@@ -55,6 +53,9 @@ Created Monday 16 October 2017
 	[ ] Non-Confirmable
 	[ ] Acknowledgement
 	[ ] Reset 
+
+{{./screenshot_2018-02-06-220507.png}}
+
 [ ] [[NW:7.Application Layer:COAP]] uses two layer approach
 	[ ] CoAP messaging layer used to deal with UDP and the asynchronous nature of the interactions
 	[ ] Request/response interactions using Method and Response Codes
@@ -64,10 +65,10 @@ Created Monday 16 October 2017
 ====== Messaging Model ======
 
 [ ] [[NW:7.Application Layer:COAP]]  messaging model is based on the exchange of messages over UDP between endpoints
-[ ] [[NW:7.Application Layer:COAP]] uses a short fixed length bnary header followed by compact binary options & a payload
-[ ] Message format is shred by requests & responses
-[ ] Each message contains a Message ID used to detect dulicates & for optional reliablity
-[ ] Message ID is 16 bit Max 250 messages per second from one end point to another
+[ ] [[NW:7.Application Layer:COAP]] uses a short fixed length binary header followed by compact binary options & a payload
+[ ] Message format is shared by requests & responses
+[ ] Each message contains a **Message ID** used to detect dulicates & for optional reliablity
+[ ] **Message ID** is **16 bit Max** **250 messages per second** from one end point to another
 [ ] Reliability is provided by marking a message as confirmable
 	[ ] A confirmable message is transmitted using a default timeout
 	[ ] A message will be retransmitted untill it receives ack with same ID
@@ -87,10 +88,10 @@ Created Monday 16 October 2017
 
 ====== Request/Response Model ======
 
-* CoAP request and response semantics are carried in CoAP messages, which include either a Method Code or Response Code, respectively.
-* A Token is  used to match responses to requests independently from the other messages
+* **CoAP** **request** and **response** semantics are carried in CoAP messages, which include either a Method Code or Response Code, respectively.
+* A **Token** is  used to match **responses to requests** independently from the other messages
 * A request is carried in a confirmable or non-confirmable message 
-* if response to request carried in confrimable request results in acknowledgement
+* if **response** to **request** carried in confrimable **request** results in **acknowledgement**
 
 			{{./screenshot_2017-10-21-134806.png}}
 
@@ -105,7 +106,8 @@ Created Monday 16 October 2017
 * When response is ready then server sends in new-confirmable message
 
 				{{./screenshot_2017-10-21-135143.png}}
-				
+
+			
 
 * [[NW:7.Application Layer:COAP]] make use of GET PUT POST DELETE methods in similar manner to HTTP
 
@@ -118,13 +120,4 @@ Created Monday 16 October 2017
 ====== Resource Discovery ======
 
 * Resource discovery is important for machine-to-machine interactions   and is supported using the CoRE Link Format
-
-
-
-
-
-
-
-
-
 

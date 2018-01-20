@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2018-02-06T17:09:11+05:30
+
+====== 4 ======
+Created Tuesday 06 February 2018
+
+=== Let us understand the stack from stack point of view :- ===
+
+1. we will try to get socket — Datagram sockets for UDP along with user has to pass the UDP protocol number
+2. Pass the IPO version also — in our stack we are passing IPV6
+3. CONFIG_NET_MAX_CONTEXTS → Number of network contexts to allocate
+	default value is 6 
+	
+	Each network context is used to describe a network 5-tuple that is used when listening or sending network traffic. 
+	This is very similar as one could call a network socket in some other systems.
+	
+
+	/** Protocol families */
+	#define PF_UNSPEC	0	/* Unspecified.  */
+	#define PF_INET		2	/* IP protocol family.  */
+	#define PF_INET6	10	/* IP version 6.  */
+

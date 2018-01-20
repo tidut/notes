@@ -14,7 +14,7 @@ Created Saturday 21 October 2017
 
 		{{./screenshot_2017-10-21-142406.png}}
 		
-* The messageformat starts with a fixed-size 4-byte header.  
+* The message format starts with a fixed-size 4-byte header.  
 * This is followed by a variable-length Token value, which can be between 0 and 8 bytes long.
 
 **The fields in the header are defined as follows:**
@@ -53,16 +53,34 @@ Created Saturday 21 October 2017
 		* type Acknowledgement/Reset to messages of type Confirmable/Non-confirmable.  
 		* The rules for generating a Message ID and matching messages are defined in Section 4.
 
+				{{./screenshot_2018-02-06-224126.png}}
+
+
+
 **Token :-** 
 	* The header is followed by the Token value, which may be 0 to 8 bytes, as given by the Token Length field. 
 	* The Token value is used to correlate requests and responses.  
 
 **Options :-**
 	* Header and Token are followed by zero or more Options
-	* An Option can be followed by the end of the message, by another Option, or by the Payload Marker and the payload.
-	* CoAP defines a number of options that can be included in a message.
+	* An Option can be followed by the end of the message, by another Option, or by the **Payload Marker and the payload.**
+	* **CoAP** defines a number of options that can be included in a message.
 	* Each option instance in a message specifies the Option Number of the  defined CoAP option, the length of the Option Value, and the Option Value itself.
 
+
+{{./screenshot_2018-02-06-231043.png}}{{./screenshot_2018-02-06-231106.png}}
+
+{{./screenshot_2018-01-20-131415.png}}{{./screenshot_2018-02-06-231246.png}}
+
+
+
+   o  the Uri-Host Option specifies the Internet host of the resource being requested,
+
+   o  the Uri-Port Option specifies the transport-layer port number of the resource,
+
+   o  each Uri-Path Option specifies one segment of the absolute path to the resource, and
+
+   o  each Uri-Query Option specifies one argument parameterizing the resource.
 
 
 
