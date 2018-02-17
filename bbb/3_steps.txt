@@ -149,9 +149,15 @@ Created Tuesday 09 May 2017
 [    0.629355] Tidu Module omap_gpio_probe successfully started 
 [    0.631154] Tidu Module omap_gpio_probe successfully done 
 
+[root@localhost linux]# gedit include/linux/gpio.h
+[root@localhost linux]# gedit arch/arm/include/asm/gpio.h
+[root@localhost linux]# gedit include/asm-generic/gpio.h
+[root@localhost linux]# gedit drivers/gpio/gpiolib.c
+[root@localhost linux]# gedit drivers/gpio/gpio-omap.c
+[root@localhost linux]# gedit include/linux/gpio/driver.h
 
-	**drivers/gpio/gpio-omap.c:	printk(KERN_ALERT "Tidu Module omap_gpio_probe successfully started \n");**
-	**drivers/gpio/gpio-omap.c:	postcore_initcall(omap_gpio_drv_reg);**
+**drivers/gpio/gpio-omap.c:	printk(KERN_ALERT "Tidu Module omap_gpio_probe successfully started \n");**
+**drivers/gpio/gpio-omap.c:	postcore_initcall(omap_gpio_drv_reg);**
 
 
 === Step ####################################################################################### ===
